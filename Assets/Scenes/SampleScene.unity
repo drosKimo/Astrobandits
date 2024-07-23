@@ -678,6 +678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed239b16e7de8d74db46fd3abc6ba0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trans: 0
+  riseCard: 20
 --- !u!224 &482082763
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1337,6 +1339,7 @@ GameObject:
   - component: {fileID: 1270946411}
   - component: {fileID: 1270946410}
   - component: {fileID: 1270946409}
+  - component: {fileID: 1270946415}
   - component: {fileID: 1270946414}
   m_Layer: 0
   m_Name: Item 1
@@ -1506,6 +1509,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1270946415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270946407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c349da3784f8b744a9cdfad869b01e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1276468413
 GameObject:
   m_ObjectHideFlags: 0
