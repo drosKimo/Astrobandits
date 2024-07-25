@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShowCard : MonoBehaviour
+public class ShowCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     string cardName = ""; // имя текущей карты
     GameObject placeholder, thisCard;
@@ -14,7 +14,7 @@ public class ShowCard : MonoBehaviour
     [HideInInspector] public int trans;
     [SerializeField] int riseCard;
 
-    public void GetCard()
+    public void OnPointerEnter(PointerEventData eventData)
     {
         // получает объекты под курсором
         PointerEventData pointerData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
@@ -51,7 +51,7 @@ public class ShowCard : MonoBehaviour
         thisCard.transform.localScale = new Vector3(1.25f, 1.25f, 1); // немного увеличивает карту
     }
 
-    public void ReleaseCard()
+    public void OnPointerExit(PointerEventData eventData)
     {
         thisCard.transform.localScale = new Vector3(1, 1, 1);
         thisCard.transform.SetSiblingIndex(trans);

@@ -9,13 +9,11 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     LerpToPlaceholder LtP;
     ShowCard showCard;
     GameObject placeholder;
-    EventTrigger trigger;
 
     void Start()
     {
-        showCard = GameObject.Find("ShowCard").GetComponent<ShowCard>();
+        showCard = gameObject.GetComponent<ShowCard>();
         LtP = GetComponent<LerpToPlaceholder>();
-        trigger = GetComponent<EventTrigger>();
     }
 
     public void OnDrag(PointerEventData eventData) // вызывается каждый кадр
@@ -39,18 +37,15 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         
         if (!hit.collider.IsUnityNull()) // есть ли под мышью коллайдер
         {
-            trigger.enabled = false; // отключает скрипт с триггером
+            showCard.enabled = false; // отключает скрипт с триггером
 
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
         else
         {
+            placeholder.SetActive(true);
             gameObject.transform.SetSiblingIndex(showCard.trans);
             LtP.enabled = true;
-
-            // временно, чтобы можно было вернуть карту в руку
-            if (trigger.enabled == false)
-                trigger.enabled = true;
         }
     }
 }

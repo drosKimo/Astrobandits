@@ -3,18 +3,24 @@ using UnityEngine;
 [ CreateAssetMenu(fileName = "New Card", menuName = "ScriptableObjects/Card") ]
 public class Cards : ScriptableObject
 {
-    public string itemName, itemDescription;
+    [Header("Базовые свойства")]
+    public string itemName;
+    public string itemDescription;
     public Sprite itemImage;
-    public dropDown itemProperty = dropDown.Default; // свойство карты
-    public suits itemSuit = suits.Default; // масть карты
+    [Space]
+    [Header("Масть карты")]
+    [Tooltip("Свойство карты. По умолчанию это карта действия")] public dropDown itemProperty = dropDown.Default; // свойство карты
+    [Tooltip("Масть карты")] public suits itemSuit = suits.Default; // масть карты
+    [Tooltip("Номер карты. Указывать 2-10, J, Q, K, A")] public string itemNumber; // Может быть 2-10, J, Q, K, A
+    [Space]
+    [Header("Bool свойства")]
+    [Tooltip("Можно сыграть на себя?")] public bool itemSelf = false;
+    [Tooltip("Можно сыграть на другого игрока?")] public bool itemOther = false;
 
     public enum dropDown 
     { 
-        Default, 
-        Heal, 
-        Damage,
-        Defence,
-        Weapon
+        Default, // карта действия
+        Blue // карта, которую кладут перед собой
     }
 
     public enum suits
