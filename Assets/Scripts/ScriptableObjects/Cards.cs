@@ -4,8 +4,8 @@ using UnityEngine;
 public class Cards : ScriptableObject
 {
     [Header("Базовые свойства")]
-    public string itemName;
-    public string itemDescription;
+    [Tooltip("Ключ локализации названия")] public string itemName;
+    [Tooltip("Ключ локализации описания")] public string itemDescription;
     public Sprite itemImage;
     [Space]
     [Header("Масть карты")]
