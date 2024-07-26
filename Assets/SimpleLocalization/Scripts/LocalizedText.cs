@@ -10,9 +10,6 @@ namespace Assets.SimpleLocalization.Scripts
     [RequireComponent(typeof(TMP_Text))]
     public class LocalizedText : MonoBehaviour
     {
-        //[SerializeField] Cards cards;
-
-        //[HideInInspector] public string LocalizationKey;
         public string LocalizationKey;
 
         public void Start()
@@ -28,7 +25,6 @@ namespace Assets.SimpleLocalization.Scripts
 
         private void Localize()
         {
-            //LocalizationKey = cards.itemName;
             GetComponent<TMP_Text>().text = LocalizationManager.Localize(LocalizationKey);
         }
     }

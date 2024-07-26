@@ -1,3 +1,5 @@
 Key,Russian,English
 Cards.Name.Armageddets,Армагедец,Armageddets
-Cards.Description.Armageddets,Новая игра,New game
+Cards.Description.Armageddets,Каждый соперник скидывает Уворот или теряет хп,Each opponent plays a Dodge or loses hp
+Cards.Name.Bartender,Бармен,Bartender
+Cards.Description.Bartender,Вы восстанавливаете 2 хп. Все соперники восстанавливают по 1 хп,You are recovering 2 hp. All opponents recover 1 hp each
