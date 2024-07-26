@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4b146ee1939e8429893ad3801f8408, type: 3}
   m_Name: Bartender
   m_EditorClassIdentifier: 
-  itemName: 
-  itemDescription: 
+  itemName: Cards.Name.Bartender
+  itemDescription: Cards.Description.Bartender
   itemImage: {fileID: 0}
   itemProperty: 0
   itemSuit: 0

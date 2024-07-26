@@ -16,6 +16,7 @@ public class Cards : ScriptableObject
     [Header("Bool свойства")]
     [Tooltip("Можно сыграть на себя?")] public bool itemSelf = false;
     [Tooltip("Можно сыграть на другого игрока?")] public bool itemOther = false;
+    [Tooltip("Это оружие?")] public bool itemIsWeapon = false;
 
     public enum dropDown 
     { 

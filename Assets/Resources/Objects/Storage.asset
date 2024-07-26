@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0bae475a6ac69f478b0d6af8866ef55, type: 3}
   m_Name: Storage
   m_EditorClassIdentifier: 
-  allCards: []
+  allCards:
+  - {fileID: 11400000, guid: 5309a116ab068d24fba02adf442d4c39, type: 2}
+  - {fileID: 11400000, guid: 34e0a9daf27dd0f43af997a057d1cc08, type: 2}
   allEvents: []
   allCharacters: []

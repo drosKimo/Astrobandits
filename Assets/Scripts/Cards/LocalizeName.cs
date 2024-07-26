@@ -11,6 +11,5 @@ public class LocalizeName : MonoBehaviour
         cardItem = GetComponentInParent<GetCardItem>();
 
         localizedText.LocalizationKey = cardItem.nameKey;
-        Debug.Log(cardItem.nameKey);
     }
 }

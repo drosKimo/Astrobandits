@@ -13,13 +13,9 @@ public class GetCardItem : MonoBehaviour
         int minStorage = 0; 
         int maxStorage = globalStorage.allCards.Count;
 
-        Debug.Log(maxStorage);
-
         System.Random rand = new System.Random();
 
         cardItem = globalStorage.allCards[rand.Next(minStorage, maxStorage)];
-        //cardItem = globalStorage.allCards[0];
-
         nameKey = cardItem.itemName;
         descriptionKey = cardItem.itemDescription;
     }
