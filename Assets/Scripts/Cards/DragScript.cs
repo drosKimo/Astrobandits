@@ -43,11 +43,9 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
 
         if (!hit.collider.IsUnityNull()) // есть ли под мышью коллайдер
         {
-            if ((getCardItem.cardItem.itemOther == false || getCardItem.cardItem.itemBoard == true) && hit.collider.gameObject.tag == "Enemy")
-            {
-                CantPlay();
-            }
-            else if ((getCardItem.cardItem.itemOther == true || getCardItem.cardItem.itemBoard == true) && hit.collider.gameObject.tag == "Player")
+            if ((getCardItem.cardItem.itemOther == false && hit.collider.gameObject.tag == "Enemy") ||
+                (getCardItem.cardItem.itemOther == true && hit.collider.gameObject.tag == "Player") ||
+                (getCardItem.cardItem.itemBoard == true) || (hit.collider.gameObject.tag == "Untagged"))
             {
                 CantPlay();
             }
