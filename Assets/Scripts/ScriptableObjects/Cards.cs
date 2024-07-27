@@ -14,9 +14,8 @@ public class Cards : ScriptableObject
     [Tooltip("Номер карты. Указывать 2-10, J, Q, K, A")] public string itemNumber; // Может быть 2-10, J, Q, K, A
     [Space]
     [Header("Bool свойства")]
-    [Tooltip("Можно сыграть на себя?")] public bool itemSelf = false;
-    [Tooltip("Можно сыграть на другого игрока?")] public bool itemOther = false;
-    [Tooltip("Это оружие?")] public bool itemIsWeapon = false;
+    [Tooltip("Можно сыграть только на другого игрока?")] public bool itemOther = false;
+    [Tooltip("Это можно сыграть на поле?")] public bool itemBoard = false;
 
     public enum dropDown 
     { 

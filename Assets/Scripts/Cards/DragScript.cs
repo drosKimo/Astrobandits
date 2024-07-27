@@ -9,6 +9,7 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     LerpToPlaceholder LtP;
     ShowCard showCard;
     CardProperty cardProperty;
+    GetCardItem getCardItem;
     GameObject placeholder;
 
     [HideInInspector] public RaycastHit2D hit;
@@ -18,6 +19,7 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         showCard = gameObject.GetComponent<ShowCard>();
         LtP = GetComponent<LerpToPlaceholder>();
         cardProperty = GetComponent<CardProperty>();
+        getCardItem = GetComponent<GetCardItem>();
     }
 
     public void OnDrag(PointerEventData eventData) // вызывается каждый кадр
@@ -38,19 +40,45 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
         hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-        
+
         if (!hit.collider.IsUnityNull()) // есть ли под мышью коллайдер
         {
-            showCard.enabled = false; // отключает скрипт с триггером
-            cardProperty.getCardToPlay(); // запускает скрипт, который ищет свойство текущей карты
-
-            Destroy(gameObject);
+            if ((getCardItem.cardItem.itemOther == false || getCardItem.cardItem.itemBoard == true) && hit.collider.gameObject.tag == "Enemy")
+            {
+                CantPlay();
+            }
+            else if ((getCardItem.cardItem.itemOther == true || getCardItem.cardItem.itemBoard == true) && hit.collider.gameObject.tag == "Player")
+            {
+                CantPlay();
+            }
+            else
+            {
+                CanPlay();
+            }
         }
         else
         {
-            placeholder.SetActive(true);
-            gameObject.transform.SetSiblingIndex(showCard.trans);
-            LtP.enabled = true;
+            if (getCardItem.cardItem.itemBoard == true)
+            {
+                showCard.enabled = false; // отключает скрипт с триггером
+                cardProperty.PlayBoardCard(); // запускает скрипт, который разыгравает карту, которую можно сыграть только на поле
+            }
+            else
+                CantPlay();
         }
+    }
+
+    void CantPlay()
+    {
+        //Debug.Log("Нельзя применить");
+        placeholder.SetActive(true);
+        gameObject.transform.SetSiblingIndex(showCard.trans);
+        LtP.enabled = true;
+    }
+
+    void CanPlay()
+    {
+        showCard.enabled = false; // отключает скрипт с триггером
+        cardProperty.GetCardToPlay(); // запускает скрипт, который ищет свойство текущей карты
     }
 }

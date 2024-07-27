@@ -14,7 +14,7 @@ public class CardProperty : MonoBehaviour
     }
 
     // включает свойство карты по имени
-    public void getCardToPlay()
+    public void GetCardToPlay()
     {
         playCard = dragScript.hit.collider.gameObject.GetComponent<PlayCard>();
 
@@ -24,5 +24,13 @@ public class CardProperty : MonoBehaviour
                 playCard.Bang();
                 break;
         }
+
+        Destroy(gameObject);
+    }
+
+    public void PlayBoardCard()
+    {
+        Destroy(gameObject);
+        //Debug.Log("…ес минус три");
     }
 }
