@@ -8,12 +8,16 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
 {
     LerpToPlaceholder LtP;
     ShowCard showCard;
+    CardProperty cardProperty;
     GameObject placeholder;
+
+    [HideInInspector] public RaycastHit2D hit;
 
     void Start()
     {
         showCard = gameObject.GetComponent<ShowCard>();
         LtP = GetComponent<LerpToPlaceholder>();
+        cardProperty = GetComponent<CardProperty>();
     }
 
     public void OnDrag(PointerEventData eventData) // вызывается каждый кадр
@@ -33,11 +37,12 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         // координаты мыши, иначе не получится
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-        RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+        hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
         
         if (!hit.collider.IsUnityNull()) // есть ли под мышью коллайдер
         {
             showCard.enabled = false; // отключает скрипт с триггером
+            cardProperty.getCardToPlay(); // запускает скрипт, который ищет свойство текущей карты
 
             Destroy(gameObject);
         }
