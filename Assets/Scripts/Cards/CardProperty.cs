@@ -1,21 +1,27 @@
 using UnityEngine;
 
+// необходимо разбить отыгровки карт на разные скрипты, чтобы позже это
+// было удобнее дл€ мультиплеера и управлени€ ботами
+
 public class CardProperty : MonoBehaviour
 {
     GetCardItem getCardItem;
     DragScript dragScript;
     PlayCard playCard;
+    EnemyCardReaction enemyCardReaction;
 
     void Awake()
     {
         getCardItem = GetComponent<GetCardItem>();
-        dragScript = GetComponent<DragScript>();       
+        dragScript = GetComponent<DragScript>();
     }
 
     // включает свойство карты по имени
     public void GetCardToPlay()
     {
         playCard = dragScript.hit.collider.gameObject.GetComponent<PlayCard>();
+        if (gameObject.tag == "Enemy")
+            enemyCardReaction = GetComponent<EnemyCardReaction>();
 
         switch (getCardItem.nameKey)
         {
@@ -72,7 +78,7 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Slam":
-                playCard.Slam();
+                enemyCardReaction.Slam();
                 break;
 
             case "Cards.Name.SporeBeer":
@@ -95,6 +101,7 @@ public class CardProperty : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // карты, которые разыгрываютс€ на поле
     public void PlayBoardCard()
     {
         playCard = GameObject.FindWithTag("Player").GetComponent<PlayCard>();
@@ -102,7 +109,12 @@ public class CardProperty : MonoBehaviour
         switch (getCardItem.nameKey)
         {
             case "Cards.Name.Armageddets":
-                playCard.Armageddets();
+                // проверка дл€ каждого из врагов
+                foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    enemyCardReaction = enemy.GetComponent<EnemyCardReaction>();
+                    enemyCardReaction.Armageddets();
+                }
                 break;
 
             case "Cards.Name.Bartender":
@@ -114,7 +126,11 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Insectoids":
-                playCard.Insectoids();
+                foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    enemyCardReaction = enemy.GetComponent<EnemyCardReaction>();
+                    enemyCardReaction.Insectoids();
+                }
                 break;
 
             case "Cards.Name.LootBoxes":
@@ -131,6 +147,5 @@ public class CardProperty : MonoBehaviour
         }
 
         Destroy(gameObject);
-        //Debug.Log("…ес минус три");
     }
 }

@@ -4,11 +4,6 @@ public class PlayCard : MonoBehaviour
 {
     [SerializeField] SpawnCard spawnCard;
 
-    public void Armageddets()
-    {
-        Debug.Log("Карта разыграна");
-    }
-
     public void Bartender()
     {
         Debug.Log("Карта разыграна");
@@ -54,11 +49,6 @@ public class PlayCard : MonoBehaviour
         Debug.Log("Карта разыграна");
     }
 
-    public void Insectoids()
-    {
-        Debug.Log("Карта разыграна");
-    }
-
     public void Isabelle()
     {
         Debug.Log("Карта разыграна");
@@ -98,11 +88,6 @@ public class PlayCard : MonoBehaviour
     }
 
     public void Shredder()
-    {
-        Debug.Log("Карта разыграна");
-    }
-
-    public void Slam()
     {
         Debug.Log("Карта разыграна");
     }

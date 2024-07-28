@@ -16,6 +16,7 @@ public class Cards : ScriptableObject
     [Header("Bool свойства")]
     [Tooltip("Можно сыграть только на другого игрока?")] public bool itemOther = false;
     [Tooltip("Это можно сыграть на поле?")] public bool itemBoard = false;
+    //[Tooltip("Эта карта разыгрывается на себя? (только карты на поле)")] public bool itemEnemyOnly = false;
 
     public enum dropDown 
     { 
