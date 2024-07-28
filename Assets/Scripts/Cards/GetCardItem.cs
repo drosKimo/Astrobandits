@@ -15,6 +15,7 @@ public class GetCardItem : MonoBehaviour
 
         System.Random rand = new System.Random();
 
+        // выбирает случайную карту
         cardItem = globalStorage.allCards[rand.Next(minStorage, maxStorage)];
         nameKey = cardItem.itemName;
         descriptionKey = cardItem.itemDescription;

@@ -4,12 +4,12 @@ public class SpawnCard : MonoBehaviour
 {
     [SerializeField] GameObject prefab;
     GameObject objParent;
+    [HideInInspector] public GameObject newItem;
 
     public void Spawn()
     {
         objParent = GameObject.Find("Elements Container");
 
-        GameObject newItem;
         newItem = GameObject.Instantiate(prefab);
 
         // большая проверка, чтобы карты не ломались
