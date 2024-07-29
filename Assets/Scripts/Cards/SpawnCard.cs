@@ -9,9 +9,27 @@ public class SpawnCard : MonoBehaviour
     public void Spawn()
     {
         objParent = GameObject.Find("Elements Container");
+        GetCardItem cardItem = prefab.GetComponent<GetCardItem>();
+        cardItem.calling = true;
+        newItem = GameObject.Instantiate(prefab);
+        GetItemName();
+    }
+
+    // Временно для дебага
+    // позволяет заспавнить карту по индексу
+    public void SpawnByIndex(int setCardIndex)
+    {
+        objParent = GameObject.Find("Elements Container");
+        GetCardItem cardItem = prefab.GetComponent<GetCardItem>();
+        cardItem.cardIndex = setCardIndex;
+        cardItem.calling = false;
 
         newItem = GameObject.Instantiate(prefab);
+        GetItemName();
+    }
 
+    void GetItemName()
+    {
         // большая проверка, чтобы карты не ломались
         if (objParent.transform.childCount == 0)
         {
@@ -36,7 +54,7 @@ public class SpawnCard : MonoBehaviour
                     finalName = startName;
                 else finalName = lastName;
             }
-            
+
             int cardIndex = System.Convert.ToInt32(finalName.Substring(5)) + 1;
             newItem.name = "Item " + cardIndex;
         }

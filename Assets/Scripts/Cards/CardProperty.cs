@@ -78,6 +78,7 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Slam":
+                enemyCardReaction = dragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
                 enemyCardReaction.Slam();
                 break;
 
