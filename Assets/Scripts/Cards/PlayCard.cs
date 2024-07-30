@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -83,7 +84,44 @@ public class PlayCard : MonoBehaviour
 
     public void Reassembly()
     {
-        Debug.Log("Карта разыграна");
+        List<Cards> allCards = new List<Cards>(); // все карты в руке
+        Dictionary<string, int> players = new Dictionary<string, int>(); // игрок и сколько у него карт
+        
+        // проверка для каждого из врагов
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            enemyCard = enemy.GetComponent<EnemyCard>();
+            // добавляет врага и количество его карт в список
+            players.Add(enemy.name, enemyCard.enemyCards.Count);
+
+            // ищет подходящую карту из общего хранилища
+            foreach (Cards card in enemyCard.enemyCards)
+            {
+                //Debug.Log($"{card.itemName}");
+                allCards.Add(card);
+            }
+
+            enemyCard.enemyCards.Clear(); // очистить список
+        }
+
+        // теперь то же самое для игрока
+        GameObject playerHand = GameObject.Find("Elements Container");
+        players.Add(gameObject.name, playerHand.transform.childCount); // добавляет игрока в список игроков
+
+        for (int i = 0; i < playerHand.transform.childCount; i++)
+        {
+            // ищет каждую карту в руке
+            GetCardItem getCard = playerHand.transform.GetChild(i).GetComponent<GetCardItem>();
+            allCards.Add(getCard.cardItem); // добавляет в список
+            Destroy(playerHand.transform.GetChild(i).gameObject); // удаляет карту
+        }
+
+        // проверять через точку остановки
+        // TODO: обратная выдача карт
+        Debug.Log(allCards);
+        Debug.Log(players);
+
+        //Debug.Log("Карта разыграна");
     }
 
     public void Scorpion()
