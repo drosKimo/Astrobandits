@@ -28,6 +28,15 @@ public class SpawnCard : MonoBehaviour
         GetItemName();
     }
 
+    public void EnemyGetsCard()
+    {
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            EnemyCard enemyCard = enemy.GetComponent<EnemyCard>();
+            enemyCard.GetEnemyCard();
+        }
+    }
+
     void GetItemName()
     {
         // большая проверка, чтобы карты не ломались

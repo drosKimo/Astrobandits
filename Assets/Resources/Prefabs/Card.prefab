@@ -413,7 +413,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7880500834050132361}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -516,8 +516,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalStorage: {fileID: 11400000, guid: b3ac204604dd98a40ad3ada5bd376922, type: 2}
   cardItem: {fileID: 11400000, guid: 5309a116ab068d24fba02adf442d4c39, type: 2}
+  cardIndex: 1
   nameKey: 
   descriptionKey: 
+  calling: 0
 --- !u!114 &-6470714491268844921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,3 +532,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d019ab016d5aaf7469096c484cc08739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CPdragScript: {fileID: 0}

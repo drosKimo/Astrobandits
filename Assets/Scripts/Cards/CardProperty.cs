@@ -6,22 +6,20 @@ using UnityEngine;
 public class CardProperty : MonoBehaviour
 {
     GetCardItem getCardItem;
-    DragScript dragScript;
+    [HideInInspector] public DragScript CPdragScript;
     PlayCard playCard;
     EnemyCardReaction enemyCardReaction;
 
     void Awake()
     {
         getCardItem = GetComponent<GetCardItem>();
-        dragScript = GetComponent<DragScript>();
+        CPdragScript = GetComponent<DragScript>();
     }
 
     // включает свойство карты по имени
     public void GetCardToPlay()
     {
-        playCard = dragScript.hit.collider.gameObject.GetComponent<PlayCard>();
-        if (gameObject.tag == "Enemy")
-            enemyCardReaction = GetComponent<EnemyCardReaction>();
+        playCard = CPdragScript.hit.collider.gameObject.GetComponent<PlayCard>();
 
         switch (getCardItem.nameKey)
         {
@@ -78,7 +76,7 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Slam":
-                enemyCardReaction = dragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
+                enemyCardReaction = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
                 enemyCardReaction.Slam();
                 break;
 
@@ -91,6 +89,7 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.XenoRunt":
+                playCard.playStorage = getCardItem.globalStorage;
                 playCard.XenoRunt();
                 break;
 
