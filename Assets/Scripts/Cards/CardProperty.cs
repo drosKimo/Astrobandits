@@ -138,6 +138,7 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Reassembly":
+                playCard.playStorage = getCardItem.globalStorage;
                 playCard.Reassembly();
                 break;
 

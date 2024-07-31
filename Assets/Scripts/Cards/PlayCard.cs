@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class PlayCard : MonoBehaviour
@@ -86,7 +87,8 @@ public class PlayCard : MonoBehaviour
     {
         List<Cards> allCards = new List<Cards>(); // все карты в руке
         Dictionary<string, int> players = new Dictionary<string, int>(); // игрок и сколько у него карт
-        
+        spawnCard = GameObject.Find("SpawnCard").GetComponent<SpawnCard>(); // скрипт спавна карт
+
         // проверка для каждого из врагов
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
@@ -104,24 +106,30 @@ public class PlayCard : MonoBehaviour
             enemyCard.enemyCards.Clear(); // очистить список
         }
 
-        // теперь то же самое для игрока
-        GameObject playerHand = GameObject.Find("Elements Container");
-        players.Add(gameObject.name, playerHand.transform.childCount); // добавляет игрока в список игроков
-
-        for (int i = 0; i < playerHand.transform.childCount; i++)
+        // теперь отдаем карты обратно
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            // ищет каждую карту в руке
-            GetCardItem getCard = playerHand.transform.GetChild(i).GetComponent<GetCardItem>();
-            allCards.Add(getCard.cardItem); // добавляет в список
-            Destroy(playerHand.transform.GetChild(i).gameObject); // удаляет карту
+            enemyCard = enemy.GetComponent<EnemyCard>();
+            System.Random rand = new System.Random();
+            int max = allCards.Count - 1;
+
+            // проверяет весь список персонажей
+            foreach (KeyValuePair<string, int> pair in players)
+            {
+                if (enemy.name == pair.Key)
+                {
+                    for (int i = 0; i < pair.Value; i++)
+                    {
+                        int card = rand.Next(0, max);
+                        enemyCard.enemyCards.Add(allCards[card]);
+                        allCards.RemoveAt(card);
+                    }
+
+                    players.Remove(pair.Key); // удаляет текущего персонажа из списка
+                    break;
+                }
+            }
         }
-
-        // проверять через точку остановки
-        // TODO: обратная выдача карт
-        Debug.Log(allCards);
-        Debug.Log(players);
-
-        //Debug.Log("Карта разыграна");
     }
 
     public void Scorpion()
@@ -175,7 +183,6 @@ public class PlayCard : MonoBehaviour
                 index = playStorage.allCards.IndexOf(card);
             }
         }
-
         spawnCard.SpawnByIndex(index); // и спавнит
     }
 }
