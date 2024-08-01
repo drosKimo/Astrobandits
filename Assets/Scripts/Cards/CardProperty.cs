@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 // необходимо разбить отыгровки карт на разные скрипты, чтобы позже это
 // было удобнее для мультиплеера и управления ботами
@@ -14,6 +17,50 @@ public class CardProperty : MonoBehaviour
     {
         getCardItem = GetComponent<GetCardItem>();
         CPdragScript = GetComponent<DragScript>();
+    }
+
+    // продолжение розыгрыша карты лутбокса
+    public void LootBoxes_Button()
+    {
+        // сначала мы берем карту в руку
+        GameObject baseGrid = GameObject.Find("Elements Container");
+
+        // выключает компонент кнопки
+        Button button = GetComponent<Button>();
+        button.enabled = false;
+
+        // включает возможность тянуть карту
+        DragScript dragScript = GetComponent<DragScript>();
+        dragScript.enabled = true;
+
+        // включает скрипт, поднимающий карту
+        ShowCard showCard = GetComponent<ShowCard>();
+        showCard.enabled = true;
+
+        // передвигает появившиеся карты в отдельный контейнер
+        getCardItem.transform.SetParent(baseGrid.transform);
+        getCardItem.transform.localScale = new Vector3(1, 1, 1);
+
+
+        System.Random rand = new System.Random();
+        GameObject LBgrid = GameObject.Find("LootBoxes Container");
+        List<Cards> LBlist = new List<Cards>();
+
+        // добавляет все оставшиеся карты в список
+        for (int i = 0; i < LBgrid.transform.childCount; i++)
+        {
+            GetCardItem cardItem = LBgrid.transform.GetChild(i).gameObject.GetComponent<GetCardItem>();
+            Cards card = cardItem.cardItem;
+            LBlist.Add(card);
+            Destroy(LBgrid.transform.GetChild(i).gameObject);
+        }
+
+        // раздает карты в случайном порядке
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            EnemyCard enemyCard = enemy.GetComponent<EnemyCard>();
+            enemyCard.enemyCards.Add(LBlist[rand.Next(0, LBgrid.transform.childCount)]);
+        }
     }
 
     // включает свойство карты по имени

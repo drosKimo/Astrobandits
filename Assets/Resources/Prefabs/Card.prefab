@@ -449,7 +449,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2578008599483516406}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -6470714491268844921}
+        m_TargetAssemblyTypeName: CardProperty, Assembly-CSharp
+        m_MethodName: LootBoxes_Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8675017733478433253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,10 +528,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalStorage: {fileID: 11400000, guid: b3ac204604dd98a40ad3ada5bd376922, type: 2}
   cardItem: {fileID: 11400000, guid: 5309a116ab068d24fba02adf442d4c39, type: 2}
-  cardIndex: 1
+  cardIndex: 13
   nameKey: 
   descriptionKey: 
-  calling: 0
+  calling: 1
 --- !u!114 &-6470714491268844921
 MonoBehaviour:
   m_ObjectHideFlags: 0

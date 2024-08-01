@@ -1,7 +1,9 @@
+using Akassets.SmoothGridLayout;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayCard : MonoBehaviour
 {
@@ -69,7 +71,32 @@ public class PlayCard : MonoBehaviour
 
     public void LootBoxes()
     {
-        Debug.Log("Карта разыграна");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        // спавнит столько карт, сколько живых игроков
+        for (int i = 0; i < enemies.Length + 1; i++)
+        {
+            spawnCard.Spawn();
+            GameObject card = spawnCard.newItem.gameObject;
+            GameObject LBgrid = GameObject.Find("LootBoxes Container");
+            GetCardItem item = card.GetComponent<GetCardItem>();
+
+            // включает компонент кнопки
+            Button button = card.GetComponent<Button>();
+            button.enabled = true;
+
+            // отключает возможность тянуть карту
+            DragScript dragScript = card.GetComponent<DragScript>();
+            dragScript.enabled = false;
+
+            // отключает скрипт, поднимающий карту
+            ShowCard showCard = card.GetComponent<ShowCard>();
+            showCard.enabled = false;
+
+            // передвигает появившиеся карты в отдельный контейнер
+            item.transform.SetParent(LBgrid.transform);
+            item.transform.localScale = new Vector3(1.2f, 1.2f, 1);
+        }
     }
 
     public void MutantDealer()
@@ -99,7 +126,6 @@ public class PlayCard : MonoBehaviour
             // ищет подходящую карту из общего хранилища
             foreach (Cards card in enemyCard.enemyCards)
             {
-                //Debug.Log($"{card.itemName}");
                 allCards.Add(card);
             }
 
@@ -111,7 +137,6 @@ public class PlayCard : MonoBehaviour
         {
             enemyCard = enemy.GetComponent<EnemyCard>();
             System.Random rand = new System.Random();
-            int max = allCards.Count - 1;
 
             // проверяет весь список персонажей
             foreach (KeyValuePair<string, int> pair in players)
@@ -120,6 +145,7 @@ public class PlayCard : MonoBehaviour
                 {
                     for (int i = 0; i < pair.Value; i++)
                     {
+                        int max = allCards.Count;
                         int card = rand.Next(0, max);
                         enemyCard.enemyCards.Add(allCards[card]);
                         allCards.RemoveAt(card);

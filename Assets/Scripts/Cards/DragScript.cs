@@ -68,7 +68,6 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
 
     void CantPlay()
     {
-        //Debug.Log("Нельзя применить");
         placeholder.SetActive(true);
         gameObject.transform.SetSiblingIndex(showCard.trans);
         LtP.enabled = true;
