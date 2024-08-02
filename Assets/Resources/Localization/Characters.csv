@@ -1,6 +1,3 @@
 Key,Russian,English
-Characters.Example.Title,Меню,Menu
-Characters.Example.NewGame,Новая игра,New game
-Characters.Example.Continue,Продолжить,Continue
-Characters.Example.Settings,Настройки,Settings
-Characters.Example.Review,Написать отзыв,Write a review
+Characters.Name.DanteReeves,Данте Ривз,Dante Reeves
+Characters.Description.DanteReeves,"Каждый раз, когда теряет единицу здоровья, тянет карту из колоды","Every time he loses hit point, draws a card from the deck"

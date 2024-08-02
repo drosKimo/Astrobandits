@@ -37,4 +37,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82424635484dbe04699d8027a6aba6c9, type: 2}
   - {fileID: 11400000, guid: 75b34e9d6038c81429de93a7da631f12, type: 2}
   allEvents: []
-  allCharacters: []
+  allCharacters:
+  - {fileID: 11400000, guid: 8b41829e8cd9ad244944cdced617230b, type: 2}
