@@ -1080,6 +1080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
+  currentHP: 0
 --- !u!1 &1460153230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2371,6 +2372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
+  currentHP: 0
 --- !u!1 &1930364173
 GameObject:
   m_ObjectHideFlags: 0
@@ -2916,6 +2918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
+  currentHP: 0
 --- !u!1 &2072225112
 GameObject:
   m_ObjectHideFlags: 0
@@ -2932,7 +2935,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2072225113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2947,6 +2950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   everyPlayer: []
   thisStorage: {fileID: 11400000, guid: b3ac204604dd98a40ad3ada5bd376922, type: 2}
+  character: {fileID: 11400000, guid: 8b41829e8cd9ad244944cdced617230b, type: 2}
 --- !u!4 &2072225114
 Transform:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class EveryoneGetCharacterRole : MonoBehaviour
 {
     [HideInInspector] public List<GameObject> everyPlayer;
     [SerializeField] Storage thisStorage; // общее хранилище
-    Characters character; // персонаж задается здесь
+    [SerializeField] Characters character; // персонаж задается здесь
     CharacterRole characterRole;
 
     void Start()
@@ -22,6 +22,7 @@ public class EveryoneGetCharacterRole : MonoBehaviour
             // назначает выданную роль персонажу
             characterRole = player.GetComponent<CharacterRole>();
             characterRole.character = character;
+            characterRole.currentHP = character.characerHitPoint;
         }
     }
 }

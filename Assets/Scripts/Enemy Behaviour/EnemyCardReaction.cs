@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyCardReaction : MonoBehaviour
 {
     EnemyCard enemyCard;
+    CharacterRole characterRole;
 
     bool missed; // проверяет, может ли противник отбить атаку
     int itemIndex; // индекс разыгранной карты
@@ -10,6 +11,7 @@ public class EnemyCardReaction : MonoBehaviour
     void Awake()
     {
         enemyCard = GetComponent<EnemyCard>();
+        characterRole = GetComponent<CharacterRole>();
     }
 
     void EnemyDodge() // разыгрывается противником, когда ему нужно скинуть Уворот
@@ -24,13 +26,7 @@ public class EnemyCardReaction : MonoBehaviour
             }
         }
 
-        if (missed == true)
-        {
-            enemyCard.enemyCards.RemoveAt(itemIndex);
-            Debug.Log("Мимо!");
-        }
-        else
-            Debug.Log("Попал");
+        Reaction();
     }
 
     void EnemySlam() // аналогично, но когда ему нужно отстреляться
@@ -44,13 +40,25 @@ public class EnemyCardReaction : MonoBehaviour
             }
         }
 
+        Reaction();
+    }
+
+    void Reaction()
+    {
         if (missed == true)
         {
             enemyCard.enemyCards.RemoveAt(itemIndex);
             Debug.Log("Мимо!");
         }
         else
+        {
+            characterRole.currentHP--;
+            if (characterRole.currentHP <= 0)
+            {
+                Destroy(gameObject);
+            }
             Debug.Log("Попал");
+        }
     }
 
 
