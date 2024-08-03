@@ -1,7 +1,4 @@
-using Akassets.SmoothGridLayout;
-using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -179,7 +176,17 @@ public class PlayCard : MonoBehaviour
 
     public void SporeBeer()
     {
-        Debug.Log("Карта разыграна");
+        CharacterRole charRole = gameObject.GetComponent<CharacterRole>();
+        Characters character = charRole.character;
+
+        if (charRole.currentHP == character.characerHitPoint)
+        {
+            Debug.Log("Ох зря я туда полез...");
+        }
+        else
+        {
+            charRole.currentHP++;
+        }
     }
 
     public void Turlock()
