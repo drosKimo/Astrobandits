@@ -124,7 +124,7 @@ public class CardProperty : MonoBehaviour
 
             case "Cards.Name.Slam":
                 enemyCardReaction = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
-                enemyCardReaction.Slam();
+                enemyCardReaction.Pow();
                 break;
 
             case "Cards.Name.SporeBeer":

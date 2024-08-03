@@ -29,11 +29,11 @@ public class EnemyCardReaction : MonoBehaviour
         Reaction();
     }
 
-    void EnemySlam() // аналогично, но когда ему нужно отстреляться
+    void EnemyPow() // аналогично, но когда ему нужно отстреляться
     {
         foreach (Cards card in enemyCard.enemyCards)
         {
-            if (card.itemName == "Cards.Name.Slam")
+            if (card.itemName == "Cards.Name.Pow")
             {
                 missed = true;
                 itemIndex = enemyCard.enemyCards.IndexOf(card);
@@ -67,13 +67,13 @@ public class EnemyCardReaction : MonoBehaviour
         EnemyDodge();
     }
 
-    public void Slam()
+    public void Pow()
     {
         EnemyDodge();
     }
 
     public void Insectoids()
     {
-        EnemySlam();
+        EnemyPow();
     }
 }
