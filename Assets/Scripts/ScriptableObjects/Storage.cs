@@ -9,4 +9,6 @@ public class Storage : ScriptableObject
     public List<Events> allEvents;
     [Space]
     public List<Characters> allCharacters;
+    [Space]
+    public List<Roles> allRoles;
 }
