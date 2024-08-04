@@ -122,7 +122,7 @@ public class CardProperty : MonoBehaviour
                 playCard.Shredder();
                 break;
 
-            case "Cards.Name.Slam":
+            case "Cards.Name.Pow":
                 enemyCardReaction = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
                 enemyCardReaction.Pow();
                 break;
