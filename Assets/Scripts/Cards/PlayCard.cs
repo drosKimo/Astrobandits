@@ -11,7 +11,26 @@ public class PlayCard : MonoBehaviour
 
     public void Bartender()
     {
-        Debug.Log("Карта разыграна");
+        GameObject enemies = GameObject.Find("Enemies");
+        List<GameObject> players = new List<GameObject>();
+
+        SporeBeer(); // сначала хилит разыгравшего на 1 хп
+
+        // ищет всех живых игроков
+        for (int i = 0; i < enemies.transform.childCount; i++)
+        {
+            players.Add(enemies.transform.GetChild(i).gameObject);
+        }
+
+        // хилит каждого на 1 хп
+        foreach (GameObject enemy in players)
+        {
+            CharacterRole charRole = enemy.GetComponent<CharacterRole>();
+            Characters character = charRole.character;
+
+            if (charRole.currentHP < character.characerHitPoint)
+                charRole.currentHP++;
+        }
     }
 
     public void Bike()
@@ -179,14 +198,8 @@ public class PlayCard : MonoBehaviour
         CharacterRole charRole = gameObject.GetComponent<CharacterRole>();
         Characters character = charRole.character;
 
-        if (charRole.currentHP == character.characerHitPoint)
-        {
-            Debug.Log("Ох зря я туда полез...");
-        }
-        else
-        {
+        if (charRole.currentHP < character.characerHitPoint)
             charRole.currentHP++;
-        }
     }
 
     public void Turlock()
