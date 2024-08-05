@@ -20,4 +20,7 @@ MonoBehaviour:
   - Name: Characters
     Id: 521447833
     TextAsset: {fileID: 4900000, guid: b8f0c96d18f3bcb4994ecae55b11efce, type: 3}
+  - Name: Roles
+    Id: 210134474
+    TextAsset: {fileID: 4900000, guid: 01d08905b7f616343b0848aadfabcbe2, type: 3}
   SaveFolder: {fileID: 102900000, guid: 29791c003206464478b4c19bf385b1a4, type: 3}
