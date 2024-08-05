@@ -4,6 +4,7 @@ using UnityEngine;
 public class Roles : ScriptableObject
 {
     [Tooltip("Ключ локализации имени")] public string roleName;
+    [Tooltip("Ключ локализации описания")] public string roleDescription;
     public Sprite roleImage;
     
     [Tooltip(   "Ключ взаимодействия:\n" +

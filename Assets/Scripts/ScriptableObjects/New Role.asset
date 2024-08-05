@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: New Role
   m_EditorClassIdentifier: 
   roleName: 
-  "\u0430\u0430\u0430": 0
+  roleDescription: 
+  roleImage: {fileID: 0}
+  rolePriority: 0
+  roleEnd: 0

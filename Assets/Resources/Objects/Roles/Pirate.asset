@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87828cf82685e0d4bb7902dd9d37f390, type: 3}
   m_Name: Pirate
   m_EditorClassIdentifier: 
-  roleName: 
+  roleName: Cards.Name.Pirate
+  roleDescription: Cards.Description.Pirate
   roleImage: {fileID: 0}
-  rolePriority: 0
+  rolePriority: 1
   roleEnd: 0

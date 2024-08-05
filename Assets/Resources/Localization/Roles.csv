@@ -1,0 +1,9 @@
+Key,Russian,English
+Roles.Name.Captain,Капитан,Captain
+Roles.Description.Captain,Убей всех противников,Kill all enemies
+Roles.Name.Engineer,Инженер,Engineer
+Roles.Description.Engineer,Защити капитана,Protect the captain
+Roles.Name.Alien,Пришелец,Alien
+Roles.Description.Alien,Останься последним,Stay last
+Roles.Name.Pirate,Пират,Pirate
+Roles.Description.Pirate,Убей капитана,Kill the captain

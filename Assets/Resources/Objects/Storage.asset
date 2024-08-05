@@ -39,3 +39,8 @@ MonoBehaviour:
   allEvents: []
   allCharacters:
   - {fileID: 11400000, guid: 8b41829e8cd9ad244944cdced617230b, type: 2}
+  allRoles:
+  - {fileID: 11400000, guid: 01e27a3fe272dcf41bd1c6dc64cf53a1, type: 2}
+  - {fileID: 11400000, guid: f50fc86713cbf6d4aa3d39e7f4537d31, type: 2}
+  - {fileID: 11400000, guid: 6ca2f215bf3aca74992d947f36a497c2, type: 2}
+  - {fileID: 11400000, guid: d7403305116bfd94d948ee288c60e3cf, type: 2}

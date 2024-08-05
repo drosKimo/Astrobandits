@@ -1081,6 +1081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  role: {fileID: 0}
 --- !u!1 &1460153230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,6 +2374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  role: {fileID: 0}
 --- !u!1 &1930364173
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,6 +2921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  role: {fileID: 0}
 --- !u!1 &2072225112
 GameObject:
   m_ObjectHideFlags: 0
