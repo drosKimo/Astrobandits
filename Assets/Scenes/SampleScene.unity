@@ -295,7 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
-  role: {fileID: 0}
+  role: {fileID: 11400000, guid: 01e27a3fe272dcf41bd1c6dc64cf53a1, type: 2}
   queueNumber: 0
 --- !u!114 &291206067
 MonoBehaviour:
@@ -3699,6 +3699,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2072225114}
   - component: {fileID: 2072225113}
+  - component: {fileID: 2072225115}
   m_Layer: 0
   m_Name: WhenGameStarts
   m_TagString: Untagged
@@ -3736,6 +3737,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2072225115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072225112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a2f902010c2384ca46d68f9c08d835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
