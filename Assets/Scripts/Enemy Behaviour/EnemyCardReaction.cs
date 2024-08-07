@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemyCardReaction : MonoBehaviour
 {
-    EnemyCard enemyCard;
     CharacterRole characterRole;
 
     bool missed; // провер€ет, может ли противник отбить атаку
@@ -10,19 +9,18 @@ public class EnemyCardReaction : MonoBehaviour
 
     void Awake()
     {
-        enemyCard = GetComponent<EnemyCard>();
         characterRole = GetComponent<CharacterRole>();
     }
 
     void EnemyDodge() // разыгрываетс€ противником, когда ему нужно скинуть ”ворот
     {
         // провер€ет все карты в руке противника
-        foreach (Cards card in enemyCard.enemyCards)
+        foreach (Cards card in characterRole.hand)
         {
             if (card.itemName == "Cards.Name.Dodge")
             {
                 missed = true;
-                itemIndex = enemyCard.enemyCards.IndexOf(card);
+                itemIndex = characterRole.hand.IndexOf(card);
             }
         }
 
@@ -31,12 +29,12 @@ public class EnemyCardReaction : MonoBehaviour
 
     void EnemyPow() // аналогично, но когда ему нужно отстрел€тьс€
     {
-        foreach (Cards card in enemyCard.enemyCards)
+        foreach (Cards card in characterRole.hand)
         {
             if (card.itemName == "Cards.Name.Pow")
             {
                 missed = true;
-                itemIndex = enemyCard.enemyCards.IndexOf(card);
+                itemIndex = characterRole.hand.IndexOf(card);
             }
         }
 
@@ -47,7 +45,7 @@ public class EnemyCardReaction : MonoBehaviour
     {
         if (missed == true)
         {
-            enemyCard.enemyCards.RemoveAt(itemIndex);
+            characterRole.hand.RemoveAt(itemIndex);
             Debug.Log("ћимо!");
         }
         else

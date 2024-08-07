@@ -1,18 +1,16 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyCard : MonoBehaviour
+public class PlayerCard : MonoBehaviour
 {
-    GetCardItem cardItem;
     CharacterRole characterRole;
 
-    void Awake()
+    void Start()
     {
-        // дает карты в руки как только закончится первый кадр
-        StartCoroutine(DrawEnemyCard());
+        StartCoroutine(DrawPlayerCard());
     }
 
-    IEnumerator DrawEnemyCard()
+    IEnumerator DrawPlayerCard()
     {
         yield return new WaitForEndOfFrame(); // ожидание конца перворго кадра
 

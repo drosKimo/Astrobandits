@@ -1,15 +1,17 @@
 using UnityEngine;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class SpawnCard : MonoBehaviour
 {
     [SerializeField] GameObject prefab;
     GameObject objParent;
     [HideInInspector] public GameObject newItem;
+    GetCardItem cardItem;
 
     public void Spawn()
     {
         objParent = GameObject.Find("Elements Container");
-        GetCardItem cardItem = prefab.GetComponent<GetCardItem>();
+        cardItem = prefab.GetComponent<GetCardItem>();
         cardItem.calling = true;
         newItem = GameObject.Instantiate(prefab);
         GetItemName();
@@ -32,8 +34,8 @@ public class SpawnCard : MonoBehaviour
     {
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            EnemyCard enemyCard = enemy.GetComponent<EnemyCard>();
-            enemyCard.GetEnemyCard();
+            CharacterRole role = enemy.GetComponent<CharacterRole>();
+            role.DrawCard();
         }
     }
 

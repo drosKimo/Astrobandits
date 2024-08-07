@@ -12,6 +12,7 @@ public class CardProperty : MonoBehaviour
     [HideInInspector] public DragScript CPdragScript;
     PlayCard playCard;
     EnemyCardReaction enemyCardReaction;
+    CharacterRole characterRole;
 
     void Awake()
     {
@@ -58,8 +59,8 @@ public class CardProperty : MonoBehaviour
         // раздает карты в случайном порядке
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            EnemyCard enemyCard = enemy.GetComponent<EnemyCard>();
-            enemyCard.enemyCards.Add(LBlist[rand.Next(0, LBgrid.transform.childCount)]);
+            characterRole = enemy.GetComponent<CharacterRole>();
+            characterRole.hand.Add(LBlist[rand.Next(0, LBgrid.transform.childCount)]);
         }
     }
 

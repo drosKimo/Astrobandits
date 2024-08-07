@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PlayCard : MonoBehaviour
 {
     [SerializeField] SpawnCard spawnCard;
-    EnemyCard enemyCard;
+    CharacterRole characterRole;
     [HideInInspector] public Cards playedCard;
     [HideInInspector] public Storage playStorage;
 
@@ -135,23 +135,23 @@ public class PlayCard : MonoBehaviour
         // проверка для каждого из врагов
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            enemyCard = enemy.GetComponent<EnemyCard>();
+            characterRole = enemy.GetComponent<CharacterRole>();
             // добавляет врага и количество его карт в список
-            players.Add(enemy.name, enemyCard.enemyCards.Count);
+            players.Add(enemy.name, characterRole.hand.Count);
 
             // ищет подходящую карту из общего хранилища
-            foreach (Cards card in enemyCard.enemyCards)
+            foreach (Cards card in characterRole.hand)
             {
                 allCards.Add(card);
             }
 
-            enemyCard.enemyCards.Clear(); // очистить список
+            characterRole.hand.Clear(); // очистить список
         }
 
         // теперь отдаем карты обратно
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            enemyCard = enemy.GetComponent<EnemyCard>();
+            characterRole = enemy.GetComponent<CharacterRole>();
             System.Random rand = new System.Random();
 
             // проверяет весь список персонажей
@@ -163,7 +163,7 @@ public class PlayCard : MonoBehaviour
                     {
                         int max = allCards.Count;
                         int card = rand.Next(0, max);
-                        enemyCard.enemyCards.Add(allCards[card]);
+                        characterRole.hand.Add(allCards[card]);
                         allCards.RemoveAt(card);
                     }
 
@@ -181,16 +181,16 @@ public class PlayCard : MonoBehaviour
 
     public void Shredder()
     {
-        enemyCard = GetComponent<EnemyCard>();
+        characterRole = GetComponent<CharacterRole>();
 
         int minCard = 0;
-        int maxCard = enemyCard.enemyCards.Count - 1;
+        int maxCard = characterRole.hand.Count - 1;
 
         System.Random rand = new System.Random();
         int index = rand.Next(minCard, maxCard);
-        
+
         // уничтожает случайную карту на руке
-        enemyCard.enemyCards.RemoveAt(index);
+        characterRole.hand.RemoveAt(index);
     }
 
     public void SporeBeer()
@@ -210,16 +210,16 @@ public class PlayCard : MonoBehaviour
     public void XenoRunt()
     {
         // хранилище карт противника
-        enemyCard = GetComponent<EnemyCard>();
+        characterRole = GetComponent<CharacterRole>();
 
         int minCard = 0;
-        int maxCard = enemyCard.enemyCards.Count - 1;
+        int maxCard = characterRole.hand.Count - 1;
 
         System.Random rand = new System.Random();
         int index = rand.Next(minCard, maxCard);
 
-        playedCard = enemyCard.enemyCards[index];
-        enemyCard.enemyCards.RemoveAt(index);
+        playedCard = characterRole.hand[index];
+        characterRole.hand.RemoveAt(index);
 
         // ищет подходящую карту из общего хранилища
         foreach (Cards card in playStorage.allCards)

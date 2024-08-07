@@ -295,8 +295,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
-  role: {fileID: 11400000, guid: 01e27a3fe272dcf41bd1c6dc64cf53a1, type: 2}
+  role: {fileID: 0}
   queueNumber: 0
+  hand: []
+  getCardItem: {fileID: 0}
 --- !u!114 &291206067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3ad5c36bf7d624a96d03b14c0ed014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCards: []
 --- !u!114 &291206069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,6 +1123,7 @@ GameObject:
   - component: {fileID: 1452553573}
   - component: {fileID: 1452553572}
   - component: {fileID: 1452553571}
+  - component: {fileID: 1452553575}
   - component: {fileID: 1452553574}
   m_Layer: 0
   m_Name: You
@@ -1271,8 +1273,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
-  role: {fileID: 0}
+  role: {fileID: 11400000, guid: 01e27a3fe272dcf41bd1c6dc64cf53a1, type: 2}
   queueNumber: 0
+  hand: []
+  getCardItem: {fileID: 0}
+--- !u!114 &1452553575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452553569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166be61f0b2d9b14fb4c1c5b44d8b152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1460153230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,6 +1830,8 @@ MonoBehaviour:
   currentHP: 0
   role: {fileID: 0}
   queueNumber: 0
+  hand: []
+  getCardItem: {fileID: 0}
 --- !u!114 &1570635253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1838,7 +1856,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3ad5c36bf7d624a96d03b14c0ed014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCards: []
 --- !u!114 &1570635255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2116,6 +2133,8 @@ MonoBehaviour:
   currentHP: 0
   role: {fileID: 0}
   queueNumber: 0
+  hand: []
+  getCardItem: {fileID: 0}
 --- !u!114 &1631115244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2140,7 +2159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3ad5c36bf7d624a96d03b14c0ed014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCards: []
 --- !u!114 &1631115246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2654,6 +2672,8 @@ MonoBehaviour:
   currentHP: 0
   role: {fileID: 0}
   queueNumber: 0
+  hand: []
+  getCardItem: {fileID: 0}
 --- !u!114 &1828030739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2678,7 +2698,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3ad5c36bf7d624a96d03b14c0ed014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCards: []
 --- !u!114 &1828030741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2908,10 +2927,22 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1908824793}
         m_TargetAssemblyTypeName: SpawnCard, Assembly-CSharp
         m_MethodName: EnemyGetsCard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1452553574}
+        m_TargetAssemblyTypeName: CharacterRole, Assembly-CSharp
+        m_MethodName: DrawCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3112,7 +3143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3ad5c36bf7d624a96d03b14c0ed014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCards: []
 --- !u!114 &1918867924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3141,6 +3171,8 @@ MonoBehaviour:
   currentHP: 0
   role: {fileID: 0}
   queueNumber: 0
+  hand: []
+  getCardItem: {fileID: 0}
 --- !u!1 &1930364173
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,7 +3592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3ad5c36bf7d624a96d03b14c0ed014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCards: []
 --- !u!114 &2064692872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3689,6 +3720,8 @@ MonoBehaviour:
   currentHP: 0
   role: {fileID: 0}
   queueNumber: 0
+  hand: []
+  getCardItem: {fileID: 0}
 --- !u!1 &2072225112
 GameObject:
   m_ObjectHideFlags: 0
