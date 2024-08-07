@@ -6,7 +6,7 @@ public class QueueList : MonoBehaviour
 {
     bool capFound = false;
 
-    void Start()
+    void Awake()
     {
         GameObject list = GameObject.Find("Enemies");
         List<GameObject> GOlist = new List<GameObject>();
