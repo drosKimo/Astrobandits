@@ -9,6 +9,12 @@ public class PlayCard : MonoBehaviour
     [HideInInspector] public Cards playedCard;
     [HideInInspector] public Storage playStorage;
 
+    public void Pow() // атака противника
+    {
+        Enemy_AI enemy_AI = GetComponent<Enemy_AI>();
+        enemy_AI.target.currentHP--;
+    }
+
     public void Bartender()
     {
         GameObject enemies = GameObject.Find("Enemies");

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 
 // хранилище, в котором хранятся данные о персонаже, роли игрока и его картах
 public class CharacterRole : MonoBehaviour

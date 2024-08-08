@@ -296,7 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
-  role: {fileID: 0}
+  role: {fileID: 11400000, guid: 01e27a3fe272dcf41bd1c6dc64cf53a1, type: 2}
   queueNumber: 0
   hand: []
   getCardItem: {fileID: 0}
@@ -1630,7 +1630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
-  role: {fileID: 11400000, guid: 01e27a3fe272dcf41bd1c6dc64cf53a1, type: 2}
+  role: {fileID: 0}
   queueNumber: 0
   hand: []
   getCardItem: {fileID: 0}
@@ -4219,6 +4219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTurn: []
   blocker: {fileID: 999881025}
+  finMove: {fileID: 1007827423}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

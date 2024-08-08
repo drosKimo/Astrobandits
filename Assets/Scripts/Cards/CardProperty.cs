@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 // необходимо разбить отыгровки карт на разные скрипты, чтобы позже это
 // было удобнее для мультиплеера и управления ботами
