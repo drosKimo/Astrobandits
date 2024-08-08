@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterRole : MonoBehaviour
 {
     public Characters character;
-    public int currentHP;
+    public int currentHP, maxHP;
     public Roles role;
     [HideInInspector][Tooltip("Номер персонажа в очереди")][Range(0, 6)] public int queueNumber;
 

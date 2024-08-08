@@ -34,7 +34,7 @@ public class PlayCard : MonoBehaviour
             CharacterRole charRole = enemy.GetComponent<CharacterRole>();
             Characters character = charRole.character;
 
-            if (charRole.currentHP < character.characerHitPoint)
+            if (charRole.currentHP < character.characterHitPoint)
                 charRole.currentHP++;
         }
     }
@@ -202,9 +202,8 @@ public class PlayCard : MonoBehaviour
     public void SporeBeer()
     {
         CharacterRole charRole = gameObject.GetComponent<CharacterRole>();
-        Characters character = charRole.character;
 
-        if (charRole.currentHP < character.characerHitPoint)
+        if (charRole.currentHP < charRole.maxHP)
             charRole.currentHP++;
     }
 

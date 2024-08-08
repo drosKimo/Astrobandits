@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 // выдает каждому игроку роль и персонажа
 public class EveryoneGetCharacterRole : MonoBehaviour
@@ -9,8 +10,12 @@ public class EveryoneGetCharacterRole : MonoBehaviour
     [SerializeField] Characters character; // персонаж задается здесь
     CharacterRole characterRole;
 
+    List<Roles> rolePool;
+
     void Start()
     {
+        GetRolePool(); // задает пул ролей
+
         GameObject obj = GameObject.Find("Enemies");
         for (int i = 0; i < obj.transform.childCount; i++) // ищет каждого персонажа на поле
         {
@@ -19,10 +24,41 @@ public class EveryoneGetCharacterRole : MonoBehaviour
 
         foreach (GameObject player in everyPlayer)
         {
-            // назначает выданную роль персонажу
+            // назначает выданного персонажа. временно
             characterRole = player.GetComponent<CharacterRole>();
             characterRole.character = character;
-            characterRole.currentHP = character.characerHitPoint;
+            characterRole.maxHP = character.characterHitPoint;
+
+            System.Random rand = new System.Random();
+            int roleIndex = rand.Next(rolePool.Count);
+
+            characterRole.role = rolePool[roleIndex]; // назначает роль игроку
+
+            if (rolePool[roleIndex].roleName == "Roles.Name.Captain") // добавляет +1 хп капитану
+                characterRole.maxHP++;
+
+            rolePool.RemoveAt(roleIndex); // удаляет роль из списка, чтобы не было повторов
+
+            characterRole.currentHP = characterRole.maxHP; // устанавливает текущее значение хп
         }
+
+        QueueList queueList = GameObject.Find("WhenGameStarts").GetComponent<QueueList>();
+        queueList.SetQueueList();
+    }
+
+    void GetRolePool()
+    {
+        rolePool = new List<Roles>();
+        // 1 капитан
+        rolePool.Add(thisStorage.allRoles[0]);
+        // 2 инженера
+        rolePool.Add(thisStorage.allRoles[1]);
+        rolePool.Add(thisStorage.allRoles[1]);
+        // 1 пришелец
+        rolePool.Add(thisStorage.allRoles[2]);
+        // 3 пирата
+        rolePool.Add(thisStorage.allRoles[3]);
+        rolePool.Add(thisStorage.allRoles[3]);
+        rolePool.Add(thisStorage.allRoles[3]);
     }
 }

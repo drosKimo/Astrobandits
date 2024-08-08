@@ -6,7 +6,7 @@ public class QueueList : MonoBehaviour
 {
     bool capFound = false;
 
-    void Awake()
+    public void SetQueueList()
     {
         GameObject list = GameObject.Find("Enemies");
         List<GameObject> GOlist = new List<GameObject>();
@@ -16,17 +16,17 @@ public class QueueList : MonoBehaviour
         {
             GOlist.Add(list.transform.GetChild(i).gameObject);
         }
-        
+
         // ищет капитана
         foreach (GameObject cap in GOlist)
         {
             CharacterRole characterRole = cap.GetComponent<CharacterRole>();
-            // временно проверяет, есть ли вообще у игрока роль
-            if (!characterRole.role.IsUnityNull() && characterRole.role.roleName == "Roles.Name.Captain")
+
+            if (characterRole.role.roleName == "Roles.Name.Captain")
             {
                 capFound = true; // теперь капитан найден
                 cap.GetComponent<SpriteRenderer>().color = Color.red; // меняет цвет кэпа
-            }                
+            }
             else if (!capFound)
                 cap.transform.SetAsLastSibling(); // пока кэп не найден, ставит текущего игрока крайним в очереди
         }
