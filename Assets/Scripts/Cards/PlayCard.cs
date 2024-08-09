@@ -13,6 +13,8 @@ public class PlayCard : MonoBehaviour
     {
         Enemy_AI enemy_AI = GetComponent<Enemy_AI>();
         enemy_AI.target.currentHP--;
+
+        Debug.Log($"{gameObject.name} выстрелил в {enemy_AI.target.name}");
     }
 
     public void Bartender()

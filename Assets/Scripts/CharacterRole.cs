@@ -23,4 +23,18 @@ public class CharacterRole : MonoBehaviour
         if (gameObject.tag != "Player") // если это не игрок
             Destroy(getCardItem.gameObject); // удаляет сам объект, чтобы его не было в руке у игрока
     }
+
+    public void DeadPlayer()
+    {
+        GameObject deads = GameObject.Find("Deads");
+        SpriteRenderer sp = gameObject.GetComponent<SpriteRenderer>();
+
+
+        gameObject.transform.SetParent(deads.transform);
+        gameObject.tag = "Dead";
+        
+        sp.enabled = false; // выключает спрайт персонажа
+
+        Debug.Log($"{gameObject.name} погиб");
+    }
 }

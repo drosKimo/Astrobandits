@@ -27,7 +27,7 @@ public class TurnManager : MonoBehaviour
         else
         {
             blocker.SetActive(false);
-            StartCoroutine(WaitBeforeStart()); // ожижание перед взятием карт на старте
+            StartCoroutine(WaitBeforeStart()); // ожидание перед взятием карт на старте
         }
     }
 
@@ -44,6 +44,10 @@ public class TurnManager : MonoBehaviour
             Enemy_AI enemy_AI = playerTurn[turnIndex].GetComponent<Enemy_AI>();
             enemy_AI.StartCoroutine(enemy_AI.EnemyTurn());
         }
+        else if (playerTurn[turnIndex].tag == "Dead")
+        {
+            EndTurn();
+        }
         else // разблокирует руку игрока, если сейчас его ход
         {
             finMove.SetActive(true);
@@ -53,6 +57,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndTurn()
     {
+        Debug.Log(turnIndex);
         if (playerTurn[turnIndex].tag == "Player") // Если ход у игрока, при передаче хода блокируется рука
         {
             finMove.SetActive(false);

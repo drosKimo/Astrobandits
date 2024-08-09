@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a996a25b6ea5f3e46b9624be999c1cec, type: 3}
   m_Name: DanteReeves
   m_EditorClassIdentifier: 
-  characerName: Characters.Name.DanteReeves
-  characerDescription: Characters.Description.DanteReeves
-  characerImage: {fileID: 0}
-  characerHitPoint: 4
+  characterName: Characters.Name.DanteReeves
+  characterDescription: Characters.Description.DanteReeves
+  characterImage: {fileID: 0}
+  characterHitPoint: 4

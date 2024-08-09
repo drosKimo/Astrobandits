@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class EnemyCardReaction : MonoBehaviour
 {
     CharacterRole characterRole;
 
-    bool missed; // проверяет, может ли противник отбить атаку
+    bool missed = false; // проверяет, может ли противник отбить атаку
     int itemIndex; // индекс разыгранной карты
 
     void Awake()
@@ -22,6 +23,8 @@ public class EnemyCardReaction : MonoBehaviour
                 missed = true;
                 itemIndex = characterRole.hand.IndexOf(card);
             }
+            else
+                missed = false;
         }
 
         Reaction();
@@ -36,6 +39,8 @@ public class EnemyCardReaction : MonoBehaviour
                 missed = true;
                 itemIndex = characterRole.hand.IndexOf(card);
             }
+            else
+                missed = false;
         }
 
         Reaction();
@@ -46,16 +51,12 @@ public class EnemyCardReaction : MonoBehaviour
         if (missed == true)
         {
             characterRole.hand.RemoveAt(itemIndex);
-            Debug.Log("Мимо!");
         }
         else
         {
             characterRole.currentHP--;
-            if (characterRole.currentHP <= 0)
-            {
-                Destroy(gameObject);
-            }
-            Debug.Log("Попал");
+            if (characterRole.currentHP == 0)
+                characterRole.DeadPlayer();
         }
     }
 

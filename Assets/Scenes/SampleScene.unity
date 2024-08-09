@@ -296,6 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  maxHP: 0
   role: {fileID: 0}
   queueNumber: 0
   hand: []
@@ -1631,6 +1632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  maxHP: 0
   role: {fileID: 0}
   queueNumber: 0
   hand: []
@@ -1833,7 +1835,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 20
+          m_IntArgument: 19
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2187,6 +2189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  maxHP: 0
   role: {fileID: 0}
   queueNumber: 0
   hand: []
@@ -2504,6 +2507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  maxHP: 0
   role: {fileID: 0}
   queueNumber: 0
   hand: []
@@ -2657,6 +2661,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!1 &1650295951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1650295952}
+  m_Layer: 0
+  m_Name: Deads
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1650295952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650295951}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 600.5514, y: 339.38245, z: -3.0852845}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1661888425
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,6 +3092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  maxHP: 0
   role: {fileID: 0}
   queueNumber: 0
   hand: []
@@ -3570,6 +3606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  maxHP: 0
   role: {fileID: 0}
   queueNumber: 0
   hand: []
@@ -4133,6 +4170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   currentHP: 0
+  maxHP: 0
   role: {fileID: 0}
   queueNumber: 0
   hand: []
@@ -4235,6 +4273,7 @@ SceneRoots:
   - {fileID: 1619471671}
   - {fileID: 1751281048}
   - {fileID: 2072225114}
+  - {fileID: 1650295952}
   - {fileID: 1746798369}
   - {fileID: 1575395861}
   - {fileID: 1276468417}
