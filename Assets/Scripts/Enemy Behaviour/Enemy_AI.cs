@@ -48,34 +48,50 @@ public class Enemy_AI : MonoBehaviour
                     playCard.Pow();
                     break;
 
-                case "Cards.Name.Insectoids":
-                    EnemyCardReaction enemyCardReaction;
+                case "Cards.Name.Insectoids":             
                     Debug.Log($"{gameObject.name} сыграл {card.name}");
 
                     GameObject list = GameObject.Find("Enemies");
                     for (int i = 0; i < list.transform.childCount; i++)
                     {
                         GameObject currentEnemy = list.transform.GetChild(i).gameObject;
-                        if (list.transform.GetChild(i).name != gameObject.name)
+                        if (list.transform.GetChild(i).gameObject.name != gameObject.name)
                         {
-                            enemyCardReaction = currentEnemy.GetComponent<EnemyCardReaction>();
-                            enemyCardReaction.Insectoids();
+                            if (list.transform.GetChild(i).gameObject.transform.tag == "Player")
+                            {
+                                // логика реакции игрока
+                                CharacterRole charRolePlayer = list.transform.GetChild(i).gameObject.GetComponent<CharacterRole>();
+                                charRolePlayer.currentHP--;
+                            }
+                            else
+                            {
+                                EnemyCardReaction enemyCardReaction = currentEnemy.GetComponent<EnemyCardReaction>();
+                                enemyCardReaction.Insectoids();
+                            }
                         }
                     }
                     break;
 
                 case "Cards.Name.Armageddets":
-                    EnemyCardReaction enemyCR;
                     Debug.Log($"{gameObject.name} сыграл {card.name}");
 
                     GameObject list2 = GameObject.Find("Enemies");
                     for (int i = 0; i < list2.transform.childCount; i++)
                     {
-                        GameObject currentEnemy = list2.transform.GetChild(i).gameObject;
-                        if (list2.transform.GetChild(i).name != gameObject.name)
+                        GameObject currentEnemy2 = list2.transform.GetChild(i).gameObject;
+                        if (list2.transform.GetChild(i).gameObject.name != gameObject.name)
                         {
-                            enemyCR = currentEnemy.GetComponent<EnemyCardReaction>();
-                            enemyCR.Armageddets();
+                            if (list2.transform.GetChild(i).gameObject.transform.tag == "Player")
+                            {
+                                // логика реакции игрока
+                                CharacterRole charRolePlayer = list2.transform.GetChild(i).gameObject.GetComponent<CharacterRole>();
+                                charRolePlayer.currentHP--;
+                            }
+                            else
+                            {
+                                EnemyCardReaction enemyCardReaction = currentEnemy2.GetComponent<EnemyCardReaction>();
+                                enemyCardReaction.Armageddets();
+                            }
                         }
                     }
                     break;
@@ -85,6 +101,7 @@ public class Enemy_AI : MonoBehaviour
                     break;
             }
 
+            // проверяет, умер ли игрок
             if (youPlayer.currentHP <= 0)
             {
                 characterRole = youPlayer.GetComponent<CharacterRole>();

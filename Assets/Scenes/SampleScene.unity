@@ -1057,6 +1057,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1997899996}
   - {fileID: 240488311}
   - {fileID: 1460153231}
   m_Father: {fileID: 1276468417}
@@ -1097,7 +1098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.68864363, g: 0.92456603, b: 0.9811321, a: 0.36862746}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1228,11 +1229,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 623298898}
-  m_Father: {fileID: 1276468417}
+  m_Father: {fileID: 1997899996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1053.602, y: -424}
+  m_AnchoredPosition: {x: -1053.602, y: -424.00012}
   m_SizeDelta: {x: 391.152, y: 102.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1007827425
@@ -1355,12 +1356,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2821, y: -1293, z: -6.2402787}
-  m_LocalScale: {x: 3.0868165, y: 3.0868165, z: 3.0868165}
+  m_LocalScale: {x: 3.0868168, y: 3.0868168, z: 3.0868168}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1522064332}
   - {fileID: 432446749}
-  m_Father: {fileID: 1276468417}
+  m_Father: {fileID: 1997899996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1276468413
 GameObject:
@@ -1457,10 +1458,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 824499258}
-  - {fileID: 1112383600}
-  - {fileID: 1506537668}
-  - {fileID: 1908824792}
-  - {fileID: 1007827424}
   - {fileID: 1661888426}
   - {fileID: 999881026}
   m_Father: {fileID: 0}
@@ -1755,11 +1752,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1557648883}
-  m_Father: {fileID: 1276468417}
+  m_Father: {fileID: 1997899996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1470.8223, y: -421}
+  m_AnchoredPosition: {x: 1470.8223, y: -421.00006}
   m_SizeDelta: {x: 292.356, y: 96.897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1506537669
@@ -3279,11 +3276,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1937287308}
-  m_Father: {fileID: 1276468417}
+  m_Father: {fileID: 1997899996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1121.6, y: -421}
+  m_AnchoredPosition: {x: 1121.6, y: -421.00006}
   m_SizeDelta: {x: 292.356, y: 96.897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1908824793
@@ -3894,6 +3891,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937287307}
   m_CullTransparentMesh: 1
+--- !u!1 &1997899995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1997899996}
+  m_Layer: 0
+  m_Name: Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1997899996
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997899995}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1007827424}
+  - {fileID: 1908824792}
+  - {fileID: 1506537668}
+  - {fileID: 1112383600}
+  m_Father: {fileID: 824499258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 643.16266}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2001299493
 GameObject:
   m_ObjectHideFlags: 3
