@@ -145,7 +145,8 @@ public class CardProperty : MonoBehaviour
                 Debug.Log("Карта не задана");
                 break;
         }
-
+        
+        RecreateInventory();
         Destroy(gameObject);
     }
 
@@ -195,6 +196,31 @@ public class CardProperty : MonoBehaviour
                 break;
         }
 
+        RecreateInventory();
         Destroy(gameObject);
+    }
+
+    // TODO: эта штука ультра сырая. Добавь воссоздание инвентаря из руки на экране
+    void RecreateInventory()
+    {
+        // перемещает разыгранную карту во временное хранилище
+        GameObject cardDestroy = GameObject.Find("CardToDestroy");
+        gameObject.transform.SetParent(cardDestroy.transform);
+
+        // очищает инвентарь игрока
+        CharacterRole playerChar = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterRole>();
+        playerChar.hand.Clear();
+
+        GameObject playerHand = GameObject.Find("Elements Container"); // карты на экране
+
+        // воссоздает инвентарь
+        for (int i = 0; i < playerHand.transform.childCount; i++)
+        {
+            // получает информацию о текущей карте в очереди в руке игрока
+            GetCardItem cardItem = playerHand.transform.GetChild(i).gameObject.GetComponent<GetCardItem>();
+            Cards card = cardItem.cardItem;
+
+            playerChar.hand.Add(card); // добавляет карту с руки в инвентарь
+        }
     }
 }

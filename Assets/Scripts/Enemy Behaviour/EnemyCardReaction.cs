@@ -55,7 +55,7 @@ public class EnemyCardReaction : MonoBehaviour
         else
         {
             characterRole.currentHP--;
-            if (characterRole.currentHP == 0)
+            if (characterRole.currentHP <= 0)
                 characterRole.DeadPlayer();
         }
     }

@@ -120,7 +120,7 @@ public class Enemy_AI : MonoBehaviour
             }
 
             // проверяет, умер ли игрок
-            if (!youPlayer.IsUnityNull() && youPlayer.currentHP <= 0)
+            if (youPlayer.currentHP <= 0)
             {
                 characterRole = youPlayer.GetComponent<CharacterRole>();
                 characterRole.DeadPlayer();
@@ -172,6 +172,7 @@ public class Enemy_AI : MonoBehaviour
         // удаляет использованные карты из руки
         for (int i = 0; i < index.Count; i++)
         {
+            characterRole = GetComponent<CharacterRole>();
             characterRole.hand.RemoveAt(index[i]);
         }
 

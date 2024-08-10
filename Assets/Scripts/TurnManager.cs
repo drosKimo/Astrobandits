@@ -38,6 +38,7 @@ public class TurnManager : MonoBehaviour
 
         if (playerTurn[0].tag != "Player") // если капитан - не игрок, карты в руке заблокироавны
         {
+            finMove.SetActive(false);
             blocker.SetActive(true);
             StartTurn();
         }
