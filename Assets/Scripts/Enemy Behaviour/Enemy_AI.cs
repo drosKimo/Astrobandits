@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy_AI : MonoBehaviour
 {
     [HideInInspector] public CharacterRole target;
 
     TurnManager manager;
-    CharacterRole characterRole;
+    CharacterRole characterRole, youPlayer;
     PlayCard playCard;
+
+    bool turnEnd;
 
     // запуск логики противника
     public IEnumerator EnemyTurn()
@@ -16,20 +22,29 @@ public class Enemy_AI : MonoBehaviour
         characterRole = GetComponent<CharacterRole>();
         playCard = GetComponent<PlayCard>();
 
+        turnEnd = false; // ход не закончен
+
         // противник разыгрывает карту
         StartCoroutine(EnemyPlayCard());
 
-        yield return new WaitForSeconds(0.3f); // ожидание перед окончанием хода
+        yield return new WaitUntil(() => turnEnd); // ждет пока ход закончится
+        yield return new WaitForSeconds(0.3f); // дополнительное ожидание перед окончанием хода
 
         manager.EndTurn(); // заканчивает ход
     }
 
     IEnumerator EnemyPlayCard()
     {
+        List<int> index = new List<int>();
+
         foreach (Cards card in characterRole.hand)
         {
-            yield return new WaitForSeconds(0.3f);
-            CharacterRole youPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterRole>(); // ищет игрока
+            yield return new WaitForSeconds(0.5f);
+
+            if (!GameObject.FindGameObjectWithTag("Player").IsUnityNull())
+            {
+                youPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterRole>(); // ищет игрока
+            }
 
             // смотрит каждую карту в своей руке и пытается ее разыграть
             switch (card.itemName)
@@ -46,6 +61,7 @@ public class Enemy_AI : MonoBehaviour
                     }
 
                     playCard.Pow();
+                    index.Add(characterRole.hand.IndexOf(card));
                     break;
 
                 case "Cards.Name.Insectoids":             
@@ -70,6 +86,7 @@ public class Enemy_AI : MonoBehaviour
                             }
                         }
                     }
+                    index.Add(characterRole.hand.IndexOf(card));
                     break;
 
                 case "Cards.Name.Armageddets":
@@ -94,6 +111,7 @@ public class Enemy_AI : MonoBehaviour
                             }
                         }
                     }
+                    index.Add(characterRole.hand.IndexOf(card));
                     break;
 
                 default:
@@ -102,7 +120,7 @@ public class Enemy_AI : MonoBehaviour
             }
 
             // проверяет, умер ли игрок
-            if (youPlayer.currentHP <= 0)
+            if (!youPlayer.IsUnityNull() && youPlayer.currentHP <= 0)
             {
                 characterRole = youPlayer.GetComponent<CharacterRole>();
                 characterRole.DeadPlayer();
@@ -150,5 +168,13 @@ public class Enemy_AI : MonoBehaviour
                     break;
             }*/
         }
+
+        // удаляет использованные карты из руки
+        for (int i = 0; i < index.Count; i++)
+        {
+            characterRole.hand.RemoveAt(index[i]);
+        }
+
+        turnEnd = true; // ход закончен
     }
 }

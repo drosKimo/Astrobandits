@@ -12,7 +12,7 @@ public class PlayerCard : MonoBehaviour
 
     IEnumerator DrawPlayerCard()
     {
-        yield return new WaitForSeconds(0.5f); // ожидание конца перворго кадра
+        yield return new WaitForSeconds(0.25f);
 
         characterRole = GetComponent<CharacterRole>();
 

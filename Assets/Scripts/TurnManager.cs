@@ -7,11 +7,28 @@ public class TurnManager : MonoBehaviour
     public List<GameObject> playerTurn;
     [SerializeField] GameObject blocker;
     [SerializeField] GameObject finMove;
+    GameObject list;
+
     private int turnIndex = 0;
 
     void Start()
     {
-        GameObject list = GameObject.Find("Enemies");
+        /*list = GameObject.Find("Enemies");
+
+        // каждого противника в список
+        for (int i = 0; i < list.transform.childCount; i++)
+        {
+            playerTurn.Add(list.transform.GetChild(i).gameObject);
+        }*/
+
+        StartCoroutine(WaitForQueue());
+    }
+
+    IEnumerator WaitForQueue()
+    {
+        list = GameObject.Find("Enemies");
+
+        yield return new WaitForSeconds(0.1f);
 
         // каждого противника в список
         for (int i = 0; i < list.transform.childCount; i++)
@@ -33,32 +50,43 @@ public class TurnManager : MonoBehaviour
 
     void StartTurn()
     {
-        // дает в руку 2 карты в начале хода
-        CharacterRole currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
-        currentPlayer.DrawCard();
-        currentPlayer.DrawCard();
+        if (list.transform.childCount > 1)
+        {
+            // логикка хода противника
+            if (playerTurn[turnIndex].tag == "Enemy")
+            {
+                // дает в руку 2 карты в начале хода
+                CharacterRole currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
+                currentPlayer.DrawCard();
+                currentPlayer.DrawCard();
 
-        // логикка хода противника
-        if (playerTurn[turnIndex].tag == "Enemy")
-        {
-            Enemy_AI enemy_AI = playerTurn[turnIndex].GetComponent<Enemy_AI>();
-            enemy_AI.StartCoroutine(enemy_AI.EnemyTurn());
-        }
-        else if (playerTurn[turnIndex].tag == "Dead")
-        {
-            EndTurn();
-        }
-        else // разблокирует руку игрока, если сейчас его ход
-        {
-            finMove.SetActive(true);
-            blocker.SetActive(false);
+                Enemy_AI enemy_AI = playerTurn[turnIndex].GetComponent<Enemy_AI>();
+                enemy_AI.StartCoroutine(enemy_AI.EnemyTurn());
+            }
+            else if (playerTurn[turnIndex].tag == "Dead")
+            {
+                if (playerTurn[turnIndex].name == "You")
+                    blocker.SetActive(true);
+
+                EndTurn();
+            }
+            else // разблокирует руку игрока, если сейчас его ход
+            {
+                // дает в руку 2 карты в начале хода
+                CharacterRole currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
+                currentPlayer.DrawCard();
+                currentPlayer.DrawCard();
+
+                finMove.SetActive(true);
+                blocker.SetActive(false);
+            }
         }
     }
 
     public void EndTurn()
     {
         Debug.Log(turnIndex);
-        if (playerTurn[turnIndex].tag == "Player") // Если ход у игрока, при передаче хода блокируется рука
+        if (playerTurn[turnIndex].tag == "Player") // Если ход был у игрока, при передаче хода блокируется рука
         {
             finMove.SetActive(false);
             blocker.SetActive(true);
