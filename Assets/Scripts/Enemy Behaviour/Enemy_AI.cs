@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,8 @@ public class Enemy_AI : MonoBehaviour
     TurnManager manager;
     CharacterRole characterRole, youPlayer;
     PlayCard playCard;
+
+    List<int> index;
 
     bool turnEnd;
 
@@ -33,11 +36,26 @@ public class Enemy_AI : MonoBehaviour
         manager.EndTurn(); // заканчивает ход
     }
 
+    void EnemySearchOther()
+    {
+        // выбирает случайную цель
+        System.Random rand = new System.Random();
+
+        // временно, сейчас он должен искать кого угодно кроме себя
+        target = GameObject.Find("Enemies").transform.GetChild(rand.Next(GameObject.Find("Enemies").transform.childCount)).GetComponent<CharacterRole>();
+        for (int i = 0; target.name == gameObject.name; i++)
+        {
+            target = GameObject.Find("Enemies").transform.GetChild(rand.Next(GameObject.Find("Enemies").transform.childCount)).GetComponent<CharacterRole>();
+        }
+    }
+
     IEnumerator EnemyPlayCard()
     {
-        List<int> index = new List<int>();
+        index = new List<int>();
 
-        foreach (Cards card in characterRole.hand)
+        restart:
+        // чтобы можно было добавлять карты, нужно поместить значения в .List()
+        foreach (Cards card in characterRole.hand.ToList())
         {
             yield return new WaitForSeconds(0.5f);
 
@@ -50,16 +68,7 @@ public class Enemy_AI : MonoBehaviour
             switch (card.itemName)
             {
                 case "Cards.Name.Pow":
-                    // выбирает случайную цель
-                    System.Random rand = new System.Random();
-
-                    // временно, сейчас он должен искать кого угодно кроме себя
-                    target = GameObject.Find("Enemies").transform.GetChild(rand.Next(GameObject.Find("Enemies").transform.childCount)).GetComponent<CharacterRole>();
-                    for (int i = 0; target.name == gameObject.name; i++)
-                    {
-                        target = GameObject.Find("Enemies").transform.GetChild(rand.Next(GameObject.Find("Enemies").transform.childCount)).GetComponent<CharacterRole>();
-                    }
-
+                    EnemySearchOther();
                     playCard.Pow();
                     index.Add(characterRole.hand.IndexOf(card));
                     break;
@@ -114,13 +123,72 @@ public class Enemy_AI : MonoBehaviour
                     index.Add(characterRole.hand.IndexOf(card));
                     break;
 
+                case "Cards.Name.Bartender":
+                    if (characterRole.currentHP <= characterRole.maxHP - 2)
+                    {
+                        Debug.Log($"{gameObject.name} сыграл {card.name}");
+                        playCard.Bartender();
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
+                    break;
+
+                case "Cards.Name.SporeBeer":
+                    Debug.Log($"{gameObject.name} сыграл {card.name}");
+                    playCard.SporeBeer();
+                    index.Add(characterRole.hand.IndexOf(card));
+                    break;
+
+                case "Cards.Name.MutantDealer":
+                    Debug.Log($"{gameObject.name} сыграл {card.name}");
+
+                    playCard.MutantDealer();
+                    index.Add(characterRole.hand.IndexOf(card));
+
+                    DestroyCards();
+                    goto restart; // начинает разыгрывать карты заново
+
+                case "Cards.Name.Jackpot":
+                    Debug.Log($"{gameObject.name} сыграл {card.name}");
+
+                    playCard.Jackpot();
+                    index.Add(characterRole.hand.IndexOf(card));
+
+                    DestroyCards();
+                    goto restart; // начинает разыгрывать карты заново
+
+                case "Cards.Name.Shredder":
+                    EnemySearchOther(); // target = CharacterRole
+
+                    int maxCard, ind;
+                    System.Random rand = new System.Random();
+
+                    // если цель - игрок, уничтожает карту на экране и пересоздает инвентарь
+                    if (target.gameObject.tag == "Player")
+                    {
+                        GameObject playerHand  = GameObject.Find("Elements Container");
+                        maxCard = playerHand.transform.childCount - 1;
+                        ind = rand.Next(maxCard);
+                        target.hand.RemoveAt(ind); // уничтожает случайную карту на руке
+                        Destroy(playerHand.transform.GetChild(ind).gameObject); // удаляет ту же карту на экране
+                    }
+                    else
+                    {
+                        maxCard = target.hand.Count - 1;
+                        ind = rand.Next(maxCard);
+                        target.hand.RemoveAt(ind); // уничтожает случайную карту на руке
+                    }
+
+                    Debug.Log($"{gameObject.name} уничтожил карту {target.name}");
+                    index.Add(characterRole.hand.IndexOf(card));
+                    break;
+
                 default:
                     Debug.Log("Противник не умеет играть эту карту");
                     break;
             }
 
             // проверяет, умер ли игрок
-            if (youPlayer.currentHP <= 0)
+            if (!GameObject.FindGameObjectWithTag("Player").IsUnityNull() && youPlayer.currentHP <= 0)
             {
                 characterRole = youPlayer.GetComponent<CharacterRole>();
                 characterRole.DeadPlayer();
@@ -128,8 +196,6 @@ public class Enemy_AI : MonoBehaviour
 
             /*switch (card.itemName)
             {
-                case "Cards.Name.Bartender":
-                    break;
                 case "Cards.Name.Bike":
                     break;
                 case "Cards.Name.Challenge":
@@ -146,21 +212,13 @@ public class Enemy_AI : MonoBehaviour
                     break;
                 case "Cards.Name.Isabelle":
                     break;
-                case "Cards.Name.Jackpot":
-                    break;
                 case "Cards.Name.LootBoxes":
-                    break;
-                case "Cards.Name.MutantDealer":
                     break;
                 case "Cards.Name.PulseRifle":
                     break;
                 case "Cards.Name.Reassembly":
                     break;
                 case "Cards.Name.Scorpion":
-                    break;
-                case "Cards.Name.Shredder":
-                    break;
-                case "Cards.Name.SporeBeer":
                     break;
                 case "Cards.Name.Turlock":
                     break;
@@ -169,13 +227,19 @@ public class Enemy_AI : MonoBehaviour
             }*/
         }
 
-        // удаляет использованные карты из руки
-        for (int i = 0; i < index.Count; i++)
-        {
-            characterRole = GetComponent<CharacterRole>();
-            characterRole.hand.RemoveAt(index[i]);
-        }
-
+        DestroyCards();
         turnEnd = true; // ход закончен
+    }
+
+    // удаляет разыгранные карты
+    void DestroyCards()
+    {
+        // удаляет использованные карты из руки в обратном порядке
+        for (int i = index.Count; i > 0; i--)
+        {
+            characterRole = gameObject.GetComponent<CharacterRole>();
+            characterRole.hand.RemoveAt(index[i - 1]);
+        }
+        index.Clear(); // очищает отбойник после удаления карт
     }
 }

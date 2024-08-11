@@ -200,7 +200,6 @@ public class CardProperty : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // TODO: эта штука ультра сырая. Добавь воссоздание инвентаря из руки на экране
     void RecreateInventory()
     {
         // перемещает разыгранную карту во временное хранилище

@@ -12,7 +12,16 @@ public class PlayCard : MonoBehaviour
     public void Pow() // атака противника
     {
         Enemy_AI enemy_AI = GetComponent<Enemy_AI>();
-        enemy_AI.target.currentHP--;
+
+        if (enemy_AI.target.gameObject.tag == "Player") // отнимает хп, если это игрок
+        {
+            enemy_AI.target.currentHP--;
+        }
+        else // позвол€ет противнику отреагировать на атаку
+        {
+            EnemyCardReaction reaction = enemy_AI.target.GetComponent<EnemyCardReaction>();
+            reaction.Pow();
+        }
 
         Debug.Log($"{gameObject.name} выстрелил в {enemy_AI.target.name}");
     }
@@ -88,9 +97,11 @@ public class PlayCard : MonoBehaviour
 
     public void Jackpot()
     {
-        spawnCard.Spawn();
-        spawnCard.Spawn();
-        spawnCard.Spawn();
+        characterRole = GetComponent<CharacterRole>();
+
+        characterRole.DrawCard();
+        characterRole.DrawCard();
+        characterRole.DrawCard();
     }
 
     public void LootBoxes()
@@ -125,8 +136,10 @@ public class PlayCard : MonoBehaviour
 
     public void MutantDealer()
     {
-        spawnCard.Spawn();
-        spawnCard.Spawn();
+        characterRole = GetComponent<CharacterRole>();
+
+        characterRole.DrawCard();
+        characterRole.DrawCard();
     }
 
     public void PulseRifle()
@@ -187,15 +200,14 @@ public class PlayCard : MonoBehaviour
         Debug.Log(" арта разыграна");
     }
 
-    public void Shredder()
+    public void Shredder() // только когда разыгрывает игрок
     {
         characterRole = GetComponent<CharacterRole>();
 
-        int minCard = 0;
         int maxCard = characterRole.hand.Count - 1;
 
         System.Random rand = new System.Random();
-        int index = rand.Next(minCard, maxCard);
+        int index = rand.Next(maxCard);
 
         // уничтожает случайную карту на руке
         characterRole.hand.RemoveAt(index);
@@ -219,11 +231,10 @@ public class PlayCard : MonoBehaviour
         // хранилище карт противника
         characterRole = GetComponent<CharacterRole>();
 
-        int minCard = 0;
         int maxCard = characterRole.hand.Count - 1;
 
         System.Random rand = new System.Random();
-        int index = rand.Next(minCard, maxCard);
+        int index = rand.Next(maxCard);
 
         playedCard = characterRole.hand[index];
         characterRole.hand.RemoveAt(index);
