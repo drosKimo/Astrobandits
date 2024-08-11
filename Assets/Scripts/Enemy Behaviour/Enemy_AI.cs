@@ -67,6 +67,7 @@ public class Enemy_AI : MonoBehaviour
             // смотрит каждую карту в своей руке и пытается ее разыграть
             switch (card.itemName)
             {
+                // TODO: поставить ограничение по выстрелам через булевый маркер
                 case "Cards.Name.Pow":
                     EnemySearchOther();
                     playCard.Pow();

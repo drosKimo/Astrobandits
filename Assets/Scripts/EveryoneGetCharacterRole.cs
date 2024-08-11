@@ -51,13 +51,11 @@ public class EveryoneGetCharacterRole : MonoBehaviour
         rolePool = new List<Roles>();
         // 1 капитан
         rolePool.Add(thisStorage.allRoles[0]);
-        // 2 инженера
-        rolePool.Add(thisStorage.allRoles[1]);
+        // 1 инженер
         rolePool.Add(thisStorage.allRoles[1]);
         // 1 пришелец
         rolePool.Add(thisStorage.allRoles[2]);
-        // 3 пирата
-        rolePool.Add(thisStorage.allRoles[3]);
+        // 2 пирата
         rolePool.Add(thisStorage.allRoles[3]);
         rolePool.Add(thisStorage.allRoles[3]);
     }
