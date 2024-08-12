@@ -9,18 +9,12 @@ public class TurnManager : MonoBehaviour
     [SerializeField] GameObject finMove;
     GameObject list;
 
+    CharacterRole currentPlayer;
+
     private int turnIndex = 0;
 
     void Start()
     {
-        /*list = GameObject.Find("Enemies");
-
-        // каждого противника в список
-        for (int i = 0; i < list.transform.childCount; i++)
-        {
-            playerTurn.Add(list.transform.GetChild(i).gameObject);
-        }*/
-
         StartCoroutine(WaitForQueue());
     }
 
@@ -51,35 +45,36 @@ public class TurnManager : MonoBehaviour
 
     void StartTurn()
     {
-        if (list.transform.childCount > 1)
+        if (list.transform.childCount > 1) // временно. Нужно для того, чтобы ход не продолжался если остается 1 игрок+
         {
-            // логикка хода противника
-            if (playerTurn[turnIndex].tag == "Enemy")
+            // логика хода противника
+            switch (playerTurn[turnIndex].tag) 
             {
-                // дает в руку 2 карты в начале хода
-                CharacterRole currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
-                currentPlayer.DrawCard();
-                currentPlayer.DrawCard();
+                case "Enemy":
+                    // дает в руку 2 карты в начале хода
+                    currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
+                    currentPlayer.DrawCard();
+                    currentPlayer.DrawCard();
 
-                Enemy_AI enemy_AI = playerTurn[turnIndex].GetComponent<Enemy_AI>();
-                enemy_AI.StartCoroutine(enemy_AI.EnemyTurn());
-            }
-            else if (playerTurn[turnIndex].tag == "Dead")
-            {
-                if (playerTurn[turnIndex].name == "You")
-                    blocker.SetActive(true);
+                    Enemy_AI enemy_AI = playerTurn[turnIndex].GetComponent<Enemy_AI>();
+                    enemy_AI.StartCoroutine(enemy_AI.EnemyTurn());
+                    break;
 
-                EndTurn();
-            }
-            else // разблокирует руку игрока, если сейчас его ход
-            {
-                // дает в руку 2 карты в начале хода
-                CharacterRole currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
-                currentPlayer.DrawCard();
-                currentPlayer.DrawCard();
+                case "Dead":
+                    if (playerTurn[turnIndex].name == "You")
+                        blocker.SetActive(true);
+                    EndTurn();
+                    break;
 
-                finMove.SetActive(true);
-                blocker.SetActive(false);
+                case "Player": // разблокирует руку игрока, если сейчас его ход
+                    // дает в руку 2 карты в начале хода
+                    currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
+                    currentPlayer.DrawCard();
+                    currentPlayer.DrawCard();
+
+                    finMove.SetActive(true);
+                    blocker.SetActive(false);
+                    break;
             }
         }
     }
