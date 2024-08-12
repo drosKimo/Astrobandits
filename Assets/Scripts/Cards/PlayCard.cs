@@ -134,6 +134,18 @@ public class PlayCard : MonoBehaviour
         }
     }
 
+    public void EnemyLootBoxes()
+    {
+        GameObject players = GameObject.Find("Enemies");
+        
+        // сразу раздает ем по карте
+        for (int i = 0; i < players.transform.childCount; i++)
+        {
+            characterRole = players.transform.GetChild(i).GetComponent<CharacterRole>();
+            characterRole.DrawCard();
+        }
+    }
+
     public void MutantDealer()
     {
         characterRole = GetComponent<CharacterRole>();

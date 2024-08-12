@@ -13,10 +13,11 @@ public class Enemy_AI : MonoBehaviour
     TurnManager manager;
     CharacterRole characterRole, youPlayer;
     PlayCard playCard;
+    Cards stolenCard;
 
     List<int> index;
 
-    bool turnEnd;
+    bool turnEnd, playedPow = false;
 
     // запуск логики противника
     public IEnumerator EnemyTurn()
@@ -69,9 +70,15 @@ public class Enemy_AI : MonoBehaviour
             {
                 // TODO: поставить ограничение по выстрелам через булевый маркер
                 case "Cards.Name.Pow":
-                    EnemySearchOther();
-                    playCard.Pow();
-                    index.Add(characterRole.hand.IndexOf(card));
+                    if (!playedPow)
+                    {
+                        playedPow = true;
+                        EnemySearchOther();
+                        playCard.Pow();
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
+                    else
+                        Debug.Log($"{gameObject.name} попытался выстрелить");
                     break;
 
                 case "Cards.Name.Insectoids":             
@@ -160,27 +167,75 @@ public class Enemy_AI : MonoBehaviour
                 case "Cards.Name.Shredder":
                     EnemySearchOther(); // target = CharacterRole
 
-                    int maxCard, ind;
-                    System.Random rand = new System.Random();
-
-                    // если цель - игрок, уничтожает карту на экране и пересоздает инвентарь
-                    if (target.gameObject.tag == "Player")
+                    if (target.hand.Count > 0) // если у игрока есть карты на руке
                     {
-                        GameObject playerHand  = GameObject.Find("Elements Container");
-                        maxCard = playerHand.transform.childCount - 1;
-                        ind = rand.Next(maxCard);
-                        target.hand.RemoveAt(ind); // уничтожает случайную карту на руке
-                        Destroy(playerHand.transform.GetChild(ind).gameObject); // удаляет ту же карту на экране
-                    }
-                    else
-                    {
-                        maxCard = target.hand.Count - 1;
-                        ind = rand.Next(maxCard);
-                        target.hand.RemoveAt(ind); // уничтожает случайную карту на руке
-                    }
+                        int maxCard, ind;
+                        System.Random rand = new System.Random();
 
-                    Debug.Log($"{gameObject.name} уничтожил карту {target.name}");
+                        // если цель - игрок, уничтожает карту на экране и пересоздает инвентарь
+                        if (target.gameObject.tag == "Player")
+                        {
+                            GameObject playerHand = GameObject.Find("Elements Container");
+                            maxCard = playerHand.transform.childCount - 1;
+                            ind = rand.Next(maxCard);
+                            target.hand.RemoveAt(ind); // уничтожает случайную карту на руке
+                            Destroy(playerHand.transform.GetChild(ind).gameObject); // удаляет ту же карту на экране
+                        }
+                        else
+                        {
+                            maxCard = target.hand.Count - 1;
+                            ind = rand.Next(maxCard);
+                            target.hand.RemoveAt(ind); // уничтожает случайную карту на руке
+                        }
+
+                        Debug.Log($"{gameObject.name} уничтожил карту {target.name}");
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
+                    break;
+
+                case "Cards.Name.LootBoxes":
+                    Debug.Log($"{gameObject.name} сыграл {card.name}");
+                    playCard.EnemyLootBoxes();
                     index.Add(characterRole.hand.IndexOf(card));
+                    break;
+
+                case "Cards.Name.XenoRunt":
+                    EnemySearchOther(); // target = CharacterRole
+
+                    if (target.hand.Count > 0) // если у игрока есть карты на руке
+                    {
+                        int maxcard, indexI;
+                        System.Random random = new System.Random();
+
+                        // если цель - игрок, уничтожает карту на экране и пересоздает инвентарь
+                        if (target.gameObject.tag == "Player")
+                        {
+                            GameObject playerHand = GameObject.Find("Elements Container");
+                            maxcard = playerHand.transform.childCount - 1;
+                            indexI = random.Next(maxcard);
+
+                            stolenCard = target.hand[indexI];
+                            target.hand.RemoveAt(indexI); // уничтожает случайную карту на руке
+                            Destroy(playerHand.transform.GetChild(indexI).gameObject); // удаляет ту же карту на экране
+                        }
+                        else
+                        {
+                            maxcard = target.hand.Count - 1;
+                            indexI = random.Next(maxcard);
+
+                            stolenCard = target.hand[indexI];
+                            target.hand.RemoveAt(indexI); // уничтожает случайную карту на руке
+                        }
+
+                        characterRole.hand.Add(stolenCard); // добавляет украденную карту в руку
+
+                        Debug.Log($"{gameObject.name} украл карту {target.name}");
+                        index.Add(characterRole.hand.IndexOf(card));
+
+                        DestroyCards();
+                        goto restart;
+                    }
+                    // иначе оставляет эту карту в руке
                     break;
 
                 default:
@@ -213,8 +268,6 @@ public class Enemy_AI : MonoBehaviour
                     break;
                 case "Cards.Name.Isabelle":
                     break;
-                case "Cards.Name.LootBoxes":
-                    break;
                 case "Cards.Name.PulseRifle":
                     break;
                 case "Cards.Name.Reassembly":
@@ -222,8 +275,6 @@ public class Enemy_AI : MonoBehaviour
                 case "Cards.Name.Scorpion":
                     break;
                 case "Cards.Name.Turlock":
-                    break;
-                case "Cards.Name.XenoRunt":
                     break;
             }*/
         }

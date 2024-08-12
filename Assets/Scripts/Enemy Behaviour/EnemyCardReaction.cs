@@ -60,6 +60,7 @@ public class EnemyCardReaction : MonoBehaviour
     }
 
 
+    // реакции на карты
     public void Armageddets()
     {
         EnemyDodge();
