@@ -2,7 +2,6 @@ using Akassets.SmoothGridLayout;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
