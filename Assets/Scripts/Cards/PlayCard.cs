@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -138,7 +140,7 @@ public class PlayCard : MonoBehaviour
     {
         GameObject players = GameObject.Find("Enemies");
         
-        // сразу раздает ем по карте
+        // сразу раздает всем по карте
         for (int i = 0; i < players.transform.childCount; i++)
         {
             characterRole = players.transform.GetChild(i).GetComponent<CharacterRole>();
@@ -161,43 +163,72 @@ public class PlayCard : MonoBehaviour
 
     public void Reassembly()
     {
-        List<Cards> allCards = new List<Cards>(); // все карты в руке
+        System.Random rand = new System.Random();
+        List<Cards> allCards = new List<Cards>(); // все карты из рук персонажей
         Dictionary<string, int> players = new Dictionary<string, int>(); // игрок и сколько у него карт
-        spawnCard = GameObject.Find("SpawnCard").GetComponent<SpawnCard>(); // скрипт спавна карт
 
         // проверка для каждого из врагов
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        foreach (CharacterRole enemy in GameObject.Find("Enemies").transform.GetComponentsInChildren<CharacterRole>())
         {
-            characterRole = enemy.GetComponent<CharacterRole>();
-            // добавляет врага и количество его карт в список
-            players.Add(enemy.name, characterRole.hand.Count);
-
-            // ищет подходящую карту из общего хранилища
-            foreach (Cards card in characterRole.hand)
+            // если текущий персонаж - не разыгравший карту и у него на руках есть карты
+            if (enemy.gameObject.name != gameObject.name && enemy.hand.Count > 0)
             {
-                allCards.Add(card);
-            }
+                // добавляет врага и количество его карт в список
+                players.Add(enemy.gameObject.name, enemy.hand.Count);
 
-            characterRole.hand.Clear(); // очистить список
+                // ищет подходящую карту из общего хранилища
+                foreach (Cards card in enemy.hand)
+                {
+                    allCards.Add(card);
+                }
+
+                if (enemy.gameObject.tag == "Player")
+                {
+                    GameObject container = GameObject.Find("Elements Container");
+                    
+                    for (int i = container.transform.childCount; i > 0; i--) // очистить экран
+                    {
+                        Destroy(container.transform.GetChild(i - 1).gameObject);
+                    }
+
+                    enemy.hand.Clear(); // очистить руку
+
+                }
+                else
+                    enemy.hand.Clear(); // очистить руку
+            }
         }
 
         // теперь отдаем карты обратно
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        foreach (CharacterRole enemy in GameObject.Find("Enemies").transform.GetComponentsInChildren<CharacterRole>())
         {
-            characterRole = enemy.GetComponent<CharacterRole>();
-            System.Random rand = new System.Random();
-
             // проверяет весь список персонажей
             foreach (KeyValuePair<string, int> pair in players)
             {
-                if (enemy.name == pair.Key)
+                if (enemy.gameObject.name == pair.Key) // проверяет, совпадает ли текущий в очереди персонаж со значением
                 {
                     for (int i = 0; i < pair.Value; i++)
                     {
                         int max = allCards.Count;
-                        int card = rand.Next(0, max);
-                        characterRole.hand.Add(allCards[card]);
-                        allCards.RemoveAt(card);
+                        int card = rand.Next(max);
+
+                        if (enemy.gameObject.tag == "Player") // выводит карты на экран для игрока
+                        {
+                            // получает общее хранилище
+                            GetCardItem cardItem = spawnCard.SCprefab.GetComponent<GetCardItem>();
+                            playStorage = cardItem.globalStorage;
+
+                            // спавнит карту по индексу
+                            cardItem.cardIndex = playStorage.allCards.IndexOf(allCards[card]);
+                            cardItem.calling = false;
+                            spawnCard.newItem = GameObject.Instantiate(spawnCard.SCprefab);
+
+                            // получает имя для карты, чтобы не было ошибок с взаимодействием с картами
+                            spawnCard.GetItemName();
+                        }
+
+                        enemy.hand.Add(allCards[card]); // добавляет выданную карту в руку
+                        allCards.RemoveAt(card); // удаляет выданную карту из списка
                     }
 
                     players.Remove(pair.Key); // удаляет текущего персонажа из списка

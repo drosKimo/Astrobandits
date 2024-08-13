@@ -195,9 +195,12 @@ public class Enemy_AI : MonoBehaviour
 
                 case "Cards.Name.LootBoxes":
                     Debug.Log($"{gameObject.name} сыграл {card.name}");
+
                     playCard.EnemyLootBoxes();
-                    index.Add(characterRole.hand.IndexOf(card));
-                    break;
+                    index.Add(characterRole.hand.IndexOf(card)); 
+
+                    DestroyCards();
+                    goto restart; // начинает разыгрывать карты заново
 
                 case "Cards.Name.XenoRunt":
                     EnemySearchOther(); // target = CharacterRole
@@ -236,6 +239,12 @@ public class Enemy_AI : MonoBehaviour
                         goto restart;
                     }
                     // иначе оставляет эту карту в руке
+                    break; // может начать разыгрывать карты заново
+
+                case "Cards.Name.Reassembly":
+                    Debug.Log($"{gameObject.name} сыграл {card.name}");
+                    playCard.Reassembly();
+                    index.Add(characterRole.hand.IndexOf(card));
                     break;
 
                 default:
@@ -269,8 +278,6 @@ public class Enemy_AI : MonoBehaviour
                 case "Cards.Name.Isabelle":
                     break;
                 case "Cards.Name.PulseRifle":
-                    break;
-                case "Cards.Name.Reassembly":
                     break;
                 case "Cards.Name.Scorpion":
                     break;

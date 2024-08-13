@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpawnCard : MonoBehaviour
 {
-    [SerializeField] GameObject prefab;
+    [SerializeField] public GameObject SCprefab;
     GameObject objParent;
     [HideInInspector] public GameObject newItem;
     GetCardItem cardItem;
@@ -10,9 +10,9 @@ public class SpawnCard : MonoBehaviour
     public void Spawn()
     {
         objParent = GameObject.Find("Elements Container");
-        cardItem = prefab.GetComponent<GetCardItem>();
+        cardItem = SCprefab.GetComponent<GetCardItem>();
         cardItem.calling = true;
-        newItem = GameObject.Instantiate(prefab);
+        newItem = GameObject.Instantiate(SCprefab);
         GetItemName();
     }
 
@@ -21,11 +21,11 @@ public class SpawnCard : MonoBehaviour
     public void SpawnByIndex(int setCardIndex)
     {
         objParent = GameObject.Find("Elements Container");
-        GetCardItem cardItem = prefab.GetComponent<GetCardItem>();
+        GetCardItem cardItem = SCprefab.GetComponent<GetCardItem>();
         cardItem.cardIndex = setCardIndex;
         cardItem.calling = false;
 
-        newItem = GameObject.Instantiate(prefab);
+        newItem = GameObject.Instantiate(SCprefab);
         GetItemName();
     }
 
@@ -38,7 +38,7 @@ public class SpawnCard : MonoBehaviour
         }
     }
 
-    void GetItemName()
+    public void GetItemName()
     {
         // большая проверка, чтобы карты не ломались
         if (objParent.transform.childCount == 0)
