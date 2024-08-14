@@ -20,46 +20,18 @@ public class CardProperty : MonoBehaviour
     }
 
     // продолжение розыгрыша карты лутбокса
-    public void LootBoxes_Button()
+    public void React_Button()
     {
-        // сначала мы берем карту в руку
-        GameObject baseGrid = GameObject.Find("Elements Container");
-
-        // выключает компонент кнопки
-        Button button = GetComponent<Button>();
-        button.enabled = false;
-
-        // включает возможность тянуть карту
-        DragScript dragScript = GetComponent<DragScript>();
-        dragScript.enabled = true;
-
-        // включает скрипт, поднимающий карту
-        ShowCard showCard = GetComponent<ShowCard>();
-        showCard.enabled = true;
-
-        // передвигает появившиеся карты в отдельный контейнер
-        getCardItem.transform.SetParent(baseGrid.transform);
-        getCardItem.transform.localScale = new Vector3(1, 1, 1);
-
-
-        System.Random rand = new System.Random();
-        GameObject LBgrid = GameObject.Find("LootBoxes Container");
-        List<Cards> LBlist = new List<Cards>();
-
-        // добавляет все оставшиеся карты в список
-        for (int i = 0; i < LBgrid.transform.childCount; i++)
+        // сначала проверяет в каком контейнере находятся карты
+        switch (gameObject.transform.parent.name)
         {
-            GetCardItem cardItem = LBgrid.transform.GetChild(i).gameObject.GetComponent<GetCardItem>();
-            Cards card = cardItem.cardItem;
-            LBlist.Add(card);
-            Destroy(LBgrid.transform.GetChild(i).gameObject);
-        }
+            case "Elements Container":
+                Debug.Log("Реакция");
+                break;
 
-        // раздает карты в случайном порядке
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            characterRole = enemy.GetComponent<CharacterRole>();
-            characterRole.hand.Add(LBlist[rand.Next(0, LBgrid.transform.childCount)]);
+            case "LootBoxes Container":
+                React_LootBoxes();
+                break;
         }
     }
 
@@ -220,6 +192,49 @@ public class CardProperty : MonoBehaviour
             Cards card = cardItem.cardItem;
 
             playerChar.hand.Add(card); // добавляет карту с руки в инвентарь
+        }
+    }
+
+    void React_LootBoxes()
+    {
+        // сначала мы берем карту в руку
+        GameObject baseGrid = GameObject.Find("Elements Container");
+
+        // выключает компонент кнопки
+        Button button = GetComponent<Button>();
+        button.enabled = false;
+
+        // включает возможность тянуть карту
+        DragScript dragScript = GetComponent<DragScript>();
+        dragScript.enabled = true;
+
+        // включает скрипт, поднимающий карту
+        ShowCard showCard = GetComponent<ShowCard>();
+        showCard.enabled = true;
+
+        // передвигает появившиеся карты в отдельный контейнер
+        getCardItem.transform.SetParent(baseGrid.transform);
+        getCardItem.transform.localScale = new Vector3(1, 1, 1);
+
+
+        System.Random rand = new System.Random();
+        GameObject LBgrid = GameObject.Find("LootBoxes Container");
+        List<Cards> LBlist = new List<Cards>();
+
+        // добавляет все оставшиеся карты в список
+        for (int i = 0; i < LBgrid.transform.childCount; i++)
+        {
+            GetCardItem cardItem = LBgrid.transform.GetChild(i).gameObject.GetComponent<GetCardItem>();
+            Cards card = cardItem.cardItem;
+            LBlist.Add(card);
+            Destroy(LBgrid.transform.GetChild(i).gameObject);
+        }
+
+        // раздает карты в случайном порядке
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            characterRole = enemy.GetComponent<CharacterRole>();
+            characterRole.hand.Add(LBlist[rand.Next(0, LBgrid.transform.childCount)]);
         }
     }
 }

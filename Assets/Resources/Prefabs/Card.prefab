@@ -452,7 +452,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -6470714491268844921}
         m_TargetAssemblyTypeName: CardProperty, Assembly-CSharp
-        m_MethodName: LootBoxes_Button
+        m_MethodName: React_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -527,8 +527,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalStorage: {fileID: 11400000, guid: b3ac204604dd98a40ad3ada5bd376922, type: 2}
-  cardItem: {fileID: 11400000, guid: 5309a116ab068d24fba02adf442d4c39, type: 2}
-  cardIndex: 13
+  cardItem: {fileID: 11400000, guid: 0a00e5573df103e43a034dc349c67f40, type: 2}
+  cardIndex: 7
   nameKey: 
   descriptionKey: 
   calling: 1

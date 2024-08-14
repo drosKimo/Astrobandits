@@ -5,8 +5,8 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     public List<GameObject> playerTurn;
-    [SerializeField] GameObject blocker;
-    [SerializeField] GameObject finMove;
+    [SerializeField] public GameObject blocker;
+    [SerializeField] public GameObject finMove;
     GameObject list;
 
     CharacterRole currentPlayer;

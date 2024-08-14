@@ -51,6 +51,7 @@ public class Enemy_AI : MonoBehaviour
     IEnumerator EnemyPlayCard()
     {
         index = new List<int>();
+        playedPow = false;
 
         restart:
         // чтобы можно было добавлять карты, нужно поместить значения в .List()
@@ -72,8 +73,11 @@ public class Enemy_AI : MonoBehaviour
                     {
                         playedPow = true;
                         EnemySearchOther();
-                        playCard.Pow();
+                        StartCoroutine(playCard.Pow());
                         index.Add(characterRole.hand.IndexOf(card));
+
+                        yield return new WaitUntil(() => playCard.playerDone); // дождаться ответа игрока
+                        // только после этого продолжает ход
                     }
                     else
                         Debug.Log($"{gameObject.name} попытался выстрелить");

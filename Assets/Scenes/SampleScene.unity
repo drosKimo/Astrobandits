@@ -340,6 +340,7 @@ MonoBehaviour:
   spawnCard: {fileID: 1908824793}
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
+  playerDone: 0
 --- !u!61 &291206070
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1554,6 +1555,7 @@ MonoBehaviour:
   spawnCard: {fileID: 1908824793}
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
+  playerDone: 0
 --- !u!61 &1452553572
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1807,7 +1809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e91b2daabca3fc49b4f69cd0d145aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7880500834050132361, guid: ac34ae3a9cabcd84dbf9a024a0a949ac, type: 3}
+  SCprefab: {fileID: 7880500834050132361, guid: ac34ae3a9cabcd84dbf9a024a0a949ac, type: 3}
   newItem: {fileID: 0}
 --- !u!222 &1506537670
 CanvasRenderer:
@@ -1868,7 +1870,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 18
+          m_IntArgument: 16
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2378,6 +2380,7 @@ MonoBehaviour:
   spawnCard: {fileID: 1908824793}
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
+  playerDone: 0
 --- !u!61 &1631115247
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2917,7 +2920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e91b2daabca3fc49b4f69cd0d145aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7880500834050132361, guid: ac34ae3a9cabcd84dbf9a024a0a949ac, type: 3}
+  SCprefab: {fileID: 7880500834050132361, guid: ac34ae3a9cabcd84dbf9a024a0a949ac, type: 3}
   newItem: {fileID: 0}
 --- !u!222 &1908824794
 CanvasRenderer:
@@ -3187,6 +3190,7 @@ MonoBehaviour:
   spawnCard: {fileID: 1908824793}
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
+  playerDone: 0
 --- !u!114 &1918867923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3717,6 +3721,7 @@ MonoBehaviour:
   spawnCard: {fileID: 1908824793}
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
+  playerDone: 0
 --- !u!61 &2064692873
 BoxCollider2D:
   m_ObjectHideFlags: 0

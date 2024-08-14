@@ -1,17 +1,25 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayCard : MonoBehaviour
 {
     [SerializeField] SpawnCard spawnCard;
-    CharacterRole characterRole;
     [HideInInspector] public Cards playedCard;
     [HideInInspector] public Storage playStorage;
 
-    public void Pow() // атака противника
+    CharacterRole characterRole;
+    Enemy_AI enemy_AI;
+
+    bool dodged = false;
+    [HideInInspector] public bool playerDone;
+
+    public IEnumerator Pow() // атака противника
     {
-        Enemy_AI enemy_AI = GetComponent<Enemy_AI>();
+        enemy_AI = GetComponent<Enemy_AI>();
+        playerDone = false; // ожидание ответа
 
         if (enemy_AI.target.gameObject.tag == "Player") // отнимает хп, если это игрок
         {
@@ -30,15 +38,57 @@ public class PlayCard : MonoBehaviour
             // не думаю, что нужны ограничения по нижней планке, поскольку, если значения дублируются, противник все равно
             // до них достанет, но лучше удалять дубликаты, чтобы не повышать им шансы на маслину
 
-            enemy_AI.target.currentHP--;
+            StartCoroutine(WaitForPlayer()); // запускает реакцию игрока
         }
         else // позволяет противнику отреагировать на атаку
         {
             EnemyCardReaction reaction = enemy_AI.target.GetComponent<EnemyCardReaction>();
             reaction.Pow();
+            playerDone = true;
         }
 
         Debug.Log($"{gameObject.name} выстрелил в {enemy_AI.target.name}");
+        yield return new WaitUntil(() => playerDone); // дождаться ответа игрока
+    }
+
+    IEnumerator WaitForPlayer()
+    {
+        yield return new WaitForSeconds(0.3f); // небольшая задержка перед ходом
+
+        // проверяет, есть ли у игрока хотя бы 1 Уворот
+        foreach (Cards card in enemy_AI.target.hand)
+        {
+            if (card.itemName == "Cards.Name.Dodge")
+                dodged = true;
+        }
+
+        // пытается понять, есть ли у игрока возможность отреагировать
+        if (dodged)
+        {
+            // отключает блокировку карт
+            TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+            turnManager.blocker.SetActive(false);
+
+            // блокирует возможность вытянуть карту и включает кнопку
+            GameObject container = GameObject.Find("Elements Container");
+            for (int i = 0; i < container.transform.childCount; i++)
+            {
+                DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
+                Button buttonCard = container.transform.GetChild(i).GetComponent<Button>();
+                CardProperty cardProperty = container.transform.GetChild(i).GetComponent<CardProperty>();
+
+                dragCard.enabled = false;
+                buttonCard.enabled = true;
+            }
+
+            // ДОДЕЛАТЬ. Пока работает
+        }
+        else
+        {
+            enemy_AI.target.currentHP--; 
+            playerDone = true; // игрок ответил
+            Debug.Log("Игрок потерял хп");
+        }
     }
 
     public void Bartender()
@@ -58,9 +108,8 @@ public class PlayCard : MonoBehaviour
         foreach (GameObject enemy in players)
         {
             CharacterRole charRole = enemy.GetComponent<CharacterRole>();
-            Characters character = charRole.character;
 
-            if (charRole.currentHP < character.characterHitPoint)
+            if (charRole.currentHP < charRole.maxHP) // ddd
                 charRole.currentHP++;
         }
     }
