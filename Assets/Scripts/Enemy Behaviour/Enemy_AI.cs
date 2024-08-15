@@ -95,8 +95,12 @@ public class Enemy_AI : MonoBehaviour
                             if (list.transform.GetChild(i).gameObject.transform.tag == "Player")
                             {
                                 // логика реакции игрока
-                                CharacterRole charRolePlayer = list.transform.GetChild(i).gameObject.GetComponent<CharacterRole>();
-                                charRolePlayer.currentHP--;
+                                target = list.transform.GetChild(i).gameObject.GetComponent<CharacterRole>();
+
+                                playCard.currentReactionCard = "Cards.Name.Pow"; // задает карту, которая должна использоваться чтобы не потерять хп
+                                StartCoroutine(playCard.WaitForPlayer()); // запускает реакцию игрока
+
+                                yield return new WaitUntil(() => playCard.playerDone); // дождаться ответа игрока
                             }
                             else
                             {
@@ -120,8 +124,12 @@ public class Enemy_AI : MonoBehaviour
                             if (list2.transform.GetChild(i).gameObject.transform.tag == "Player")
                             {
                                 // логика реакции игрока
-                                CharacterRole charRolePlayer = list2.transform.GetChild(i).gameObject.GetComponent<CharacterRole>();
-                                charRolePlayer.currentHP--;
+                                target = list2.transform.GetChild(i).gameObject.GetComponent<CharacterRole>();
+
+                                playCard.currentReactionCard = "Cards.Name.Dodge"; // задает карту, которая должна использоваться чтобы не потерять хп
+                                StartCoroutine(playCard.WaitForPlayer()); // запускает реакцию игрока
+
+                                yield return new WaitUntil(() => playCard.playerDone); // дождаться ответа игрока
                             }
                             else
                             {
@@ -143,9 +151,12 @@ public class Enemy_AI : MonoBehaviour
                     break;
 
                 case "Cards.Name.SporeBeer":
-                    Debug.Log($"{gameObject.name} сыграл {card.name}");
-                    playCard.SporeBeer();
-                    index.Add(characterRole.hand.IndexOf(card));
+                    if (characterRole.currentHP <= characterRole.maxHP - 1)
+                    {
+                        Debug.Log($"{gameObject.name} сыграл {card.name}");
+                        playCard.SporeBeer();
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
                     break;
 
                 case "Cards.Name.MutantDealer":

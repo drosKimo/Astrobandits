@@ -15,6 +15,7 @@ public class PlayCard : MonoBehaviour
 
     bool dodged = false;
     [HideInInspector] public bool playerDone;
+    [HideInInspector] public string currentReactionCard;
 
     public IEnumerator Pow() // атака противника
     {
@@ -23,14 +24,6 @@ public class PlayCard : MonoBehaviour
 
         if (enemy_AI.target.gameObject.tag == "Player") // отнимает хп, если это игрок
         {
-            // если отключить DragScript, карту нельзя будет перетянуть
-            // TODO: придумать как реализовать ответ игрока на выстрел в него, чтобы ему нужно было разыграть карту уворота
-
-            // возможный вариант:
-            // 1. Сделать проверку, чтобы, если у игрока нет карты уворота, хп снималось автоматом
-            // 2. Запустить корутину, которая будет давать игроку возможность разыграть карту в ответ
-            // 3. Можно добавить флаг, который будет приостанавливать ход противника пока игрок не походил
-
             // как вариант, при создании расстояния между игроками опираться на их положение в иерархии
             // в случае, если индекс выходит за рамки, нужно начать с конца
             // пример: если карты закончились снизу, в счет добавляются карты с верха иерархии
@@ -38,6 +31,7 @@ public class PlayCard : MonoBehaviour
             // не думаю, что нужны ограничения по нижней планке, поскольку, если значения дублируются, противник все равно
             // до них достанет, но лучше удалять дубликаты, чтобы не повышать им шансы на маслину
 
+            currentReactionCard = "Cards.Name.Dodge"; // задает карту, которая должна использоваться чтобы не потерять хп
             StartCoroutine(WaitForPlayer()); // запускает реакцию игрока
         }
         else // позволяет противнику отреагировать на атаку
@@ -49,46 +43,6 @@ public class PlayCard : MonoBehaviour
 
         Debug.Log($"{gameObject.name} выстрелил в {enemy_AI.target.name}");
         yield return new WaitUntil(() => playerDone); // дождаться ответа игрока
-    }
-
-    IEnumerator WaitForPlayer()
-    {
-        yield return new WaitForSeconds(0.3f); // небольшая задержка перед ходом
-
-        // проверяет, есть ли у игрока хотя бы 1 Уворот
-        foreach (Cards card in enemy_AI.target.hand)
-        {
-            if (card.itemName == "Cards.Name.Dodge")
-                dodged = true;
-        }
-
-        // пытается понять, есть ли у игрока возможность отреагировать
-        if (dodged)
-        {
-            // отключает блокировку карт
-            TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
-            turnManager.blocker.SetActive(false);
-
-            // блокирует возможность вытянуть карту и включает кнопку
-            GameObject container = GameObject.Find("Elements Container");
-            for (int i = 0; i < container.transform.childCount; i++)
-            {
-                DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
-                Button buttonCard = container.transform.GetChild(i).GetComponent<Button>();
-                CardProperty cardProperty = container.transform.GetChild(i).GetComponent<CardProperty>();
-
-                dragCard.enabled = false;
-                buttonCard.enabled = true;
-            }
-
-            // ДОДЕЛАТЬ. Пока работает
-        }
-        else
-        {
-            enemy_AI.target.currentHP--; 
-            playerDone = true; // игрок ответил
-            Debug.Log("Игрок потерял хп");
-        }
     }
 
     public void Bartender()
@@ -151,19 +105,6 @@ public class PlayCard : MonoBehaviour
 
     public void CyberImplant()
     {
-        Debug.Log("Карта разыграна");
-    }
-
-    public void Dodge()
-    {
-        // скорее всего, будет использоваться как кнопка
-
-        // нужно решить как реализовать это, если на каждой карте уже висит кнопка, которая
-        // подбирает карты из лутбокса
-
-        // как вариант, сделать флаг для лутбокса и ответки, чтобы при true/false значении эти два варианта
-        // не конфликтовали между собой
-
         Debug.Log("Карта разыграна");
     }
 
@@ -388,5 +329,62 @@ public class PlayCard : MonoBehaviour
             }
         }
         spawnCard.SpawnByIndex(index); // и спавнит
+    }
+
+    public IEnumerator WaitForPlayer()
+    {
+        enemy_AI = GetComponent<Enemy_AI>();
+        playerDone = false; // ожидание ответа
+
+        yield return new WaitForSeconds(0.3f); // небольшая задержка перед ходом
+
+        // проверяет, есть ли у игрока хотя бы 1 нужная в этой ситуации карта
+        foreach (Cards card in enemy_AI.target.hand)
+        {
+            if (card.itemName == currentReactionCard)
+                dodged = true;
+        }
+
+        // пытается понять, есть ли у игрока возможность отреагировать
+        if (dodged)
+        {
+            // нужно добавить что-то, что будет сигнализировать о том, что игрок может отреагировать
+            Debug.Log("Ожидание реакции игрока");
+
+            Player_CanMove();
+        }
+        else
+        {
+            enemy_AI.target.currentHP--;
+            playerDone = true; // игрок ответил
+            Debug.Log("Игрок потерял хп");
+        }
+    }
+
+    void Player_CanMove()
+    {
+        // отключает блокировку карт
+        TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+        turnManager.blocker.SetActive(false);
+
+        // блокирует возможность вытянуть карту и включает кнопку
+        GameObject container = GameObject.Find("Elements Container");
+        for (int i = 0; i < container.transform.childCount; i++)
+        {
+            DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
+            Button buttonCard = dragCard.gameObject.GetComponent<Button>();
+            CardProperty cardProperty = dragCard.gameObject.GetComponent<CardProperty>();
+            GetCardItem thisCard = dragCard.gameObject.GetComponent<GetCardItem>();
+
+            dragCard.enabled = false;
+            buttonCard.enabled = true;
+
+            // передает карте данные о выстрелившем противнике карте
+            cardProperty.enemyObj = gameObject;
+
+            // проверяет, что мы нажали именно ту карту, которая нам нужна
+            if (thisCard.nameKey == currentReactionCard)
+                cardProperty.cardNeeded = true;
+        }
     }
 }

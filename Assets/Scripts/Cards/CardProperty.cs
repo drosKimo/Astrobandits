@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ public class CardProperty : MonoBehaviour
     EnemyCardReaction enemyCardReaction;
     CharacterRole characterRole;
 
+    [HideInInspector] public GameObject enemyObj;
+    [HideInInspector] public bool cardNeeded;
+
     void Awake()
     {
         getCardItem = GetComponent<GetCardItem>();
@@ -26,7 +30,19 @@ public class CardProperty : MonoBehaviour
         switch (gameObject.transform.parent.name)
         {
             case "Elements Container":
-                Debug.Log("Реакция");
+                if (cardNeeded)
+                {
+                    // забирает управление у игрока
+                    Button buttonCard = GetComponent<Button>();
+                    CPdragScript.enabled = true;
+                    buttonCard.enabled = false;
+
+                    // передает данные о том, что игрок закончил реакцию
+                    PlayCard playCard = enemyObj.GetComponent<PlayCard>();
+                    playCard.playerDone = true;
+
+                    Destroy(gameObject); // уничтожает эту карту
+                }
                 break;
 
             case "LootBoxes Container":
@@ -140,10 +156,6 @@ public class CardProperty : MonoBehaviour
 
             case "Cards.Name.Bartender":
                 playCard.Bartender();
-                break;
-
-            case "Cards.Name.Dodge":
-                playCard.Dodge();
                 break;
 
             case "Cards.Name.Insectoids":
