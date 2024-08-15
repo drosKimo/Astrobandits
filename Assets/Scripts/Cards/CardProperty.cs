@@ -32,10 +32,21 @@ public class CardProperty : MonoBehaviour
             case "Elements Container":
                 if (cardNeeded)
                 {
-                    // забирает управление у игрока
-                    Button buttonCard = GetComponent<Button>();
-                    CPdragScript.enabled = true;
-                    buttonCard.enabled = false;
+                    // включает блокировку карт
+                    TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+                    turnManager.blocker.SetActive(true);
+
+                    GameObject container = GameObject.Find("Elements Container");
+
+                    // забирает управление у игрока (и разблокирует все карты)
+                    for (int i = 0; i < container.transform.childCount; i++)
+                    {
+                        DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
+                        Button buttonCard = dragCard.gameObject.GetComponent<Button>();
+
+                        dragCard.enabled = false;
+                        buttonCard.enabled = true;
+                    }
 
                     // передает данные о том, что игрок закончил реакцию
                     PlayCard playCard = enemyObj.GetComponent<PlayCard>();
