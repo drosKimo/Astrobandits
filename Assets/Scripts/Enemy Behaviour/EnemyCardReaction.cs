@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyCardReaction : MonoBehaviour
 {
     CharacterRole characterRole;
+    Enemy_AI thisAI;
 
     bool missed = false; // проверяет, может ли противник отбить атаку
     int itemIndex; // индекс разыгранной карты
@@ -74,5 +76,18 @@ public class EnemyCardReaction : MonoBehaviour
     public void Insectoids()
     {
         EnemyPow();
+    }
+
+    public IEnumerator Challenge()
+    {
+        EnemyPow();
+
+        if (missed)
+        {
+            PlayCard playCard = GetComponent<PlayCard>(); // отвечающий может отреагировать, зная как разыгрывается карта
+           
+            StartCoroutine(playCard.Challenge());
+            yield return null;
+        }
     }
 }

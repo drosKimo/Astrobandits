@@ -13,9 +13,14 @@ public class PlayCard : MonoBehaviour
     CharacterRole characterRole;
     Enemy_AI enemy_AI;
 
-    bool dodged = false;
+    // блок для реакции игрока на карты Тыщ, Инсектоиды, Армагеддец и Вызов
+    bool dodged;
     [HideInInspector] public bool playerDone;
     [HideInInspector] public string currentReactionCard;
+
+    // блок для взаимодействия с противником для розыгрыша карты Вызов
+    [HideInInspector] public EnemyCardReaction enemyReact; 
+    [HideInInspector] public Enemy_AI challengeAI;
 
     public IEnumerator Pow() // атака противника
     {
@@ -63,7 +68,7 @@ public class PlayCard : MonoBehaviour
         {
             CharacterRole charRole = enemy.GetComponent<CharacterRole>();
 
-            if (charRole.currentHP < charRole.maxHP) // ddd
+            if (charRole.currentHP < charRole.maxHP)
                 charRole.currentHP++;
         }
     }
@@ -73,14 +78,23 @@ public class PlayCard : MonoBehaviour
         Debug.Log("Карта разыграна");
     }
 
-    public void Challenge()
+    public IEnumerator Challenge()
     {
-        // аналогично с действиями с выстрелом, но нужно сделать так, чтобы все взаимодействия
-        // заключались в цикличную корутину для каждого
+        Enemy_AI enemy_AI = GetComponent<Enemy_AI>(); // отвечающая сторона получает свой компонент AI
 
-        // как вариант, можно сделать так, чтобы игрок мог разыгрывать только нужные карты в обоих случаях
+        Debug.Log(enemy_AI.target);
 
-        Debug.Log("Карта разыграна");
+        // проверяет target
+        if (enemy_AI.target.gameObject.tag == "Player")
+        {
+            currentReactionCard = "Cards.Name.Pow"; // задает карту, которая должна использоваться чтобы не потерять хп
+            StartCoroutine(WaitForPlayer()); // ждем реакцию игрока
+        }
+        else
+        {
+            // прописать как противник должен кидыть Вызов на других
+        }
+        yield return null;
     }
 
     public void Collapsar()
@@ -333,7 +347,9 @@ public class PlayCard : MonoBehaviour
 
     public IEnumerator WaitForPlayer()
     {
-        enemy_AI = GetComponent<Enemy_AI>();
+        dodged = false;
+
+        enemy_AI = GetComponent<Enemy_AI>(); // нельзя убрать, иначе ломается
         playerDone = false; // ожидание ответа
 
         yield return new WaitForSeconds(0.3f); // небольшая задержка перед ходом
@@ -379,7 +395,7 @@ public class PlayCard : MonoBehaviour
             dragCard.enabled = false;
             buttonCard.enabled = true;
 
-            // передает карте данные о выстрелившем противнике карте
+            // передает карте данные о выстрелившем противнике
             cardProperty.enemyObj = gameObject;
 
             // проверяет, что мы нажали именно ту карту, которая нам нужна

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +14,12 @@ public class CardProperty : MonoBehaviour
     CharacterRole characterRole;
 
     [HideInInspector] public GameObject enemyObj;
-    [HideInInspector] public bool cardNeeded;
+    [HideInInspector] public bool cardNeeded, isChallenge;
+
+    void Start()
+    {
+        isChallenge = false;
+    }
 
     void Awake()
     {
@@ -32,20 +36,28 @@ public class CardProperty : MonoBehaviour
             case "Elements Container":
                 if (cardNeeded)
                 {
-                    // включает блокировку карт
-                    TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
-                    turnManager.blocker.SetActive(true);
-
-                    GameObject container = GameObject.Find("Elements Container");
-
-                    // забирает управление у игрока (и разблокирует все карты)
-                    for (int i = 0; i < container.transform.childCount; i++)
+                    if (isChallenge)
                     {
-                        DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
-                        Button buttonCard = dragCard.gameObject.GetComponent<Button>();
+                        isChallenge = false;
+                        Play_Challenge();
+                    }
+                    else
+                    {
+                        // включает блокировку карт
+                        TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+                        turnManager.blocker.SetActive(true);
 
-                        dragCard.enabled = false;
-                        buttonCard.enabled = true;
+                        GameObject container = GameObject.Find("Elements Container");
+
+                        // забирает управление у игрока (и разблокирует все карты)
+                        for (int i = 0; i < container.transform.childCount; i++)
+                        {
+                            DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
+                            Button buttonCard = dragCard.gameObject.GetComponent<Button>();
+
+                            dragCard.enabled = false;
+                            buttonCard.enabled = true;
+                        }
                     }
 
                     // передает данные о том, что игрок закончил реакцию
@@ -62,6 +74,15 @@ public class CardProperty : MonoBehaviour
         }
     }
 
+    void Play_Challenge() // только когда игрок разыграл Вызов
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        playCard.challengeAI.target = player.GetComponent<CharacterRole>(); // AI объявляет угрожающую сторону
+
+        StartCoroutine(playCard.enemyReact.Challenge());
+    }
+
     // включает свойство карты по имени
     public void GetCardToPlay()
     {
@@ -74,7 +95,12 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Challenge":
-                playCard.Challenge();
+                // получаем противника, на которого сыграли Вызов
+                playCard.enemyReact = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
+                // получаем AI отвечающей стороны
+                playCard.challengeAI = CPdragScript.hit.collider.gameObject.GetComponent<Enemy_AI>();
+
+                Play_Challenge();
                 break;
 
             case "Cards.Name.Collapsar":
