@@ -38,6 +38,8 @@ public class CardProperty : MonoBehaviour
                 {
                     if (isChallenge)
                     {
+                        // цикл пока не замкнулс€, нужно перепроверить карту ¬ызов
+
                         isChallenge = false;
                         Play_Challenge();
                     }
@@ -49,21 +51,22 @@ public class CardProperty : MonoBehaviour
 
                         GameObject container = GameObject.Find("Elements Container");
 
-                        // забирает управление у игрока (и разблокирует все карты)
+                        // и разблокирует все карты
                         for (int i = 0; i < container.transform.childCount; i++)
                         {
                             DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
                             Button buttonCard = dragCard.gameObject.GetComponent<Button>();
 
-                            dragCard.enabled = false;
-                            buttonCard.enabled = true;
+                            dragCard.enabled = true;
+                            buttonCard.enabled = false;
                         }
                     }
 
                     // передает данные о том, что игрок закончил реакцию
-                    PlayCard playCard = enemyObj.GetComponent<PlayCard>();
-                    playCard.playerDone = true;
+                    PlayCard playEnemyCard = enemyObj.GetComponent<PlayCard>();
+                    playEnemyCard.playerDone = true;
 
+                    RecreateInventory();
                     Destroy(gameObject); // уничтожает эту карту
                 }
                 break;

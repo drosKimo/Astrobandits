@@ -71,6 +71,7 @@ public class Enemy_AI : MonoBehaviour
                 case "Cards.Name.Pow":
                     if (!playedPow)
                     {
+                        playCard.playerDone = false; // ожидание ответа
                         playedPow = true;
                         EnemySearchOther();
                         StartCoroutine(playCard.Pow());
@@ -85,6 +86,7 @@ public class Enemy_AI : MonoBehaviour
 
                 case "Cards.Name.Insectoids":             
                     Debug.Log($"{gameObject.name} сыграл {card.name}");
+                    playCard.playerDone = false; // ожидание ответа
 
                     GameObject list = GameObject.Find("Enemies");
                     for (int i = 0; i < list.transform.childCount; i++)
@@ -114,6 +116,7 @@ public class Enemy_AI : MonoBehaviour
 
                 case "Cards.Name.Armageddets":
                     Debug.Log($"{gameObject.name} сыграл {card.name}");
+                    playCard.playerDone = false; // ожидание ответа
 
                     GameObject list2 = GameObject.Find("Enemies");
                     for (int i = 0; i < list2.transform.childCount; i++)

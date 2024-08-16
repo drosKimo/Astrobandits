@@ -350,7 +350,7 @@ public class PlayCard : MonoBehaviour
         dodged = false;
 
         enemy_AI = GetComponent<Enemy_AI>(); // нельзя убрать, иначе ломается
-        playerDone = false; // ожидание ответа
+        //playerDone = false; // ожидание ответа
 
         yield return new WaitForSeconds(0.3f); // небольшая задержка перед ходом
 
