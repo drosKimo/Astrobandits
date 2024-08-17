@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,13 +13,15 @@ public class CardProperty : MonoBehaviour
     PlayCard playCard;
     EnemyCardReaction enemyCardReaction;
     CharacterRole characterRole;
+    TurnManager turnManager;
 
     [HideInInspector] public GameObject enemyObj;
-    [HideInInspector] public bool cardNeeded, isChallenge;
+    [HideInInspector] public bool cardNeeded;
 
     void Start()
     {
-        isChallenge = false;
+        turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+        turnManager.isChallenge = false;
     }
 
     void Awake()
@@ -36,11 +39,21 @@ public class CardProperty : MonoBehaviour
             case "Elements Container":
                 if (cardNeeded)
                 {
-                    if (isChallenge)
-                    {
-                        // цикл пока не замкнулся, нужно перепроверить карту Вызов
+                    GameObject container = GameObject.Find("Elements Container");
 
-                        isChallenge = false;
+                    for (int i = 0; i < container.transform.childCount; i++) // разблокирует все карты
+                    {
+                        DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
+                        Button buttonCard = dragCard.gameObject.GetComponent<Button>();
+
+                        dragCard.enabled = true;
+                        buttonCard.enabled = false;
+                    }
+
+                    if (turnManager.isChallenge)
+                    {
+                        // начинает цикл перестрелки пока у кого-то не кончатся Тыщ
+                        turnManager.isChallenge = false;
                         Play_Challenge();
                     }
                     else
@@ -48,18 +61,6 @@ public class CardProperty : MonoBehaviour
                         // включает блокировку карт
                         TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
                         turnManager.blocker.SetActive(true);
-
-                        GameObject container = GameObject.Find("Elements Container");
-
-                        // и разблокирует все карты
-                        for (int i = 0; i < container.transform.childCount; i++)
-                        {
-                            DragScript dragCard = container.transform.GetChild(i).GetComponent<DragScript>();
-                            Button buttonCard = dragCard.gameObject.GetComponent<Button>();
-
-                            dragCard.enabled = true;
-                            buttonCard.enabled = false;
-                        }
                     }
 
                     // передает данные о том, что игрок закончил реакцию
@@ -81,9 +82,9 @@ public class CardProperty : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        playCard.challengeAI.target = player.GetComponent<CharacterRole>(); // AI объявляет угрожающую сторону
+        turnManager.playChallenge.challengeAI.target = player.GetComponent<CharacterRole>(); // AI объявляет угрожающую сторону
 
-        StartCoroutine(playCard.enemyReact.Challenge());
+        StartCoroutine(turnManager.playChallenge.enemyReact.Challenge());
     }
 
     // включает свойство карты по имени
@@ -98,6 +99,8 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Challenge":
+                // переносим данные во внешнее хранилище
+                turnManager.playChallenge = playCard;
                 // получаем противника, на которого сыграли Вызов
                 playCard.enemyReact = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
                 // получаем AI отвечающей стороны

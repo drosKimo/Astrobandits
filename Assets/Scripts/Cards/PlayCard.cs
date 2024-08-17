@@ -10,6 +10,7 @@ public class PlayCard : MonoBehaviour
     [HideInInspector] public Cards playedCard;
     [HideInInspector] public Storage playStorage;
 
+    TurnManager turnManager;
     CharacterRole characterRole;
     Enemy_AI enemy_AI;
 
@@ -21,6 +22,11 @@ public class PlayCard : MonoBehaviour
     // блок для взаимодействия с противником для розыгрыша карты Вызов
     [HideInInspector] public EnemyCardReaction enemyReact; 
     [HideInInspector] public Enemy_AI challengeAI;
+
+    void Awake()
+    {
+        turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+    }
 
     public IEnumerator Pow() // атака противника
     {
@@ -87,6 +93,10 @@ public class PlayCard : MonoBehaviour
         // проверяет target
         if (enemy_AI.target.gameObject.tag == "Player")
         {
+            // нужно чтобы можно было продолжить
+            
+            turnManager.isChallenge = true;
+
             currentReactionCard = "Cards.Name.Pow"; // задает карту, которая должна использоваться чтобы не потерять хп
             StartCoroutine(WaitForPlayer()); // ждем реакцию игрока
         }
@@ -380,7 +390,6 @@ public class PlayCard : MonoBehaviour
     void Player_CanMove()
     {
         // отключает блокировку карт
-        TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
         turnManager.blocker.SetActive(false);
 
         // блокирует возможность вытянуть карту и включает кнопку

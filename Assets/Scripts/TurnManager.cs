@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class TurnManager : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class TurnManager : MonoBehaviour
     CharacterRole currentPlayer;
 
     private int turnIndex = 0;
+
+    // для CardProperty
+    [HideInInspector] public bool isChallenge;
+    [HideInInspector] public PlayCard playChallenge;
 
     void Start()
     {
