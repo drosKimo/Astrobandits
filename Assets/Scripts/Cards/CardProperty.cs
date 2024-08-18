@@ -82,7 +82,12 @@ public class CardProperty : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        turnManager.playChallenge.challengeAI.target = player.GetComponent<CharacterRole>(); // AI объ€вл€ет угрожающую сторону
+        // нужно заменить способ розыгрыша
+        // 1 - когда игрок, 2 - когда противник
+        //turnManager.playChallenge.challengeAI.target = player.GetComponent<CharacterRole>(); // AI объ€вл€ет угрожающую сторону
+        //turnManager.challenge_AI = turnManager.playChallenge.challengeAI; // ? поможет когда противник кинул вызов
+
+        turnManager.playChallenge = turnManager.challenge_AI.gameObject.GetComponent<PlayCard>();
 
         StartCoroutine(turnManager.playChallenge.enemyReact.Challenge());
     }
@@ -100,7 +105,7 @@ public class CardProperty : MonoBehaviour
 
             case "Cards.Name.Challenge":
                 // переносим данные во внешнее хранилище
-                turnManager.playChallenge = playCard;
+                turnManager.challenge_AI = CPdragScript.hit.collider.gameObject.GetComponent<Enemy_AI>();
                 // получаем противника, на которого сыграли ¬ызов
                 playCard.enemyReact = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
                 // получаем AI отвечающей стороны

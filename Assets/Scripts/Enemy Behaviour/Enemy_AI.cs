@@ -69,7 +69,7 @@ public class Enemy_AI : MonoBehaviour
             {
                 // TODO: поставить ограничение по выстрелам через булевый маркер
                 case "Cards.Name.Pow":
-                    if (!playedPow)
+                    if (!playedPow) // проверяет, стрелял ли уже персонаж
                     {
                         playCard.playerDone = false; // ожидание ответа
                         playedPow = true;
@@ -263,6 +263,20 @@ public class Enemy_AI : MonoBehaviour
                     index.Add(characterRole.hand.IndexOf(card));
                     break;
 
+                case "Cards.Name.Challenge":
+                    EnemySearchOther(); // ищет target
+                    Debug.Log($"{gameObject.name} кинул вызов {target.name}");
+
+                    TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+                    turnManager.challenge_AI = gameObject.GetComponent<Enemy_AI>();
+
+                    StartCoroutine(playCard.Challenge());
+
+                    index.Add(characterRole.hand.IndexOf(card));
+                    yield return new WaitUntil(() => playCard.playerDone); // дождаться ответа игрока
+                    // нужно заменить флажок чтобы серия не прерывалась после первого выстрела
+                    break;
+
                 default:
                     Debug.Log("Противник не умеет играть эту карту");
                     break;
@@ -278,8 +292,6 @@ public class Enemy_AI : MonoBehaviour
             /*switch (card.itemName)
             {
                 case "Cards.Name.Bike":
-                    break;
-                case "Cards.Name.Challenge":
                     break;
                 case "Cards.Name.Collapsar":
                     break;

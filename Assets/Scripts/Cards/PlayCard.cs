@@ -86,9 +86,9 @@ public class PlayCard : MonoBehaviour
 
     public IEnumerator Challenge()
     {
-        Enemy_AI enemy_AI = GetComponent<Enemy_AI>(); // отвечающая сторона получает свой компонент AI
-
-        Debug.Log(enemy_AI.target);
+        // когда игрок кидает вызов - это отвечающая сторона
+        // когда противник кидает вызов - это нападающая сторона
+        Enemy_AI enemy_AI = turnManager.challenge_AI; 
 
         // проверяет target
         if (enemy_AI.target.gameObject.tag == "Player")
@@ -99,12 +99,17 @@ public class PlayCard : MonoBehaviour
 
             currentReactionCard = "Cards.Name.Pow"; // задает карту, которая должна использоваться чтобы не потерять хп
             StartCoroutine(WaitForPlayer()); // ждем реакцию игрока
+
+            yield return new WaitUntil(() => playerDone); // дождаться ответа игрока
         }
         else
         {
+            playerDone = true;
             // прописать как противник должен кидыть Вызов на других
         }
+
         yield return null;
+        // нужно добавить флажок, который будет тормозить ход противника пока у кого-то не кончатся карты Тыщ
     }
 
     public void Collapsar()
