@@ -5,6 +5,8 @@ public class EnemyCardReaction : MonoBehaviour
 {
     CharacterRole characterRole;
     Enemy_AI thisAI;
+    TurnManager turnManager;
+    PlayCard playCard;
 
     bool missed = false; // проверяет, может ли противник отбить атаку
     int itemIndex; // индекс разыгранной карты
@@ -12,6 +14,7 @@ public class EnemyCardReaction : MonoBehaviour
     void Awake()
     {
         characterRole = GetComponent<CharacterRole>();
+        turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
     }
 
     void EnemyDodge() // разыгрывается противником, когда ему нужно скинуть Уворот
@@ -58,6 +61,13 @@ public class EnemyCardReaction : MonoBehaviour
             characterRole.currentHP--;
             if (characterRole.currentHP <= 0)
                 characterRole.DeadPlayer();
+
+            if (turnManager.isChallenge)
+            {
+                playCard = GetComponent<PlayCard>();
+                playCard.challengeDone = true;
+                turnManager.isChallenge = false;
+            }
         }
     }
 
@@ -84,9 +94,9 @@ public class EnemyCardReaction : MonoBehaviour
 
         if (missed)
         {
-            PlayCard playCard = GetComponent<PlayCard>(); // отвечающий может отреагировать, зная как разыгрывается карта
+            playCard = GetComponent<PlayCard>(); // отвечающий может отреагировать, зная как разыгрывается карта
            
-            StartCoroutine(playCard.Challenge());
+            playCard.Challenge();
             yield return null;
         }
     }
