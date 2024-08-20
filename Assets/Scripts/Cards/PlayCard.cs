@@ -89,22 +89,31 @@ public class PlayCard : MonoBehaviour
         // когда игрок кидает вызов - это отвечающа€ сторона
         // когда противник кидает вызов - это нападающа€ сторона
         Enemy_AI enemy_AI = turnManager.challenge_AI; 
-        enemyReact = GetComponent<EnemyCardReaction>();
+        enemyReact = turnManager.challenge_AI.GetComponent<EnemyCardReaction>();
 
         // провер€ет target
         if (enemy_AI.target.gameObject.tag == "Player")
         {
+            challengeDone = true;
+             /*
+            // временно оставим игрока
             // нужно чтобы можно было продолжить
             
             turnManager.isChallenge = true;
 
             currentReactionCard = "Cards.Name.Pow"; // задает карту, котора€ должна использоватьс€ чтобы не потер€ть хп
             StartCoroutine(WaitForPlayer()); // ждем реакцию игрока
+            */
         }
         else
         {
-            //playerDone = true;
-            challengeDone = true;
+            // все еще хрень
+            enemyReact = enemy_AI.target.gameObject.GetComponent<EnemyCardReaction>();
+
+            Debug.Log($"{enemy_AI.target.gameObject.name} отвечает {enemy_AI.gameObject.name}");
+            StartCoroutine(enemyReact.Challenge());
+
+            //challengeDone = true;
             // прописать как противник должен кидыть ¬ызов на других
         }
     }
