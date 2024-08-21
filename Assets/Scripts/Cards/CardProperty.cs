@@ -53,7 +53,6 @@ public class CardProperty : MonoBehaviour
                     if (turnManager.isChallenge)
                     {
                         // начинает цикл перестрелки пока у кого-то не кончатся Тыщ
-                        //turnManager.isChallenge = false;
                         Play_Challenge();
                     }
                     else
@@ -80,17 +79,10 @@ public class CardProperty : MonoBehaviour
 
     void Play_Challenge() // только когда игрок разыграл Вызов
     {
-        // нужно заменить способ розыгрыша
-        // 1 - когда игрок, 2 - когда противник
-        //turnManager.playChallenge.challengeAI.target = player.GetComponent<CharacterRole>(); // AI объявляет угрожающую сторону
-        //turnManager.challenge_AI = turnManager.playChallenge.challengeAI; // ? поможет когда противник кинул вызов
-
         turnManager.playChallenge = turnManager.challenge_AI.gameObject.GetComponent<PlayCard>();
+        EnemyCardReaction reactEnemy = turnManager.challenge_AI.gameObject.GetComponent<EnemyCardReaction>();
 
-        //Debug.Log(turnManager.playChallenge.gameObject.name);
-        //Debug.Log(turnManager.gameObject.name);
-
-        StartCoroutine(turnManager.playChallenge.enemyReact.Challenge());
+        StartCoroutine(reactEnemy.Challenge());
     }
 
     // включает свойство карты по имени
@@ -106,15 +98,16 @@ public class CardProperty : MonoBehaviour
 
             case "Cards.Name.Challenge":
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
+                turnManager.isChallenge = true;
 
                 // переносим данные во внешнее хранилище
-                turnManager.challenge_AI = CPdragScript.hit.collider.gameObject.GetComponent<Enemy_AI>();
+                turnManager.challenge_AI = CPdragScript.hit.collider.gameObject.GetComponent<Enemy_AI>(); // на кого кинули Вызов
+                turnManager.challenge_AI.target = player.GetComponent<CharacterRole>(); // он объявляет игрока целью
+
                 // получаем противника, на которого сыграли Вызов
                 playCard.enemyReact = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
                 // получаем AI отвечающей стороны
                 playCard.challengeAI = CPdragScript.hit.collider.gameObject.GetComponent<Enemy_AI>();
-                // AI объявляет угрожающую сторону
-                playCard.challengeAI.target = player.GetComponent<CharacterRole>(); 
 
                 Play_Challenge();
                 break;

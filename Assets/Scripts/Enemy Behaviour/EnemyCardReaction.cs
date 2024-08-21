@@ -4,7 +4,6 @@ using UnityEngine;
 public class EnemyCardReaction : MonoBehaviour
 {
     CharacterRole characterRole;
-    Enemy_AI thisAI;
     TurnManager turnManager;
     PlayCard playCard;
 
@@ -64,8 +63,7 @@ public class EnemyCardReaction : MonoBehaviour
 
             if (turnManager.isChallenge)
             {
-                playCard = GetComponent<PlayCard>();
-                playCard.challengeDone = true;
+                turnManager.challengeDone = true;
                 turnManager.isChallenge = false;
             }
         }
@@ -90,14 +88,28 @@ public class EnemyCardReaction : MonoBehaviour
 
     public IEnumerator Challenge()
     {
+        Debug.Log(123); // если разыгрывает игрок, пока не работает. Править тут, дальше не проходит на этом этапе
+
+        yield return new WaitForSeconds(0.3f);
+
         EnemyPow();
+
+        playCard = GetComponent<PlayCard>();
 
         if (missed)
         {
-            playCard = GetComponent<PlayCard>(); // отвечающий может отреагировать, зная как разыгрывается карта
-           
+            // меняем игрока, которому нужно отвечать
+            Enemy_AI enemy_AI = GetComponent<Enemy_AI>(); // текущий отвечающий
+
+            if (enemy_AI.target.gameObject.tag != "Player")
+            {
+                enemy_AI.target = turnManager.challenge_AI.gameObject.GetComponent<CharacterRole>(); // текущий атакующий становится целью
+                turnManager.challenge_AI = enemy_AI; // отвечающий становится атакующим
+            }
+
             playCard.Challenge();
-            yield return null;
         }
+        else
+            turnManager.challengeDone = true;
     }
 }

@@ -270,11 +270,11 @@ public class Enemy_AI : MonoBehaviour
                     TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
                     turnManager.challenge_AI = gameObject.GetComponent<Enemy_AI>();
 
-                    playCard.challengeDone = false; // ожидание ответа
+                    turnManager.challengeDone = false; // ожидание ответа
                     playCard.Challenge();
 
                     index.Add(characterRole.hand.IndexOf(card));
-                    yield return new WaitUntil(() => playCard.challengeDone); // дождаться ответа игрока
+                    yield return new WaitUntil(() => turnManager.challengeDone); // дождаться ответа игрока
 
                     // флажок изменен, но серия все еще прерывается после первой реакции игрока
                     break;

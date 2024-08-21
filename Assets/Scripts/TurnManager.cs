@@ -16,7 +16,7 @@ public class TurnManager : MonoBehaviour
     private int turnIndex = 0;
 
     // для CardProperty
-    [HideInInspector] public bool isChallenge;
+    [HideInInspector] public bool isChallenge, challengeDone;
     [HideInInspector] public PlayCard playChallenge;
     [HideInInspector] public Enemy_AI challenge_AI;
 

@@ -16,7 +16,7 @@ public class PlayCard : MonoBehaviour
 
     // блок для реакции игрока на карты Тыщ, Инсектоиды, Армагеддец и Вызов
     bool dodged;
-    [HideInInspector] public bool playerDone, challengeDone;
+    [HideInInspector] public bool playerDone;
     [HideInInspector] public string currentReactionCard;
 
     // блок для взаимодействия с противником для розыгрыша карты Вызов
@@ -94,27 +94,17 @@ public class PlayCard : MonoBehaviour
         // проверяет target
         if (enemy_AI.target.gameObject.tag == "Player")
         {
-            challengeDone = true;
-             /*
-            // временно оставим игрока
-            // нужно чтобы можно было продолжить
-            
             turnManager.isChallenge = true;
 
             currentReactionCard = "Cards.Name.Pow"; // задает карту, которая должна использоваться чтобы не потерять хп
             StartCoroutine(WaitForPlayer()); // ждем реакцию игрока
-            */
         }
         else
         {
-            // все еще хрень
             enemyReact = enemy_AI.target.gameObject.GetComponent<EnemyCardReaction>();
 
             Debug.Log($"{enemy_AI.target.gameObject.name} отвечает {enemy_AI.gameObject.name}");
             StartCoroutine(enemyReact.Challenge());
-
-            //challengeDone = true;
-            // прописать как противник должен кидыть Вызов на других
         }
     }
 
@@ -394,7 +384,7 @@ public class PlayCard : MonoBehaviour
         {
             enemy_AI.target.currentHP--;
             playerDone = true; // игрок ответил
-            challengeDone = true;
+            turnManager.challengeDone = true;
 
             Debug.Log("Игрок потерял хп");
         }
