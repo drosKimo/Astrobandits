@@ -88,10 +88,6 @@ public class EnemyCardReaction : MonoBehaviour
 
     public IEnumerator Challenge()
     {
-        Debug.Log(123); // если разыгрывает игрок, пока не работает. ѕравить тут, дальше не проходит на этом этапе
-
-        yield return new WaitForSeconds(0.3f);
-
         EnemyPow();
 
         playCard = GetComponent<PlayCard>();
@@ -111,5 +107,7 @@ public class EnemyCardReaction : MonoBehaviour
         }
         else
             turnManager.challengeDone = true;
+
+        yield return new WaitForSeconds(0.3f);
     }
 }

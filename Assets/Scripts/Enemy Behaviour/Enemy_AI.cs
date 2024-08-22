@@ -15,7 +15,8 @@ public class Enemy_AI : MonoBehaviour
 
     List<int> index;
 
-    bool turnEnd, playedPow = false;
+    bool turnEnd;
+    [HideInInspector] public bool playedPow = false;
 
     // запуск логики противника
     public IEnumerator EnemyTurn()
@@ -276,8 +277,8 @@ public class Enemy_AI : MonoBehaviour
                     index.Add(characterRole.hand.IndexOf(card));
                     yield return new WaitUntil(() => turnManager.challengeDone); // дождаться ответа игрока
 
-                    // флажок изменен, но серия все еще прерывается после первой реакции игрока
-                    break;
+                    DestroyCards();
+                    goto restart;
 
                 default:
                     Debug.Log("Противник не умеет играть эту карту");
