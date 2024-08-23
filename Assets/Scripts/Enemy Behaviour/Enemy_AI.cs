@@ -68,7 +68,7 @@ public class Enemy_AI : MonoBehaviour
             // смотрит каждую карту в своей руке и пытается ее разыграть
             switch (card.itemName)
             {
-                // TODO: поставить ограничение по выстрелам через булевый маркер
+                /*
                 case "Cards.Name.Pow":
                     if (!playedPow) // проверяет, стрелял ли уже персонаж
                     {
@@ -83,7 +83,7 @@ public class Enemy_AI : MonoBehaviour
                     }
                     else
                         Debug.Log($"{gameObject.name} попытался выстрелить");
-                    break;
+                    break;*/
 
                 case "Cards.Name.Insectoids":             
                     Debug.Log($"{gameObject.name} сыграл {card.name}");
