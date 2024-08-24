@@ -278,7 +278,8 @@ public class Enemy_AI : MonoBehaviour
                     yield return new WaitUntil(() => turnManager.challengeDone); // дождаться ответа игрока
 
                     DestroyCards();
-                    goto restart;
+                    break;
+                /*goto restart;*/
 
                 default:
                     Debug.Log("Противник не умеет играть эту карту");
