@@ -52,6 +52,8 @@ public class TurnManager : MonoBehaviour
 
     void StartTurn()
     {
+        Debug.Log($"{playerTurn[turnIndex].gameObject.name} начал ход");
+
         if (list.transform.childCount > 1) // временно. Нужно для того, чтобы ход не продолжался если остается 1 игрок+
         {
             // логика хода противника
@@ -88,7 +90,6 @@ public class TurnManager : MonoBehaviour
 
     public void EndTurn()
     {
-        Debug.Log(turnIndex);
         if (playerTurn[turnIndex].tag == "Player") // Если ход был у игрока, при передаче хода блокируется рука
         {
             finMove.SetActive(false);

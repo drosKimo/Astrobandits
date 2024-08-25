@@ -319,6 +319,8 @@ public class Enemy_AI : MonoBehaviour
         }
 
         DestroyCards();
+        LeaveCards();
+
         turnEnd = true; // ход закончен
     }
 
@@ -332,5 +334,16 @@ public class Enemy_AI : MonoBehaviour
             characterRole.hand.RemoveAt(index[i - 1]);
         }
         index.Clear(); // очищает отбойник после удаления карт
+    }
+
+    // оставляет в руке не больше карт, чем хп у игрока
+    void LeaveCards()
+    {
+        // сейчас убирает просто все карты с конца списка. Нужно будет добавить систему, при которой противник
+        // будет оставлять у себя полезные карты
+        for (int i = characterRole.hand.Count; i > characterRole.currentHP; i--)
+        {
+            characterRole.hand.RemoveAt(i - 1);
+        }
     }
 }
