@@ -20,8 +20,8 @@ public class PlayCard : MonoBehaviour
     [HideInInspector] public string currentReactionCard;
 
     // блок для взаимодействия с противником для розыгрыша карты Вызов
-    [HideInInspector] public EnemyCardReaction enemyReact; 
-    [HideInInspector] public Enemy_AI challengeAI;
+    //[HideInInspector] public EnemyCardReaction enemyReact; 
+    //[HideInInspector] public Enemy_AI challengeAI;
 
     void Awake()
     {
@@ -84,26 +84,25 @@ public class PlayCard : MonoBehaviour
         Debug.Log("Карта разыграна");
     }
 
-    public void Challenge()
+    public void Challenge() // только противник
     {
-        // когда игрок кидает вызов - это отвечающая сторона
-        // когда противник кидает вызов - это нападающая сторона
-        Enemy_AI enemy_AI = turnManager.challenge_AI; 
-        enemyReact = turnManager.challenge_AI.GetComponent<EnemyCardReaction>();
+        Enemy_AI challengeAI = turnManager.challenge_AI;
+        EnemyCardReaction enemyReact;
+
+        turnManager.isChallenge = true;
+        //enemyReact = turnManager.challenge_AI.GetComponent<EnemyCardReaction>();
 
         // проверяет target
-        if (enemy_AI.target.gameObject.tag == "Player")
+        if (challengeAI.target.gameObject.tag == "Player")
         {
-            turnManager.isChallenge = true;
-
             currentReactionCard = "Cards.Name.Pow"; // задает карту, которая должна использоваться чтобы не потерять хп
             StartCoroutine(WaitForPlayer()); // ждем реакцию игрока
         }
         else
         {
-            enemyReact = enemy_AI.target.gameObject.GetComponent<EnemyCardReaction>();
+            enemyReact = challengeAI.target.gameObject.GetComponent<EnemyCardReaction>();
 
-            Debug.Log($"{enemy_AI.target.gameObject.name} отвечает {enemy_AI.gameObject.name}");
+            Debug.Log($"{challengeAI.target.gameObject.name} отвечает {challengeAI.gameObject.name}");
             StartCoroutine(enemyReact.Challenge());
         }
     }

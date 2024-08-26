@@ -79,7 +79,6 @@ public class CardProperty : MonoBehaviour
 
     void Play_Challenge() // только когда игрок разыграл Вызов
     {
-        turnManager.playChallenge = turnManager.challenge_AI.gameObject.GetComponent<PlayCard>();
         EnemyCardReaction reactEnemy = turnManager.challenge_AI.gameObject.GetComponent<EnemyCardReaction>();
 
         StartCoroutine(reactEnemy.Challenge());
@@ -101,13 +100,8 @@ public class CardProperty : MonoBehaviour
                 turnManager.isChallenge = true;
 
                 // переносим данные во внешнее хранилище
-                turnManager.challenge_AI = CPdragScript.hit.collider.gameObject.GetComponent<Enemy_AI>(); // на кого кинули Вызов
+                turnManager.challenge_AI = playCard.gameObject.GetComponent<Enemy_AI>(); // на кого кинули Вызов
                 turnManager.challenge_AI.target = player.GetComponent<CharacterRole>(); // он объявляет игрока целью
-
-                // получаем противника, на которого сыграли Вызов
-                playCard.enemyReact = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
-                // получаем AI отвечающей стороны
-                playCard.challengeAI = CPdragScript.hit.collider.gameObject.GetComponent<Enemy_AI>();
 
                 Play_Challenge();
                 break;

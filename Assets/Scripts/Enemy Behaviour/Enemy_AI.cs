@@ -68,7 +68,6 @@ public class Enemy_AI : MonoBehaviour
             // смотрит каждую карту в своей руке и пытается ее разыграть
             switch (card.itemName)
             {
-                /*
                 case "Cards.Name.Pow":
                     if (!playedPow) // проверяет, стрелял ли уже персонаж
                     {
@@ -83,7 +82,7 @@ public class Enemy_AI : MonoBehaviour
                     }
                     else
                         Debug.Log($"{gameObject.name} попытался выстрелить");
-                    break;*/
+                    break;
 
                 case "Cards.Name.Insectoids":             
                     Debug.Log($"{gameObject.name} сыграл {card.name}");
@@ -272,14 +271,14 @@ public class Enemy_AI : MonoBehaviour
                     turnManager.challenge_AI = gameObject.GetComponent<Enemy_AI>();
 
                     turnManager.challengeDone = false; // ожидание ответа
-                    playCard.Challenge();
 
                     index.Add(characterRole.hand.IndexOf(card));
-                    yield return new WaitUntil(() => turnManager.challengeDone); // дождаться ответа игрока
-
                     DestroyCards();
+
+                    playCard.Challenge();
+
+                    yield return new WaitUntil(() => turnManager.challengeDone); // дождаться ответа игрока
                     break;
-                /*goto restart;*/
 
                 default:
                     Debug.Log("Противник не умеет играть эту карту");

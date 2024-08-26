@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyCardReaction : MonoBehaviour
@@ -7,7 +8,7 @@ public class EnemyCardReaction : MonoBehaviour
     TurnManager turnManager;
     PlayCard playCard;
 
-    bool missed = false; // проверяет, может ли противник отбить атаку
+    bool missed = false, challenge = false; // проверяет, может ли противник отбить атаку
     int itemIndex; // индекс разыгранной карты
 
     void Awake()
@@ -41,6 +42,7 @@ public class EnemyCardReaction : MonoBehaviour
             {
                 missed = true;
                 itemIndex = characterRole.hand.IndexOf(card);
+                break; // нужно выйти из цикла на случай, если карт Тыщ больше 1 штуки
             }
             else
                 missed = false;
@@ -54,18 +56,24 @@ public class EnemyCardReaction : MonoBehaviour
         if (missed == true)
         {
             characterRole.hand.RemoveAt(itemIndex);
+
+            missed = false;
+            challenge = true;
         }
         else
         {
+            Debug.Log($"{gameObject.name} потерял хп");
             characterRole.currentHP--;
             if (characterRole.currentHP <= 0)
                 characterRole.DeadPlayer();
 
-            if (turnManager.isChallenge)
+            if (turnManager.isChallenge) // когда против игрока
             {
                 turnManager.challengeDone = true;
                 turnManager.isChallenge = false;
             }
+            /*else
+                challenge = false;*/
         }
     }
 
@@ -92,22 +100,29 @@ public class EnemyCardReaction : MonoBehaviour
 
         playCard = GetComponent<PlayCard>();
 
-        if (missed)
+        if (turnManager.isChallenge)
         {
             // меняем игрока, которому нужно отвечать
-            Enemy_AI enemy_AI = GetComponent<Enemy_AI>(); // текущий отвечающий
+            Enemy_AI attacker_AI = turnManager.challenge_AI; // текущий атакующий
 
-            if (enemy_AI.target.gameObject.tag != "Player")
+            if (attacker_AI.target.gameObject.tag != "Player")
             {
-                enemy_AI.target = turnManager.challenge_AI.gameObject.GetComponent<CharacterRole>(); // текущий атакующий становится целью
-                turnManager.challenge_AI = enemy_AI; // отвечающий становится атакующим
+                Enemy_AI defender_AI = turnManager.challenge_AI.target.gameObject.GetComponent<Enemy_AI>(); // текущий отвечающий
+                CharacterRole attacker = attacker_AI.gameObject.GetComponent<CharacterRole>();
+
+                turnManager.challenge_AI = defender_AI; // отвечающий становится атакующим
+                turnManager.challenge_AI.target = attacker; // атакующий становится отвечающим
+
+                // ломается где-то здесь
             }
 
+            //challenge = false;
+            yield return new WaitForSeconds(0.3f);
             playCard.Challenge();
         }
         else
             turnManager.challengeDone = true;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return null;
     }
 }
