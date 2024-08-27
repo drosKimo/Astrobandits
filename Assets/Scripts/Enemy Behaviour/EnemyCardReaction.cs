@@ -8,7 +8,7 @@ public class EnemyCardReaction : MonoBehaviour
     TurnManager turnManager;
     PlayCard playCard;
 
-    bool missed = false, challenge = false; // проверяет, может ли противник отбить атаку
+    bool missed = false; // проверяет, может ли противник отбить атаку
     int itemIndex; // индекс разыгранной карты
 
     void Awake()
@@ -58,7 +58,6 @@ public class EnemyCardReaction : MonoBehaviour
             characterRole.hand.RemoveAt(itemIndex);
 
             missed = false;
-            challenge = true;
         }
         else
         {
@@ -72,8 +71,6 @@ public class EnemyCardReaction : MonoBehaviour
                 turnManager.challengeDone = true;
                 turnManager.isChallenge = false;
             }
-            /*else
-                challenge = false;*/
         }
     }
 
@@ -116,7 +113,6 @@ public class EnemyCardReaction : MonoBehaviour
                 // ломается где-то здесь
             }
 
-            //challenge = false;
             yield return new WaitForSeconds(0.3f);
             playCard.Challenge();
         }

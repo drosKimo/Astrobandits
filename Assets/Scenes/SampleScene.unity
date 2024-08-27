@@ -341,7 +341,6 @@ MonoBehaviour:
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
   playerDone: 0
-  challengeReact: 0
   currentReactionCard: 
 --- !u!61 &291206070
 BoxCollider2D:
@@ -453,6 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  playedPow: 0
 --- !u!1 &432446748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,7 +1558,6 @@ MonoBehaviour:
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
   playerDone: 0
-  challengeReact: 0
   currentReactionCard: 
 --- !u!61 &1452553572
 BoxCollider2D:
@@ -2385,7 +2384,6 @@ MonoBehaviour:
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
   playerDone: 0
-  challengeReact: 0
   currentReactionCard: 
 --- !u!61 &1631115247
 BoxCollider2D:
@@ -2497,6 +2495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  playedPow: 0
 --- !u!1 &1650295951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3197,7 +3196,6 @@ MonoBehaviour:
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
   playerDone: 0
-  challengeReact: 0
   currentReactionCard: 
 --- !u!114 &1918867923
 MonoBehaviour:
@@ -3255,6 +3253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  playedPow: 0
 --- !u!1 &1930364173
 GameObject:
   m_ObjectHideFlags: 0
@@ -3730,7 +3729,6 @@ MonoBehaviour:
   playedCard: {fileID: 0}
   playStorage: {fileID: 0}
   playerDone: 0
-  challengeReact: 0
   currentReactionCard: 
 --- !u!61 &2064692873
 BoxCollider2D:
@@ -3861,6 +3859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  playedPow: 0
 --- !u!1 &2072225112
 GameObject:
   m_ObjectHideFlags: 0
@@ -3873,6 +3872,7 @@ GameObject:
   - component: {fileID: 2072225113}
   - component: {fileID: 2072225115}
   - component: {fileID: 2072225116}
+  - component: {fileID: 2072225117}
   m_Layer: 0
   m_Name: WhenGameStarts
   m_TagString: Untagged
@@ -3937,6 +3937,24 @@ MonoBehaviour:
   playerTurn: []
   blocker: {fileID: 999881025}
   finMove: {fileID: 1007827423}
+  isChallenge: 0
+  challengeDone: 0
+  challenge_AI: {fileID: 0}
+--- !u!114 &2072225117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072225112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfc23f8efe396f4985df1fa69e31db6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerA: {fileID: 0}
+  playerB: {fileID: 0}
+  distance: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

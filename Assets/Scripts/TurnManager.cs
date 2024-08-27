@@ -18,7 +18,6 @@ public class TurnManager : MonoBehaviour
     // для CardProperty
     [HideInInspector] public bool isChallenge = false, challengeDone;
     [HideInInspector] public Enemy_AI challenge_AI;
-    //[HideInInspector] public PlayCard playChallenge;
 
     void Start()
     {

@@ -9,6 +9,7 @@ public class Enemy_AI : MonoBehaviour
     [HideInInspector] public CharacterRole target;
 
     TurnManager manager;
+    PlayerHierarchy hierarchy;
     CharacterRole characterRole, youPlayer;
     PlayCard playCard;
     Cards stolenCard;
@@ -22,6 +23,7 @@ public class Enemy_AI : MonoBehaviour
     public IEnumerator EnemyTurn()
     {
         manager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+        hierarchy = GameObject.Find("WhenGameStarts").GetComponent<PlayerHierarchy>();
         characterRole = GetComponent<CharacterRole>();
         playCard = GetComponent<PlayCard>();
 
@@ -74,6 +76,10 @@ public class Enemy_AI : MonoBehaviour
                         playCard.playerDone = false; // ожидание ответа
                         playedPow = true;
                         EnemySearchOther();
+
+                        // тут можно будет поставить сравнение для расстояния. Рабочее!
+                        int aaa = hierarchy.CalculateCircularDistance(gameObject.transform, target.gameObject.transform);
+
                         StartCoroutine(playCard.Pow());
                         index.Add(characterRole.hand.IndexOf(card));
 

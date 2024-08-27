@@ -33,7 +33,7 @@ public class PlayCard : MonoBehaviour
         enemy_AI = GetComponent<Enemy_AI>();
         playerDone = false; // ожидание ответа
 
-        if (enemy_AI.target.gameObject.tag == "Player") // отнимает хп, если это игрок
+        if (enemy_AI.target.gameObject.tag == "Player")
         {
             // как вариант, при создании расстояния между игроками опираться на их положение в иерархии
             // в случае, если индекс выходит за рамки, нужно начать с конца
