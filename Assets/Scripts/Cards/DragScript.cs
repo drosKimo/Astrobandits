@@ -44,7 +44,8 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         {
             if ((getCardItem.cardItem.itemOther == false && hit.collider.gameObject.tag == "Enemy") ||
                 (getCardItem.cardItem.itemOther == true && hit.collider.gameObject.tag == "Player") ||
-                (getCardItem.cardItem.itemBoard == true) || (hit.collider.gameObject.tag == "Untagged"))
+                (getCardItem.cardItem.itemBoard == true) || (hit.collider.gameObject.tag == "Untagged") ||
+                 getCardItem.cardItem.itemNull == true)
             {
                 CantPlay();
             }
