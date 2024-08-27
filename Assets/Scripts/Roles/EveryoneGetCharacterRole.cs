@@ -1,15 +1,16 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 // выдает каждому игроку роль и персонажа
 public class EveryoneGetCharacterRole : MonoBehaviour
 {
     [HideInInspector] public List<GameObject> everyPlayer;
     [SerializeField] Storage thisStorage; // общее хранилище
-    [SerializeField] Characters character; // персонаж задается здесь
+    Characters character; // персонаж задается здесь
     CharacterRole characterRole;
 
+    System.Random rand;
     List<Roles> rolePool;
 
     void Start()
@@ -24,20 +25,12 @@ public class EveryoneGetCharacterRole : MonoBehaviour
 
         foreach (GameObject player in everyPlayer)
         {
-            // назначает выданного персонажа. временно
             characterRole = player.GetComponent<CharacterRole>();
-            characterRole.character = character;
-            characterRole.maxHP = character.characterHitPoint;
+            rand = new System.Random();
 
-            System.Random rand = new System.Random();
-            int roleIndex = rand.Next(rolePool.Count);
-
-            characterRole.role = rolePool[roleIndex]; // назначает роль игроку
-
-            if (rolePool[roleIndex].roleName == "Roles.Name.Captain") // добавляет +1 хп капитану
-                characterRole.maxHP++;
-
-            rolePool.RemoveAt(roleIndex); // удаляет роль из списка, чтобы не было повторов
+            // назначает выданного персонажа. временно
+            SetCharacter();
+            SetRole();
 
             characterRole.currentHP = characterRole.maxHP; // устанавливает текущее значение хп
         }
@@ -58,5 +51,24 @@ public class EveryoneGetCharacterRole : MonoBehaviour
         // 2 пирата
         rolePool.Add(thisStorage.allRoles[3]);
         rolePool.Add(thisStorage.allRoles[3]);
+    }
+
+    void SetCharacter()
+    {
+        character = thisStorage.allCharacters[0];
+
+        characterRole.character = character;
+        characterRole.maxHP = character.characterHitPoint;
+    }
+
+    void SetRole()
+    {
+        int roleIndex = rand.Next(rolePool.Count);
+        characterRole.role = rolePool[roleIndex]; // назначает роль игроку
+
+        if (rolePool[roleIndex].roleName == "Roles.Name.Captain") // добавляет +1 хп капитану
+            characterRole.maxHP++;
+
+        rolePool.RemoveAt(roleIndex); // удаляет роль из списка, чтобы не было повторов
     }
 }
