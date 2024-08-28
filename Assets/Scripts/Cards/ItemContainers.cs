@@ -1,12 +1,9 @@
-using Akassets.SmoothGridLayout;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemContainers : MonoBehaviour
 {
-    int defaultItems = 5, // минимальное число предметов до уменьшения расстояния
+    int defaultItems = 2, // минимальное число предметов до уменьшения расстояния
         spacingItems; // количество объектов
 
     Vector2 spacingOffset, // какое значение мы устанавливаем

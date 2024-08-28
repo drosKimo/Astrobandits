@@ -19,4 +19,5 @@ MonoBehaviour:
   itemSuit: 0
   itemNumber: 
   itemOther: 0
-  itemBoard: 1
+  itemBoard: 0
+  itemNull: 1
