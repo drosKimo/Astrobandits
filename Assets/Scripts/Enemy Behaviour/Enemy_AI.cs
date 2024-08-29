@@ -9,6 +9,7 @@ public class Enemy_AI : MonoBehaviour
     [HideInInspector] public CharacterRole target;
 
     TurnManager manager;
+    HelperData helper;
     PlayerHierarchy hierarchy;
     CharacterRole characterRole, youPlayer;
     PlayCard playCard;
@@ -23,11 +24,15 @@ public class Enemy_AI : MonoBehaviour
     public IEnumerator EnemyTurn()
     {
         manager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
-        hierarchy = GameObject.Find("WhenGameStarts").GetComponent<PlayerHierarchy>();
+        helper = manager.gameObject.GetComponent<HelperData>();
+        hierarchy = manager.gameObject.GetComponent<PlayerHierarchy>();
+
         characterRole = GetComponent<CharacterRole>();
         playCard = GetComponent<PlayCard>();
 
         turnEnd = false; // ход не закончен
+
+        helper.currentDistance = helper.baseDistance; // временно. Позже изменить на скрипт, который будет считать дистанцию
 
         // противник разыгрывает карту
         StartCoroutine(EnemyPlayCard());
@@ -71,14 +76,15 @@ public class Enemy_AI : MonoBehaviour
             switch (card.itemName)
             {
                 case "Cards.Name.Pow":
-                    if (!playedPow) // проверяет, стрелял ли уже персонаж
+                    EnemySearchOther();
+
+                    // считает какое расстояние до цели
+                    int calc = hierarchy.CalculateCircularDistance(gameObject.transform, target.gameObject.transform);
+
+                    if (!playedPow || calc <= helper.currentDistance) // проверяет, стрелял ли уже персонаж
                     {
                         playCard.playerDone = false; // ожидание ответа
                         playedPow = true;
-                        EnemySearchOther();
-
-                        // тут можно будет поставить сравнение для расстояния. Рабочее!
-                        int aaa = hierarchy.CalculateCircularDistance(gameObject.transform, target.gameObject.transform);
 
                         StartCoroutine(playCard.Pow());
                         index.Add(characterRole.hand.IndexOf(card));
@@ -273,17 +279,15 @@ public class Enemy_AI : MonoBehaviour
                     EnemySearchOther(); // ищет target
                     Debug.Log($"{gameObject.name} кинул вызов {target.name}");
 
-                    TurnManager turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
-                    turnManager.challenge_AI = gameObject.GetComponent<Enemy_AI>();
-
-                    turnManager.challengeDone = false; // ожидание ответа
+                    helper.challenge_AI = gameObject.GetComponent<Enemy_AI>();
+                    helper.challengeDone = false; // ожидание ответа
 
                     index.Add(characterRole.hand.IndexOf(card));
                     DestroyCards();
 
                     playCard.Challenge();
 
-                    yield return new WaitUntil(() => turnManager.challengeDone); // дождаться ответа игрока
+                    yield return new WaitUntil(() => helper.challengeDone); // дождаться ответа игрока
                     break;
 
                 default:

@@ -10,6 +10,7 @@ public class PlayCard : MonoBehaviour
     [HideInInspector] public Cards playedCard;
     [HideInInspector] public Storage playStorage;
 
+    HelperData helperData;
     TurnManager turnManager;
     CharacterRole characterRole;
     Enemy_AI enemy_AI;
@@ -25,6 +26,7 @@ public class PlayCard : MonoBehaviour
 
     void Awake()
     {
+        helperData = GameObject.Find("WhenGameStarts").GetComponent<HelperData>();
         turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
     }
 
@@ -86,11 +88,10 @@ public class PlayCard : MonoBehaviour
 
     public void Challenge() // только противник
     {
-        Enemy_AI challengeAI = turnManager.challenge_AI;
+        Enemy_AI challengeAI = helperData.challenge_AI;
         EnemyCardReaction enemyReact;
 
-        turnManager.isChallenge = true;
-        //enemyReact = turnManager.challenge_AI.GetComponent<EnemyCardReaction>();
+        helperData.isChallenge = true;
 
         // проверяет target
         if (challengeAI.target.gameObject.tag == "Player")
@@ -383,7 +384,7 @@ public class PlayCard : MonoBehaviour
         {
             enemy_AI.target.currentHP--;
             playerDone = true; // игрок ответил
-            turnManager.challengeDone = true;
+            helperData.challengeDone = true;
 
             Debug.Log("Игрок потерял хп");
         }

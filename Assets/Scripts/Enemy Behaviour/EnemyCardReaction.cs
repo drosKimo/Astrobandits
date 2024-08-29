@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyCardReaction : MonoBehaviour
 {
     CharacterRole characterRole;
-    TurnManager turnManager;
+    HelperData helperData;
     PlayCard playCard;
 
     bool missed = false; // проверяет, может ли противник отбить атаку
@@ -14,7 +14,7 @@ public class EnemyCardReaction : MonoBehaviour
     void Awake()
     {
         characterRole = GetComponent<CharacterRole>();
-        turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+        helperData = GameObject.Find("WhenGameStarts").GetComponent<HelperData>();
     }
 
     void EnemyDodge() // разыгрывается противником, когда ему нужно скинуть Уворот
@@ -66,10 +66,10 @@ public class EnemyCardReaction : MonoBehaviour
             if (characterRole.currentHP <= 0)
                 characterRole.DeadPlayer();
 
-            if (turnManager.isChallenge) // когда против игрока
+            if (helperData.isChallenge) // когда против игрока
             {
-                turnManager.challengeDone = true;
-                turnManager.isChallenge = false;
+                helperData.challengeDone = true;
+                helperData.isChallenge = false;
             }
         }
     }
@@ -97,18 +97,18 @@ public class EnemyCardReaction : MonoBehaviour
 
         playCard = GetComponent<PlayCard>();
 
-        if (turnManager.isChallenge)
+        if (helperData.isChallenge)
         {
             // меняем игрока, которому нужно отвечать
-            Enemy_AI attacker_AI = turnManager.challenge_AI; // текущий атакующий
+            Enemy_AI attacker_AI = helperData.challenge_AI; // текущий атакующий
 
             if (attacker_AI.target.gameObject.tag != "Player")
             {
-                Enemy_AI defender_AI = turnManager.challenge_AI.target.gameObject.GetComponent<Enemy_AI>(); // текущий отвечающий
+                Enemy_AI defender_AI = helperData.challenge_AI.target.gameObject.GetComponent<Enemy_AI>(); // текущий отвечающий
                 CharacterRole attacker = attacker_AI.gameObject.GetComponent<CharacterRole>();
 
-                turnManager.challenge_AI = defender_AI; // отвечающий становится атакующим
-                turnManager.challenge_AI.target = attacker; // атакующий становится отвечающим
+                helperData.challenge_AI = defender_AI; // отвечающий становится атакующим
+                helperData.challenge_AI.target = attacker; // атакующий становится отвечающим
 
                 // ломается где-то здесь
             }
@@ -117,7 +117,7 @@ public class EnemyCardReaction : MonoBehaviour
             playCard.Challenge();
         }
         else
-            turnManager.challengeDone = true;
+            helperData.challengeDone = true;
 
         yield return null;
     }

@@ -3868,6 +3868,7 @@ GameObject:
   - component: {fileID: 2072225115}
   - component: {fileID: 2072225116}
   - component: {fileID: 2072225117}
+  - component: {fileID: 2072225118}
   m_Layer: 0
   m_Name: WhenGameStarts
   m_TagString: Untagged
@@ -3931,9 +3932,6 @@ MonoBehaviour:
   playerTurn: []
   blocker: {fileID: 999881025}
   finMove: {fileID: 1007827423}
-  isChallenge: 0
-  challengeDone: 0
-  challenge_AI: {fileID: 0}
 --- !u!114 &2072225117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3946,6 +3944,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfc23f8efe396f4985df1fa69e31db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2072225118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072225112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b1ab4e20829a946af87c5444fe2eb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isChallenge: 0
+  challengeDone: 0
+  shotDone: 0
+  challenge_AI: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

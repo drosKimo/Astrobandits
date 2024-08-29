@@ -11,15 +11,13 @@ public class TurnManager : MonoBehaviour
     GameObject list;
 
     CharacterRole currentPlayer;
+    HelperData helper;
 
     private int turnIndex = 0;
 
-    // для CardProperty
-    [HideInInspector] public bool isChallenge = false, challengeDone, shotDone; // shotDone = ограничитель для игрока
-    [HideInInspector] public Enemy_AI challenge_AI;
-
     void Start()
     {
+        helper = gameObject.GetComponent<HelperData>();
         StartCoroutine(WaitForQueue());
     }
 
@@ -82,7 +80,7 @@ public class TurnManager : MonoBehaviour
                     finMove.SetActive(true);
                     blocker.SetActive(false);
 
-                    shotDone = false;
+                    helper.shotDone = false;
                     break;
             }
         }

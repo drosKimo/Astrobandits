@@ -13,15 +13,15 @@ public class CardProperty : MonoBehaviour
     PlayCard playCard;
     EnemyCardReaction enemyCardReaction;
     CharacterRole characterRole;
-    TurnManager turnManager;
+    HelperData helperData;
 
     [HideInInspector] public GameObject enemyObj;
     [HideInInspector] public bool cardNeeded;
 
     void Start()
     {
-        turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
-        turnManager.isChallenge = false;
+        helperData = GameObject.Find("WhenGameStarts").GetComponent<HelperData>();
+        helperData.isChallenge = false;
     }
 
     void Awake()
@@ -50,7 +50,7 @@ public class CardProperty : MonoBehaviour
                         buttonCard.enabled = false;
                     }
 
-                    if (turnManager.isChallenge)
+                    if (helperData.isChallenge)
                     {
                         // начинает цикл перестрелки пока у кого-то не кончатся Тыщ
                         Play_Challenge();
@@ -79,7 +79,7 @@ public class CardProperty : MonoBehaviour
 
     void Play_Challenge() // только когда игрок разыграл Вызов
     {
-        EnemyCardReaction reactEnemy = turnManager.challenge_AI.gameObject.GetComponent<EnemyCardReaction>();
+        EnemyCardReaction reactEnemy = helperData.challenge_AI.gameObject.GetComponent<EnemyCardReaction>();
 
         StartCoroutine(reactEnemy.Challenge());
     }
@@ -97,11 +97,11 @@ public class CardProperty : MonoBehaviour
 
             case "Cards.Name.Challenge":
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
-                turnManager.isChallenge = true;
+                helperData.isChallenge = true;
 
                 // переносим данные во внешнее хранилище
-                turnManager.challenge_AI = playCard.gameObject.GetComponent<Enemy_AI>(); // на кого кинули Вызов
-                turnManager.challenge_AI.target = player.GetComponent<CharacterRole>(); // он объявляет игрока целью
+                helperData.challenge_AI = playCard.gameObject.GetComponent<Enemy_AI>(); // на кого кинули Вызов
+                helperData.challenge_AI.target = player.GetComponent<CharacterRole>(); // он объявляет игрока целью
 
                 Play_Challenge();
                 break;
@@ -151,7 +151,7 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Pow":
-                turnManager.shotDone = true;
+                helperData.shotDone = true;
                 enemyCardReaction = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
                 enemyCardReaction.Pow();
                 break;
