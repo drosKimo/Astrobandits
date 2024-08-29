@@ -9,6 +9,7 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     ShowCard showCard;
     CardProperty cardProperty;
     GetCardItem getCardItem;
+    TurnManager turnManager;
     GameObject placeholder;
 
     [HideInInspector] public RaycastHit2D hit;
@@ -19,6 +20,7 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         LtP = GetComponent<LerpToPlaceholder>();
         cardProperty = GetComponent<CardProperty>();
         getCardItem = GetComponent<GetCardItem>();
+        turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
     }
 
     public void OnDrag(PointerEventData eventData) // вызывается каждый кадр
@@ -51,7 +53,11 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
             }
             else
             {
-                CanPlay();
+                // стрелял ли уже игрок
+                if (getCardItem.cardItem.itemName == "Cards.Name.Pow" && turnManager.shotDone)
+                    CantPlay();
+                else
+                    CanPlay();
             }
         }
         else

@@ -197,7 +197,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00021362305, y: -0.00024414}
+  m_AnchoredPosition: {x: -0.00021362305, y: -0.00024414062}
   m_SizeDelta: {x: 0.0005, y: -0.00048828}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4951186967068486561
@@ -528,10 +528,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalStorage: {fileID: 11400000, guid: b3ac204604dd98a40ad3ada5bd376922, type: 2}
   cardItem: {fileID: 11400000, guid: 0a00e5573df103e43a034dc349c67f40, type: 2}
-  cardIndex: 7
+  cardIndex: 2
   nameKey: 
   descriptionKey: 
-  calling: 1
+  calling: 0
 --- !u!114 &-6470714491268844921
 MonoBehaviour:
   m_ObjectHideFlags: 0

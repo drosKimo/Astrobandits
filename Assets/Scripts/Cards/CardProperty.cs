@@ -151,6 +151,7 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Pow":
+                turnManager.shotDone = true;
                 enemyCardReaction = CPdragScript.hit.collider.gameObject.GetComponent<EnemyCardReaction>();
                 enemyCardReaction.Pow();
                 break;
@@ -174,8 +175,8 @@ public class CardProperty : MonoBehaviour
                 break;
         }
         
-        RecreateInventory();
         Destroy(gameObject);
+        RecreateInventory();
     }
 
     // карты, которые разыгрываются на поле

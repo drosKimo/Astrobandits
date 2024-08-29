@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class TurnManager : MonoBehaviour
@@ -16,7 +15,7 @@ public class TurnManager : MonoBehaviour
     private int turnIndex = 0;
 
     // для CardProperty
-    [HideInInspector] public bool isChallenge = false, challengeDone;
+    [HideInInspector] public bool isChallenge = false, challengeDone, shotDone; // shotDone = ограничитель для игрока
     [HideInInspector] public Enemy_AI challenge_AI;
 
     void Start()
@@ -82,6 +81,8 @@ public class TurnManager : MonoBehaviour
 
                     finMove.SetActive(true);
                     blocker.SetActive(false);
+
+                    shotDone = false;
                     break;
             }
         }

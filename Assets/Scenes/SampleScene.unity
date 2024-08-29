@@ -298,7 +298,6 @@ MonoBehaviour:
   currentHP: 0
   maxHP: 0
   role: {fileID: 0}
-  queueNumber: 0
   hand: []
   getCardItem: {fileID: 0}
 --- !u!114 &291206067
@@ -1672,7 +1671,6 @@ MonoBehaviour:
   currentHP: 0
   maxHP: 0
   role: {fileID: 0}
-  queueNumber: 0
   hand: []
   getCardItem: {fileID: 0}
 --- !u!114 &1452553575
@@ -1721,7 +1719,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35.73706}
+  m_AnchoredPosition: {x: 0, y: -134}
   m_SizeDelta: {x: -150, y: 71.474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1460153232
@@ -1744,7 +1742,7 @@ MonoBehaviour:
   m_ChildAlignment: 7
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 256, y: 256}
+  m_CellSize: {x: 306, y: 416}
   m_Spacing: {x: 25, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
@@ -2341,7 +2339,6 @@ MonoBehaviour:
   currentHP: 0
   maxHP: 0
   role: {fileID: 0}
-  queueNumber: 0
   hand: []
   getCardItem: {fileID: 0}
 --- !u!114 &1631115244
@@ -3237,7 +3234,6 @@ MonoBehaviour:
   currentHP: 0
   maxHP: 0
   role: {fileID: 0}
-  queueNumber: 0
   hand: []
   getCardItem: {fileID: 0}
 --- !u!114 &1918867926
@@ -3843,7 +3839,6 @@ MonoBehaviour:
   currentHP: 0
   maxHP: 0
   role: {fileID: 0}
-  queueNumber: 0
   hand: []
   getCardItem: {fileID: 0}
 --- !u!114 &2064692876
@@ -3894,7 +3889,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   everyPlayer: []
   thisStorage: {fileID: 11400000, guid: b3ac204604dd98a40ad3ada5bd376922, type: 2}
-  character: {fileID: 11400000, guid: 8b41829e8cd9ad244944cdced617230b, type: 2}
 --- !u!4 &2072225114
 Transform:
   m_ObjectHideFlags: 0
@@ -3952,9 +3946,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfc23f8efe396f4985df1fa69e31db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerA: {fileID: 0}
-  playerB: {fileID: 0}
-  distance: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

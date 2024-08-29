@@ -8,10 +8,8 @@ public class Cards : ScriptableObject
     [Tooltip("Ключ локализации описания")] public string itemDescription;
     public Sprite itemImage;
     [Space]
-    [Header("Масть карты")]
+    [Header("Свойства карты")]
     [Tooltip("Свойство карты. По умолчанию это карта действия")] public dropDown itemProperty = dropDown.Default; // свойство карты
-    [Tooltip("Масть карты")] public suits itemSuit = suits.Default; // масть карты
-    [Tooltip("Номер карты. Указывать 2-10, J, Q, K, A")] public string itemNumber; // Может быть 2-10, J, Q, K, A
     [Space]
     [Header("Bool свойства")]
     [Tooltip("Можно сыграть только на другого игрока?")] public bool itemOther = false;
@@ -22,14 +20,5 @@ public class Cards : ScriptableObject
     { 
         Default, // карта действия
         Blue // карта, которую кладут перед собой
-    }
-
-    public enum suits
-    {
-        Default,
-        Spades, // пики
-        Hearts, // червы
-        Clubs, // трефы
-        Diamonds // бубны
     }
 }
