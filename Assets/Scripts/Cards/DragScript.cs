@@ -2,6 +2,7 @@ using Akassets.SmoothGridLayout;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.UIElements.VisualElement;
 
 public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
@@ -11,6 +12,7 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     GetCardItem getCardItem;
     HelperData helperData;
     GameObject placeholder;
+    PlayerHierarchy hierarchy;
 
     [HideInInspector] public RaycastHit2D hit;
 
@@ -21,6 +23,7 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         cardProperty = GetComponent<CardProperty>();
         getCardItem = GetComponent<GetCardItem>();
         helperData = GameObject.Find("WhenGameStarts").GetComponent<HelperData>();
+        hierarchy = GameObject.Find("WhenGameStarts").GetComponent<PlayerHierarchy>();
     }
 
     public void OnDrag(PointerEventData eventData) // вызывается каждый кадр
@@ -53,11 +56,37 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
             }
             else
             {
-                // стрелял ли уже игрок
-                if (getCardItem.cardItem.itemName == "Cards.Name.Pow" && helperData.shotDone)
-                    CantPlay();
-                else
-                    CanPlay();
+                switch (getCardItem.cardItem.itemName)
+                {
+                    case "Cards.Name.Pow":
+                        Transform player = GameObject.FindWithTag("Player").transform;
+                        PlayCard playCard = player.gameObject.GetComponent<PlayCard>();
+
+                        // считает какое расстояние до цели
+                        int calc = hierarchy.CalculateCircularDistance(player.transform, hit.collider.gameObject.transform);
+
+                        if (helperData.shotDone) // стрелял ли уже игрок
+                            CantPlay();
+                        else
+                        {
+                            if (calc <= playCard.currentDistance)
+                                CanPlay();
+                            else
+                                CantPlay();
+                        }
+                        break;
+
+                    case "Cards.Name.CyberImplant":
+                        if (helperData.playerImplantSet) // установлен ли у игрока имплант
+                            CantPlay();
+                        else
+                            CanPlay();
+                        break;
+
+                    default:
+                        CanPlay();
+                        break;
+                }
             }
         }
         else

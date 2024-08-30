@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,19 +16,20 @@ public class PlayCard : MonoBehaviour
     CharacterRole characterRole;
     Enemy_AI enemy_AI;
 
+    public int currentDistance, baseDistance; // второй поможет с прицелом
+
     // блок для реакции игрока на карты Тыщ, Инсектоиды, Армагеддец и Вызов
     bool dodged;
     [HideInInspector] public bool playerDone;
     [HideInInspector] public string currentReactionCard;
 
-    // блок для взаимодействия с противником для розыгрыша карты Вызов
-    //[HideInInspector] public EnemyCardReaction enemyReact; 
-    //[HideInInspector] public Enemy_AI challengeAI;
-
-    void Awake()
+    void Start()
     {
         helperData = GameObject.Find("WhenGameStarts").GetComponent<HelperData>();
         turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+
+        currentDistance = helperData.baseDistance;
+        baseDistance = helperData.baseDistance;
     }
 
     public IEnumerator Pow() // атака противника
@@ -130,7 +132,8 @@ public class PlayCard : MonoBehaviour
 
     public void CyberImplant()
     {
-        Debug.Log("Карта разыграна");
+        baseDistance++;
+        currentDistance++;
     }
 
     public void EnergyBlade()
@@ -147,9 +150,7 @@ public class PlayCard : MonoBehaviour
 
     public void Isabelle()
     {
-        // дальность 4
-
-        Debug.Log("Карта разыграна");
+        currentDistance = baseDistance + 3;
     }
 
     public void Jackpot()
@@ -213,11 +214,7 @@ public class PlayCard : MonoBehaviour
 
     public void PulseRifle()
     {
-        // дальность 5
-        // скорее всего, придется временно убрать, поскольку при игре с 5 игроками максимальное расстояние = 4
-        // (без улучшений - 2)
-
-        Debug.Log("Карта разыграна");
+        currentDistance = baseDistance + 4;
     }
 
     public void Reassembly()
@@ -299,9 +296,7 @@ public class PlayCard : MonoBehaviour
 
     public void Scorpion()
     {
-        // дальность 2
-
-        Debug.Log("Карта разыграна");
+        currentDistance = baseDistance + 1;
     }
 
     public void Shredder() // только когда разыгрывает игрок
@@ -327,9 +322,7 @@ public class PlayCard : MonoBehaviour
 
     public void Turlock()
     {
-        // дальность 3
-
-        Debug.Log("Карта разыграна");
+        currentDistance = baseDistance + 2;
     }
 
     public void XenoRunt()

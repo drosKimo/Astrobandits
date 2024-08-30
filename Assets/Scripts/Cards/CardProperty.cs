@@ -115,7 +115,13 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.CyberImplant":
-                playCard.CyberImplant();
+                if (!helperData.playerImplantSet)
+                {
+                    playCard.CyberImplant();
+                    helperData.playerImplantSet = true;
+                }
+                else
+                    Debug.Log("Имплант уже установлен");
                 break;
 
             case "Cards.Name.EnergyBlade":

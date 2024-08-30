@@ -17,7 +17,7 @@ public class Enemy_AI : MonoBehaviour
 
     List<int> index;
 
-    bool turnEnd;
+    bool turnEnd, implantSet;
     [HideInInspector] public bool playedPow = false;
 
     // запуск логики противника
@@ -31,8 +31,7 @@ public class Enemy_AI : MonoBehaviour
         playCard = GetComponent<PlayCard>();
 
         turnEnd = false; // ход не закончен
-
-        helper.currentDistance = helper.baseDistance; // временно. Позже изменить на скрипт, который будет считать дистанцию
+        implantSet = false;
 
         // противник разыгрывает карту
         StartCoroutine(EnemyPlayCard());
@@ -81,7 +80,7 @@ public class Enemy_AI : MonoBehaviour
                     // считает какое расстояние до цели
                     int calc = hierarchy.CalculateCircularDistance(gameObject.transform, target.gameObject.transform);
 
-                    if (!playedPow || calc <= helper.currentDistance) // проверяет, стрелял ли уже персонаж
+                    if (!playedPow || calc <= playCard.currentDistance) // проверяет, стрелял ли уже персонаж
                     {
                         playCard.playerDone = false; // ожидание ответа
                         playedPow = true;
@@ -290,6 +289,40 @@ public class Enemy_AI : MonoBehaviour
                     yield return new WaitUntil(() => helper.challengeDone); // дождаться ответа игрока
                     break;
 
+                case "Cards.Name.Scorpion":
+                    Debug.Log($"{gameObject.name} взял в руки {card.name}");
+                    playCard.Scorpion();
+                    index.Add(characterRole.hand.IndexOf(card));
+                    break;
+
+                case "Cards.Name.Turlock":
+                    Debug.Log($"{gameObject.name} взял в руки {card.name}");
+                    playCard.Turlock();
+                    index.Add(characterRole.hand.IndexOf(card));
+                    break;
+
+                case "Cards.Name.Isabelle":
+                    Debug.Log($"{gameObject.name} взял в руки {card.name}");
+                    playCard.Isabelle();
+                    index.Add(characterRole.hand.IndexOf(card));
+                    break;
+
+                case "Cards.Name.PulseRifle":
+                    Debug.Log($"{gameObject.name} взял в руки {card.name}");
+                    playCard.PulseRifle();
+                    index.Add(characterRole.hand.IndexOf(card));
+                    break;
+
+                case "Cards.Name.CyberImplant":
+                    if (!implantSet) // чтобы ИИ не мог бесконечно увеличивать свою досягаемость
+                    {
+                        Debug.Log($"{gameObject.name} сыграл {card.name}");
+                        playCard.CyberImplant();
+                        implantSet = true;
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
+                    break;
+
                 default:
                     Debug.Log("Противник не умеет играть эту карту");
                     break;
@@ -310,19 +343,9 @@ public class Enemy_AI : MonoBehaviour
                     break;
                 case "Cards.Name.CryoCharge":
                     break;
-                case "Cards.Name.CyberImplant":
-                    break;
                 case "Cards.Name.EnergyBlade":
                     break;
                 case "Cards.Name.ForceField":
-                    break;
-                case "Cards.Name.Isabelle":
-                    break;
-                case "Cards.Name.PulseRifle":
-                    break;
-                case "Cards.Name.Scorpion":
-                    break;
-                case "Cards.Name.Turlock":
                     break;
             }*/
         }
