@@ -290,27 +290,39 @@ public class Enemy_AI : MonoBehaviour
                     break;
 
                 case "Cards.Name.Scorpion":
-                    Debug.Log($"{gameObject.name} взял в руки {card.name}");
-                    playCard.Scorpion();
-                    index.Add(characterRole.hand.IndexOf(card));
+                    if (playCard.currentDistance <= 2)
+                    {
+                        Debug.Log($"{gameObject.name} взял в руки {card.name}");
+                        playCard.Scorpion();
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
                     break;
 
                 case "Cards.Name.Turlock":
-                    Debug.Log($"{gameObject.name} взял в руки {card.name}");
-                    playCard.Turlock();
-                    index.Add(characterRole.hand.IndexOf(card));
+                    if (playCard.currentDistance <= 3)
+                    {
+                        Debug.Log($"{gameObject.name} взял в руки {card.name}");
+                        playCard.Turlock();
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
                     break;
 
                 case "Cards.Name.Isabelle":
-                    Debug.Log($"{gameObject.name} взял в руки {card.name}");
-                    playCard.Isabelle();
-                    index.Add(characterRole.hand.IndexOf(card));
+                    if (playCard.currentDistance <= 4)
+                    {
+                        Debug.Log($"{gameObject.name} взял в руки {card.name}");
+                        playCard.Isabelle();
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
                     break;
 
                 case "Cards.Name.PulseRifle":
-                    Debug.Log($"{gameObject.name} взял в руки {card.name}");
-                    playCard.PulseRifle();
-                    index.Add(characterRole.hand.IndexOf(card));
+                    if (playCard.currentDistance <= 5)
+                    {
+                        Debug.Log($"{gameObject.name} взял в руки {card.name}");
+                        playCard.PulseRifle();
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
                     break;
 
                 case "Cards.Name.CyberImplant":
