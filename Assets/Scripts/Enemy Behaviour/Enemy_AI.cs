@@ -53,6 +53,9 @@ public class Enemy_AI : MonoBehaviour
         {
             target = GameObject.Find("Enemies").transform.GetChild(rand.Next(GameObject.Find("Enemies").transform.childCount)).GetComponent<CharacterRole>();
         }
+
+        Animator anim = target.gameObject.GetComponentInChildren<Animator>();
+        anim.SetTrigger("TargetSet");
     }
 
     IEnumerator EnemyPlayCard()
