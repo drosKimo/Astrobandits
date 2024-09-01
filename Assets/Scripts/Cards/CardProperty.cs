@@ -111,7 +111,8 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.CryoCharge":
-                playCard.CryoCharge();
+                Enemy_AI enemy = playCard.gameObject.GetComponent<Enemy_AI>();
+                enemy.frozen = true;
                 break;
 
             case "Cards.Name.CyberImplant":

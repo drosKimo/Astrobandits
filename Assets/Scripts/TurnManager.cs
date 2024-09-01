@@ -50,7 +50,7 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log($"{playerTurn[turnIndex].gameObject.name} начал ход");
 
-        if (list.transform.childCount > 1) // временно. Нужно для того, чтобы ход не продолжался если остается 1 игрок+
+        if (list.transform.childCount > 1) // временно. Нужно для того, чтобы ход не продолжался если остается 1 игрок
         {
             // логика хода противника
             switch (playerTurn[turnIndex].tag) 

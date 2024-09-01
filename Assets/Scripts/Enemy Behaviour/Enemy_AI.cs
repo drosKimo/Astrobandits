@@ -18,23 +18,48 @@ public class Enemy_AI : MonoBehaviour
     List<int> index;
 
     bool turnEnd, implantSet;
-    [HideInInspector] public bool playedPow = false;
+    [HideInInspector] public bool playedPow = false, // проверка, выстрелил ли
+                                  frozen = false; // бросали ли на него Криозаряд
 
-    // запуск логики противника
-    public IEnumerator EnemyTurn()
+    void Start()
     {
         manager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
         helper = manager.gameObject.GetComponent<HelperData>();
         hierarchy = manager.gameObject.GetComponent<PlayerHierarchy>();
 
-        characterRole = GetComponent<CharacterRole>();
-        playCard = GetComponent<PlayCard>();
-
         turnEnd = false; // ход не закончен
         implantSet = false;
 
-        // противник разыгрывает карту
-        StartCoroutine(EnemyPlayCard());
+        characterRole = GetComponent<CharacterRole>();
+        playCard = GetComponent<PlayCard>();
+    }
+
+    // запуск логики противника
+    public IEnumerator EnemyTurn()
+    {
+        if (!frozen)
+        {
+            StartCoroutine(EnemyPlayCard()); // противник разыгрывает карту
+        }
+        else
+        {
+            frozen = false; // сразу выключаем заморозку
+
+            System.Random rand = new System.Random();
+            int randed = rand.Next(3);
+            Debug.Log($"Попытка разморозки: {randed}");
+
+            switch (randed)
+            {
+                case 2:
+                    StartCoroutine(EnemyPlayCard()); // противник разыгрывает карту
+                    break;
+
+                default:
+                    turnEnd = true;
+                    break;
+            }              
+        }
 
         yield return new WaitUntil(() => turnEnd); // ждет пока ход закончится
         yield return new WaitForSeconds(0.3f); // дополнительное ожидание перед окончанием хода

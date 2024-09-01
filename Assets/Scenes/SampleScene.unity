@@ -192,7 +192,7 @@ MonoBehaviour:
   m_ChildAlignment: 7
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 256, y: 256}
+  m_CellSize: {x: 306, y: 416}
   m_Spacing: {x: 100, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
@@ -455,6 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   playedPow: 0
+  frozen: 0
 --- !u!1 &432446748
 GameObject:
   m_ObjectHideFlags: 0
@@ -3032,6 +3033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   playedPow: 0
+  frozen: 0
 --- !u!1 &1650295951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3792,6 +3794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   playedPow: 0
+  frozen: 0
 --- !u!1 &1930364173
 GameObject:
   m_ObjectHideFlags: 0
@@ -4400,6 +4403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   playedPow: 0
+  frozen: 0
 --- !u!1 &2072225112
 GameObject:
   m_ObjectHideFlags: 0
