@@ -17,9 +17,8 @@ public class Enemy_AI : MonoBehaviour
 
     List<int> index;
 
-    bool turnEnd, implantSet;
-    [HideInInspector] public bool playedPow = false, // проверка, выстрелил ли
-                                  frozen = false; // бросали ли на него Криозаряд
+    bool turnEnd;
+    [HideInInspector] public bool playedPow = false; // проверка, выстрелил ли
 
     void Start()
     {
@@ -28,7 +27,6 @@ public class Enemy_AI : MonoBehaviour
         hierarchy = manager.gameObject.GetComponent<PlayerHierarchy>();
 
         turnEnd = false; // ход не закончен
-        implantSet = false;
 
         characterRole = GetComponent<CharacterRole>();
         playCard = GetComponent<PlayCard>();
@@ -37,29 +35,7 @@ public class Enemy_AI : MonoBehaviour
     // запуск логики противника
     public IEnumerator EnemyTurn()
     {
-        if (!frozen)
-        {
-            StartCoroutine(EnemyPlayCard()); // противник разыгрывает карту
-        }
-        else
-        {
-            frozen = false; // сразу выключаем заморозку
-
-            System.Random rand = new System.Random();
-            int randed = rand.Next(3);
-            Debug.Log($"Попытка разморозки: {randed}");
-
-            switch (randed)
-            {
-                case 2:
-                    StartCoroutine(EnemyPlayCard()); // противник разыгрывает карту
-                    break;
-
-                default:
-                    turnEnd = true;
-                    break;
-            }              
-        }
+        StartCoroutine(EnemyPlayCard()); // противник разыгрывает карту
 
         yield return new WaitUntil(() => turnEnd); // ждет пока ход закончится
         yield return new WaitForSeconds(0.3f); // дополнительное ожидание перед окончанием хода
@@ -354,13 +330,17 @@ public class Enemy_AI : MonoBehaviour
                     break;
 
                 case "Cards.Name.CyberImplant":
-                    if (!implantSet) // чтобы ИИ не мог бесконечно увеличивать свою досягаемость
+                    if (!characterRole.implantSet) // чтобы ИИ не мог бесконечно увеличивать свою досягаемость
                     {
                         Debug.Log($"{gameObject.name} сыграл {card.name}");
                         playCard.CyberImplant();
-                        implantSet = true;
+                        characterRole.implantSet = true;
                         index.Add(characterRole.hand.IndexOf(card));
                     }
+                    break;
+
+                case "Cards.Name.CryoCharge":
+                    target.frozen = true;
                     break;
 
                 default:
@@ -380,8 +360,6 @@ public class Enemy_AI : MonoBehaviour
                 case "Cards.Name.Bike":
                     break;
                 case "Cards.Name.Collapsar":
-                    break;
-                case "Cards.Name.CryoCharge":
                     break;
                 case "Cards.Name.EnergyBlade":
                     break;

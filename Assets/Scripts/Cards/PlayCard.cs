@@ -121,15 +121,6 @@ public class PlayCard : MonoBehaviour
         Debug.Log("Карта разыграна");
     }
 
-    public void CryoCharge()
-    {
-        // аналогично с Коллапсаром, только при добавлении проверок
-
-        // противники не должны иметь отрицательный приоритет на удаление этого статус-эффекта
-
-        Debug.Log("Карта разыграна");
-    }
-
     public void CyberImplant()
     {
         baseDistance++;

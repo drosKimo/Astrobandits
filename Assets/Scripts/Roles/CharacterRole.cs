@@ -11,6 +11,14 @@ public class CharacterRole : MonoBehaviour
     public List<Cards> hand;
 
     [HideInInspector] public GetCardItem getCardItem;
+    [HideInInspector] public bool frozen, // сыграли ли на персонажа Криозаряд
+                                  implantSet; // надет ли на персонажа Киберимплант
+
+    void Start()
+    {
+        frozen = false;
+        implantSet = false;
+    }
 
     public void DrawCard()
     {

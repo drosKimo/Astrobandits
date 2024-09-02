@@ -13,11 +13,15 @@ public class TurnManager : MonoBehaviour
     CharacterRole currentPlayer;
     HelperData helper;
 
-    private int turnIndex = 0;
+    private int turnIndex = 0, randed;
+
+    System.Random rand;
 
     void Start()
     {
         helper = gameObject.GetComponent<HelperData>();
+        System.Random rand = new System.Random();
+
         StartCoroutine(WaitForQueue());
     }
 
@@ -56,13 +60,28 @@ public class TurnManager : MonoBehaviour
             switch (playerTurn[turnIndex].tag) 
             {
                 case "Enemy":
-                    // дает в руку 2 карты в начале хода
-                    currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
-                    currentPlayer.DrawCard();
-                    currentPlayer.DrawCard();
+                    if (!currentPlayer.frozen)
+                    {
+                        EnemyTurn();
+                    }
+                    else
+                    {
+                        currentPlayer.frozen = false; // сразу выключаем заморозку
 
-                    Enemy_AI enemy_AI = playerTurn[turnIndex].GetComponent<Enemy_AI>();
-                    enemy_AI.StartCoroutine(enemy_AI.EnemyTurn());
+                        randed = rand.Next(3);
+                        Debug.Log($"Попытка разморозки: {randed}");
+
+                        switch (randed)
+                        {
+                            case 2:
+                                EnemyTurn();
+                                break;
+
+                            default:
+                                EndTurn();
+                                break;
+                        }
+                    }
                     break;
 
                 case "Dead":
@@ -72,18 +91,55 @@ public class TurnManager : MonoBehaviour
                     break;
 
                 case "Player": // разблокирует руку игрока, если сейчас его ход
-                    // дает в руку 2 карты в начале хода
-                    currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
-                    currentPlayer.DrawCard();
-                    currentPlayer.DrawCard();
+                    if (!currentPlayer.frozen)
+                    {
+                        PlayerTurn();
+                    }
+                    else
+                    {
+                        currentPlayer.frozen = false; // отключает заморозку
 
-                    finMove.SetActive(true);
-                    blocker.SetActive(false);
+                        randed = rand.Next(3);
+                        Debug.Log($"Попытка разморозки: {randed}");
 
-                    helper.shotDone = false;
+                        switch (randed)
+                        {
+                            case 2:
+                                PlayerTurn();
+                                break;
+
+                            default:
+                                EndTurn();
+                                break;
+                        }
+                    }
                     break;
             }
         }
+    }
+
+    void PlayerTurn()
+    {
+        // дает в руку 2 карты в начале хода
+        currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
+        currentPlayer.DrawCard();
+        currentPlayer.DrawCard();
+
+        finMove.SetActive(true);
+        blocker.SetActive(false);
+
+        helper.shotDone = false;
+    }
+
+    void EnemyTurn()
+    {
+        // дает в руку 2 карты в начале хода
+        currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
+        currentPlayer.DrawCard();
+        currentPlayer.DrawCard();
+
+        Enemy_AI enemy_AI = playerTurn[turnIndex].GetComponent<Enemy_AI>();
+        enemy_AI.StartCoroutine(enemy_AI.EnemyTurn());
     }
 
     public void EndTurn()

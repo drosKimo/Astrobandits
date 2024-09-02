@@ -111,15 +111,16 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.CryoCharge":
-                Enemy_AI enemy = playCard.gameObject.GetComponent<Enemy_AI>();
+                CharacterRole enemy = playCard.gameObject.GetComponent<CharacterRole>();
                 enemy.frozen = true;
                 break;
 
             case "Cards.Name.CyberImplant":
-                if (!helperData.playerImplantSet)
+                CharacterRole playerYou = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterRole>();
+                if (!playerYou.implantSet)
                 {
                     playCard.CyberImplant();
-                    helperData.playerImplantSet = true;
+                    playerYou.implantSet = true;
                 }
                 else
                     Debug.Log("Имплант уже установлен");
