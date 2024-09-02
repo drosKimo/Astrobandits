@@ -13,15 +13,11 @@ public class TurnManager : MonoBehaviour
     CharacterRole currentPlayer;
     HelperData helper;
 
-    private int turnIndex = 0, randed;
-
-    System.Random rand;
+    private int turnIndex = 0;
 
     void Start()
     {
         helper = gameObject.GetComponent<HelperData>();
-        System.Random rand = new System.Random();
-
         StartCoroutine(WaitForQueue());
     }
 
@@ -52,10 +48,11 @@ public class TurnManager : MonoBehaviour
 
     void StartTurn()
     {
-        Debug.Log($"{playerTurn[turnIndex].gameObject.name} начал ход");
-
         if (list.transform.childCount > 1) // временно. Нужно для того, чтобы ход не продолжался если остается 1 игрок
         {
+            currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
+            Debug.Log($"{playerTurn[turnIndex].gameObject.name} начал ход");
+
             // логика хода противника
             switch (playerTurn[turnIndex].tag) 
             {
@@ -68,7 +65,8 @@ public class TurnManager : MonoBehaviour
                     {
                         currentPlayer.frozen = false; // сразу выключаем заморозку
 
-                        randed = rand.Next(3);
+                        System.Random rand = new System.Random();
+                        int randed = rand.Next(3);
                         Debug.Log($"Попытка разморозки: {randed}");
 
                         switch (randed)
@@ -99,7 +97,8 @@ public class TurnManager : MonoBehaviour
                     {
                         currentPlayer.frozen = false; // отключает заморозку
 
-                        randed = rand.Next(3);
+                        System.Random rand = new System.Random();
+                        int randed = rand.Next(3);
                         Debug.Log($"Попытка разморозки: {randed}");
 
                         switch (randed)
@@ -121,7 +120,6 @@ public class TurnManager : MonoBehaviour
     void PlayerTurn()
     {
         // дает в руку 2 карты в начале хода
-        currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
         currentPlayer.DrawCard();
         currentPlayer.DrawCard();
 
@@ -134,7 +132,6 @@ public class TurnManager : MonoBehaviour
     void EnemyTurn()
     {
         // дает в руку 2 карты в начале хода
-        currentPlayer = playerTurn[turnIndex].GetComponent<CharacterRole>();
         currentPlayer.DrawCard();
         currentPlayer.DrawCard();
 

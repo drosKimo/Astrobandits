@@ -77,7 +77,9 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
                         break;
 
                     case "Cards.Name.CyberImplant":
-                        if (helperData.playerImplantSet) // установлен ли у игрока имплант
+                        CharacterRole playerChar = GameObject.FindWithTag("Player").GetComponent<CharacterRole>();
+
+                        if (playerChar.implantSet) // установлен ли у игрока имплант
                             CantPlay();
                         else
                             CanPlay();

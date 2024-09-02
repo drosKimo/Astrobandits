@@ -340,7 +340,10 @@ public class Enemy_AI : MonoBehaviour
                     break;
 
                 case "Cards.Name.CryoCharge":
+                    EnemySearchOther();
+                    Debug.Log($"{gameObject.name} заморозил {target.name}");
                     target.frozen = true;
+                    index.Add(characterRole.hand.IndexOf(card));
                     break;
 
                 default:
@@ -368,7 +371,7 @@ public class Enemy_AI : MonoBehaviour
             }*/
         }
 
-        DestroyCards();
+        if (characterRole.hand.Count > 0) DestroyCards();
         LeaveCards();
 
         turnEnd = true; // ход закончен
