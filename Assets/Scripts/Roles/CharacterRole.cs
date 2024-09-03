@@ -36,7 +36,6 @@ public class CharacterRole : MonoBehaviour
         GameObject deads = GameObject.Find("Deads");
         SpriteRenderer sp = gameObject.GetComponent<SpriteRenderer>();
 
-
         gameObject.transform.SetParent(deads.transform);
         gameObject.tag = "Dead";
         
