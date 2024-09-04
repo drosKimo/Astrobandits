@@ -353,7 +353,7 @@ public class Enemy_AI : MonoBehaviour
             {
                 case "Cards.Name.Collapsar":
                     break;
-                case "Cards.Name.Noise":
+                case "Cards.Name.Glitch":
                     break;
                 case "Cards.Name.Instability":
                     break;

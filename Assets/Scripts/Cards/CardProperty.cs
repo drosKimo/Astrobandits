@@ -166,8 +166,8 @@ public class CardProperty : MonoBehaviour
                 playCard.XenoRunt();
                 break;
 
-            case "Cards.Name.Noise":
-                playCard.Noise();
+            case "Cards.Name.Glitch":
+                playCard.Glitch();
                 break;
 
             case "Cards.Name.Overlap":

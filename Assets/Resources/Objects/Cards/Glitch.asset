@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb4b146ee1939e8429893ad3801f8408, type: 3}
-  m_Name: Noise
+  m_Name: Glitch
   m_EditorClassIdentifier: 
-  itemName: Cards.Name.Noise
-  itemDescription: Cards.Description.Noise
+  itemName: Cards.Name.Glitch
+  itemDescription: Cards.Description.Glitch
   itemImage: {fileID: 0}
   itemProperty: 0
   itemOther: 0

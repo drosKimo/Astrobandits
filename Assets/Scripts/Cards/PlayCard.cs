@@ -323,7 +323,7 @@ public class PlayCard : MonoBehaviour
         spawnCard.SpawnByIndex(index); // и спавнит
     }
 
-    public void Noise()
+    public void Glitch()
     {
         Debug.Log("Карта разыграна");
     }
