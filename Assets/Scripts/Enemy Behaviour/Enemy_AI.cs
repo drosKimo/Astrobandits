@@ -311,17 +311,8 @@ public class Enemy_AI : MonoBehaviour
                     }
                     break;
 
-                case "Cards.Name.Isabelle":
-                    if (playCard.currentDistance <= 4)
-                    {
-                        Debug.Log($"{gameObject.name} взял в руки {card.name}");
-                        playCard.Isabelle();
-                        index.Add(characterRole.hand.IndexOf(card));
-                    }
-                    break;
-
                 case "Cards.Name.PulseRifle":
-                    if (playCard.currentDistance <= 5)
+                    if (playCard.currentDistance <= 4)
                     {
                         Debug.Log($"{gameObject.name} взял в руки {card.name}");
                         playCard.PulseRifle();
@@ -360,11 +351,15 @@ public class Enemy_AI : MonoBehaviour
 
             /*switch (card.itemName)
             {
-                case "Cards.Name.Bike":
-                    break;
                 case "Cards.Name.Collapsar":
                     break;
-                case "Cards.Name.EnergyBlade":
+                case "Cards.Name.Noise":
+                    break;
+                case "Cards.Name.Instability":
+                    break;
+                case "Cards.Name.Overlap":
+                    break;
+                case "Cards.Name.Hemotransfusion":
                     break;
                 case "Cards.Name.ForceField":
                     break;

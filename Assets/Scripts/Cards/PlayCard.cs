@@ -83,11 +83,6 @@ public class PlayCard : MonoBehaviour
         }
     }
 
-    public void Bike()
-    {
-        Debug.Log("Карта разыграна");
-    }
-
     public void Challenge() // только противник
     {
         Enemy_AI challengeAI = helperData.challenge_AI;
@@ -127,21 +122,9 @@ public class PlayCard : MonoBehaviour
         currentDistance++;
     }
 
-    public void EnergyBlade()
-    {
-        // дальность 1, позвроляет играть Тыщ несколько раз
-
-        Debug.Log("Карта разыграна");
-    }
-
     public void ForceField()
     {
         Debug.Log("Карта разыграна");
-    }
-
-    public void Isabelle()
-    {
-        currentDistance = baseDistance + 3;
     }
 
     public void Jackpot()
@@ -205,7 +188,7 @@ public class PlayCard : MonoBehaviour
 
     public void PulseRifle()
     {
-        currentDistance = baseDistance + 4;
+        currentDistance = baseDistance + 3;
     }
 
     public void Reassembly()
@@ -338,6 +321,26 @@ public class PlayCard : MonoBehaviour
             }
         }
         spawnCard.SpawnByIndex(index); // и спавнит
+    }
+
+    public void Noise()
+    {
+        Debug.Log("Карта разыграна");
+    }
+
+    public void Instability()
+    {
+        Debug.Log("Карта разыграна");
+    }
+
+    public void Overlap()
+    {
+        Debug.Log("Карта разыграна");
+    }
+
+    public void Hemotransfusion()
+    {
+        Debug.Log("Карта разыграна");
     }
 
     public IEnumerator WaitForPlayer()

@@ -91,10 +91,6 @@ public class CardProperty : MonoBehaviour
 
         switch (getCardItem.nameKey)
         {
-            case "Cards.Name.Bike":
-                playCard.Bike();
-                break;
-
             case "Cards.Name.Challenge":
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 helperData.isChallenge = true;
@@ -126,16 +122,8 @@ public class CardProperty : MonoBehaviour
                     Debug.Log("Имплант уже установлен");
                 break;
 
-            case "Cards.Name.EnergyBlade":
-                playCard.EnergyBlade();
-                break;
-
             case "Cards.Name.ForceField":
                 playCard.ForceField();
-                break;
-
-            case "Cards.Name.Isabelle":
-                playCard.Isabelle();
                 break;
 
             case "Cards.Name.Jackpot":
@@ -176,6 +164,18 @@ public class CardProperty : MonoBehaviour
             case "Cards.Name.XenoRunt":
                 playCard.playStorage = getCardItem.globalStorage;
                 playCard.XenoRunt();
+                break;
+
+            case "Cards.Name.Noise":
+                playCard.Noise();
+                break;
+
+            case "Cards.Name.Overlap":
+                playCard.Overlap();
+                break;
+
+            case "Cards.Name.Hemotransfusion":
+                playCard.Hemotransfusion();
                 break;
 
             default:
@@ -222,6 +222,10 @@ public class CardProperty : MonoBehaviour
             case "Cards.Name.Reassembly":
                 playCard.playStorage = getCardItem.globalStorage;
                 playCard.Reassembly();
+                break;
+
+            case "Cards.Name.Instability":
+                playCard.Instability();
                 break;
 
             default:

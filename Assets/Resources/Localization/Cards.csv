@@ -3,8 +3,8 @@ Cards.Name.Armageddets,Армагедец,Armageddets
 Cards.Description.Armageddets,Каждый соперник скидывает Уворот или теряет хп,Each opponent plays a Dodge or loses hp
 Cards.Name.Bartender,Бармен,Bartender
 Cards.Description.Bartender,Вы восстанавливаете 2 хп. Все соперники восстанавливают по 1 хп,You are recovering 2 hp. All opponents recover 1 hp each
-Cards.Name.Bike,Байк,Bike
-Cards.Description.Bike,,
+Cards.Name.Overlap,Перекрытие,Overlap
+Cards.Description.Overlap,,
 Cards.Name.Challenge,Вызов,Challenge
 Cards.Description.Challenge,,
 Cards.Name.Collapsar,Коллапсар,Collapsar
@@ -15,14 +15,14 @@ Cards.Name.CyberImplant,Кибер имплант,Cyber implant
 Cards.Description.CyberImplant,,
 Cards.Name.Dodge,Уворот,Dodge
 Cards.Description.Dodge,,
-Cards.Name.EnergyBlade,Энерго-клинок,Energy blade
-Cards.Description.EnergyBlade,,
+Cards.Name.Noise,Помехи,Noise
+Cards.Description.Noise,,
 Cards.Name.ForceField,Силовое поле,Force field
 Cards.Description.ForceField,,
 Cards.Name.Insectoids,Инсектоиды,Insectoids
 Cards.Description.Insectoids,,
-Cards.Name.Isabelle,Изабель,Isabelle
-Cards.Description.Isabelle,,
+Cards.Name.Instability,Нестабильность,Instability
+Cards.Description.Instability,,
 Cards.Name.Jackpot,Джекпот,Jackpot
 Cards.Description.Jackpot,,
 Cards.Name.LootBoxes,Лутбоксы,Loot boxes
@@ -45,3 +45,5 @@ Cards.Name.Turlock,Турлок,Turlock
 Cards.Description.Turlock,,
 Cards.Name.XenoRunt,КсеноКарлик,XenoRunt
 Cards.Description.XenoRunt,,
+Cards.Name.Hemotransfusion,Гемотрансфузия,Hemotransfusion
+Cards.Description.Hemotransfusion,,
