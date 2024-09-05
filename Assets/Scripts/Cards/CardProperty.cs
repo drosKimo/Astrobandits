@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +11,6 @@ public class CardProperty : MonoBehaviour
     [HideInInspector] public DragScript CPdragScript;
     PlayCard playCard;
     EnemyCardReaction enemyCardReaction;
-    CharacterRole characterRole;
     HelperData helperData;
 
     [HideInInspector] public GameObject enemyObj;
@@ -175,7 +173,11 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Hemotransfusion":
-                playCard.Hemotransfusion();
+                CharacterRole playerChar = GameObject.FindWithTag("Player").GetComponent<CharacterRole>();
+
+                helperData.enemyTransHP.currentHP--;
+                playerChar.currentHP++;
+
                 break;
 
             default:
@@ -298,7 +300,7 @@ public class CardProperty : MonoBehaviour
         // раздает карты в случайном порядке
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            characterRole = enemy.GetComponent<CharacterRole>();
+            CharacterRole characterRole = enemy.GetComponent<CharacterRole>();
             characterRole.hand.Add(LBlist[rand.Next(0, LBgrid.transform.childCount)]);
         }
     }

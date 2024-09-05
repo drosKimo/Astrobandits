@@ -337,6 +337,15 @@ public class Enemy_AI : MonoBehaviour
                     index.Add(characterRole.hand.IndexOf(card));
                     break;
 
+                case "Cards.Name.Hemotransfusion":
+                    EnemySearchOther();
+                    if (target.currentHP >= 2 && characterRole.currentHP != characterRole.maxHP)
+                    {
+                        Debug.Log($"{gameObject.name} перелил себе хп {target.name}");
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
+                    break;
+
                 default:
                     Debug.Log("Противник не умеет играть эту карту");
                     break;
@@ -358,8 +367,6 @@ public class Enemy_AI : MonoBehaviour
                 case "Cards.Name.Instability":
                     break;
                 case "Cards.Name.Overlap":
-                    break;
-                case "Cards.Name.Hemotransfusion":
                     break;
                 case "Cards.Name.ForceField":
                     break;

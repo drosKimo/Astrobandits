@@ -56,14 +56,15 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
             }
             else
             {
+                CharacterRole playerChar = GameObject.FindWithTag("Player").GetComponent<CharacterRole>();
+
                 switch (getCardItem.cardItem.itemName)
                 {
                     case "Cards.Name.Pow":
-                        Transform player = GameObject.FindWithTag("Player").transform;
-                        PlayCard playCard = player.gameObject.GetComponent<PlayCard>();
+                        PlayCard playCard = playerChar.gameObject.GetComponent<PlayCard>();
 
                         // считает какое расстояние до цели
-                        int calc = hierarchy.CalculateCircularDistance(player.transform, hit.collider.gameObject.transform);
+                        int calc = hierarchy.CalculateCircularDistance(playerChar.gameObject.transform, hit.collider.gameObject.transform);
 
                         if (helperData.shotDone) // стрелял ли уже игрок
                             CantPlay();
@@ -77,12 +78,19 @@ public class DragScript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
                         break;
 
                     case "Cards.Name.CyberImplant":
-                        CharacterRole playerChar = GameObject.FindWithTag("Player").GetComponent<CharacterRole>();
-
                         if (playerChar.implantSet) // установлен ли у игрока имплант
                             CantPlay();
                         else
                             CanPlay();
+                        break;
+
+                    case "Cards.Name.Hemotransfusion":
+                        helperData.enemyTransHP = hit.collider.gameObject.GetComponent<CharacterRole>();
+
+                        if (helperData.enemyTransHP.currentHP >= 2 && playerChar.currentHP != playerChar.maxHP)
+                            CanPlay();
+                        else
+                            CantPlay();
                         break;
 
                     default:

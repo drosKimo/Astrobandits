@@ -338,11 +338,6 @@ public class PlayCard : MonoBehaviour
         Debug.Log("Карта разыграна");
     }
 
-    public void Hemotransfusion()
-    {
-        Debug.Log("Карта разыграна");
-    }
-
     public IEnumerator WaitForPlayer()
     {
         dodged = false;
