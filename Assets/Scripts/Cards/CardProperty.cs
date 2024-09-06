@@ -12,12 +12,14 @@ public class CardProperty : MonoBehaviour
     PlayCard playCard;
     EnemyCardReaction enemyCardReaction;
     HelperData helperData;
+    CharacterRole playerYou;
 
     [HideInInspector] public GameObject enemyObj;
     [HideInInspector] public bool cardNeeded;
 
     void Start()
     {
+        playerYou = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterRole>();
         helperData = GameObject.Find("WhenGameStarts").GetComponent<HelperData>();
         helperData.isChallenge = false;
     }
@@ -90,12 +92,11 @@ public class CardProperty : MonoBehaviour
         switch (getCardItem.nameKey)
         {
             case "Cards.Name.Challenge":
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
                 helperData.isChallenge = true;
 
                 // переносим данные во внешнее хранилище
                 helperData.challenge_AI = playCard.gameObject.GetComponent<Enemy_AI>(); // на кого кинули ¬ызов
-                helperData.challenge_AI.target = player.GetComponent<CharacterRole>(); // он объ€вл€ет игрока целью
+                helperData.challenge_AI.target = playerYou.gameObject.GetComponent<CharacterRole>(); // он объ€вл€ет игрока целью
 
                 Play_Challenge();
                 break;
@@ -110,7 +111,6 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.CyberImplant":
-                CharacterRole playerYou = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterRole>();
                 if (!playerYou.implantSet)
                 {
                     playCard.CyberImplant();
@@ -173,10 +173,8 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Hemotransfusion":
-                CharacterRole playerChar = GameObject.FindWithTag("Player").GetComponent<CharacterRole>();
-
                 helperData.enemyTransHP.currentHP--;
-                playerChar.currentHP++;
+                playerYou.currentHP++;
 
                 break;
 
@@ -192,7 +190,7 @@ public class CardProperty : MonoBehaviour
     // карты, которые разыгрываютс€ на поле
     public void PlayBoardCard()
     {
-        playCard = GameObject.FindWithTag("Player").GetComponent<PlayCard>();
+        playCard = playerYou.gameObject.GetComponent<PlayCard>();
 
         switch (getCardItem.nameKey)
         {
@@ -227,7 +225,12 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.Instability":
-                playCard.Instability();
+                foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    enemyCardReaction = enemy.GetComponent<EnemyCardReaction>();
+                    enemyCardReaction.Instability();
+                }
+                playerYou.currentHP--;
                 break;
 
             default:
@@ -246,8 +249,7 @@ public class CardProperty : MonoBehaviour
         gameObject.transform.SetParent(cardDestroy.transform);
 
         // очищает инвентарь игрока
-        CharacterRole playerChar = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterRole>();
-        playerChar.hand.Clear();
+        playerYou.hand.Clear();
 
         GameObject playerHand = GameObject.Find("Elements Container"); // карты на экране
 
@@ -258,7 +260,7 @@ public class CardProperty : MonoBehaviour
             GetCardItem cardItem = playerHand.transform.GetChild(i).gameObject.GetComponent<GetCardItem>();
             Cards card = cardItem.cardItem;
 
-            playerChar.hand.Add(card); // добавл€ет карту с руки в инвентарь
+            playerYou.hand.Add(card); // добавл€ет карту с руки в инвентарь
         }
     }
 

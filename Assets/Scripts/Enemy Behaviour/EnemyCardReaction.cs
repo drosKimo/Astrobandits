@@ -91,6 +91,12 @@ public class EnemyCardReaction : MonoBehaviour
         EnemyPow();
     }
 
+    public void Instability()
+    {
+        Reaction();
+        Reaction();
+    }
+
     public IEnumerator Challenge()
     {
         EnemyPow();
