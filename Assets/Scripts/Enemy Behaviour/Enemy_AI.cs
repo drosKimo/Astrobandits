@@ -346,6 +346,37 @@ public class Enemy_AI : MonoBehaviour
                     }
                     break;
 
+                case "Cards.Name.Instability":
+                    if (characterRole.currentHP >= 2) // чтобы не убить себя
+                    {
+                        Debug.Log($"{gameObject.name} сыграл {card.name}");
+                        GameObject all = gameObject.transform.parent.gameObject;
+
+                        for(int i = 0; i < all.transform.childCount; i++)
+                        {
+                            CharacterRole current = all.transform.GetChild(i).GetComponent<CharacterRole>();
+                            switch (current.gameObject.tag)
+                            {
+                                case "Player":
+                                    current.currentHP -= 2;
+                                    break;
+
+                                case "Enemy":
+                                    if (current.gameObject != gameObject)
+                                    {
+                                        EnemyCardReaction enemyCardReaction = current.gameObject.GetComponent<EnemyCardReaction>();
+                                        enemyCardReaction.Instability();
+                                    }
+                                    else
+                                        current.currentHP--;
+                                    break;
+                            }
+                        }
+
+                        index.Add(characterRole.hand.IndexOf(card));
+                    }
+                    break;
+
                 default:
                     Debug.Log("Противник не умеет играть эту карту");
                     break;
@@ -363,8 +394,6 @@ public class Enemy_AI : MonoBehaviour
                 case "Cards.Name.Collapsar":
                     break;
                 case "Cards.Name.Glitch":
-                    break;
-                case "Cards.Name.Instability":
                     break;
                 case "Cards.Name.Overlap":
                     break;
