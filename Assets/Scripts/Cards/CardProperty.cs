@@ -151,8 +151,7 @@ public class CardProperty : MonoBehaviour
                 break;
 
             case "Cards.Name.SporeBeer":
-                // Если использовать пиво при полном хп, карта все равно потеряется
-                playCard.SporeBeer();
+                playCard.SporeBeer(); // если использовать пиво при полном хп, карта все равно потеряется
                 break;
 
             case "Cards.Name.Turlock":

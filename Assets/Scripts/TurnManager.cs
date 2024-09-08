@@ -13,7 +13,7 @@ public class TurnManager : MonoBehaviour
     CharacterRole currentPlayer;
     HelperData helper;
 
-    private int turnIndex = 0;
+    public int turnIndex = 0;
 
     void Start()
     {
