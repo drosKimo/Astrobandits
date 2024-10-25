@@ -341,6 +341,17 @@ public class Enemy_AI : MonoBehaviour
                     EnemySearchOther();
                     if (target.currentHP >= 2 && characterRole.currentHP != characterRole.maxHP)
                     {
+                        target.currentHP--; // забирает у противника
+                        characterRole.currentHP++; // добавляет себе
+
+                        // показывает хп противника
+                        TMPro.TMP_Text text = target.gameObject.GetComponentInChildren<TMPro.TMP_Text>();
+                        text.text = $"{target.currentHP}/{target.maxHP}";
+
+                        // показывает хп себя
+                        TMPro.TMP_Text textself = gameObject.GetComponentInChildren<TMPro.TMP_Text>();
+                        textself.text = $"{characterRole.currentHP}/{characterRole.maxHP}";
+
                         Debug.Log($"{gameObject.name} перелил себе хп {target.name}");
                         index.Add(characterRole.hand.IndexOf(card));
                     }
@@ -371,6 +382,10 @@ public class Enemy_AI : MonoBehaviour
                                         current.currentHP--;
                                     break;
                             }
+
+                            // показывает хп
+                            TMPro.TMP_Text text = gameObject.GetComponentInChildren<TMPro.TMP_Text>();
+                            text.text = $"{current.currentHP}/{current.maxHP}";
                         }
 
                         index.Add(characterRole.hand.IndexOf(card));

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4b146ee1939e8429893ad3801f8408, type: 3}
   m_Name: Hemotransfusion
   m_EditorClassIdentifier: 
-  itemName: 
-  itemDescription: 
+  itemName: Cards.Name.Hemotransfusion
+  itemDescription: Cards.Description.Hemotransfusion
   itemImage: {fileID: 0}
   itemProperty: 0
-  itemOther: 0
+  itemOther: 1
   itemBoard: 0
   itemNull: 0

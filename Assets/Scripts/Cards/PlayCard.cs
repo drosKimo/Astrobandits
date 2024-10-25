@@ -80,6 +80,10 @@ public class PlayCard : MonoBehaviour
 
             if (charRole.currentHP < charRole.maxHP)
                 charRole.currentHP++;
+
+            // показывает хп
+            TMPro.TMP_Text text = enemy.GetComponentInChildren<TMPro.TMP_Text>();
+            text.text = $"{charRole.currentHP}/{charRole.maxHP}";
         }
     }
 
@@ -292,6 +296,10 @@ public class PlayCard : MonoBehaviour
 
         if (charRole.currentHP < charRole.maxHP)
             charRole.currentHP++;
+
+        // показывает хп
+        TMPro.TMP_Text text = gameObject.GetComponentInChildren<TMPro.TMP_Text>();
+        text.text = $"{charRole.currentHP}/{charRole.maxHP}";
     }
 
     public void Turlock()
@@ -370,6 +378,11 @@ public class PlayCard : MonoBehaviour
 
             Debug.Log("Игрок потерял хп");
         }
+
+        // показывает хп
+        GameObject player = GameObject.Find("You");
+        TMPro.TMP_Text text = player.GetComponentInChildren<TMPro.TMP_Text>();
+        text.text = $"{player.GetComponent<CharacterRole>().currentHP}/{player.GetComponent<CharacterRole>().maxHP}";
     }
 
     void Player_CanMove()

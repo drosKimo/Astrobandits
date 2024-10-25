@@ -175,6 +175,14 @@ public class CardProperty : MonoBehaviour
                 helperData.enemyTransHP.currentHP--;
                 playerYou.currentHP++;
 
+                // показывает хп противника
+                TMPro.TMP_Text text = helperData.enemyTransHP.gameObject.GetComponentInChildren<TMPro.TMP_Text>();
+                text.text = $"{helperData.enemyTransHP.currentHP}/{helperData.enemyTransHP.maxHP}";
+
+                // показывает хп себя
+                TMPro.TMP_Text textself = gameObject.GetComponentInChildren<TMPro.TMP_Text>();
+                textself.text = $"{playerYou.currentHP}/{playerYou.maxHP}";
+
                 break;
 
             default:

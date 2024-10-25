@@ -17,6 +17,9 @@ MonoBehaviour:
   - Name: Cards
     Id: 0
     TextAsset: {fileID: 4900000, guid: 91fc784fdf512c745a212a40ad4fd57a, type: 3}
+  - Name: Menu
+    Id: 768324407
+    TextAsset: {fileID: 4900000, guid: b759d046a4e89cc4c97a23ccecf41b0d, type: 3}
   - Name: Characters
     Id: 521447833
     TextAsset: {fileID: 4900000, guid: b8f0c96d18f3bcb4994ecae55b11efce, type: 3}

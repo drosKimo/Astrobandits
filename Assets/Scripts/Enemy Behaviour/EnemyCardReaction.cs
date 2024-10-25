@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyCardReaction : MonoBehaviour
@@ -72,6 +71,10 @@ public class EnemyCardReaction : MonoBehaviour
                 helperData.isChallenge = false;
             }
         }
+
+        // показывает хп
+        TMPro.TMP_Text text = gameObject.GetComponentInChildren<TMPro.TMP_Text>();
+        text.text = $"{characterRole.currentHP}/{characterRole.maxHP}"; 
     }
 
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 // выдает каждому игроку роль и персонажа
 public class EveryoneGetCharacterRole : MonoBehaviour
@@ -25,6 +25,7 @@ public class EveryoneGetCharacterRole : MonoBehaviour
 
         foreach (GameObject player in everyPlayer)
         {
+            TMP_Text text = player.GetComponentInChildren<TMP_Text>(); // временно. Для демонстрации ХП
             characterRole = player.GetComponent<CharacterRole>();
             rand = new System.Random();
 
@@ -33,6 +34,7 @@ public class EveryoneGetCharacterRole : MonoBehaviour
             SetRole();
 
             characterRole.currentHP = characterRole.maxHP; // устанавливает текущее значение хп
+            text.text = $"{characterRole.currentHP}/{characterRole.maxHP}"; // показывает хп
         }
 
         QueueList queueList = GameObject.Find("WhenGameStarts").GetComponent<QueueList>();
