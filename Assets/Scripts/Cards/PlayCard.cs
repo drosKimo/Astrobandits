@@ -5,6 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+// этот скрипт висит на персонажах, общие свойства карт для ботов и игрока
+
 public class PlayCard : MonoBehaviour
 {
     [SerializeField] SpawnCard spawnCard;
@@ -15,6 +17,7 @@ public class PlayCard : MonoBehaviour
     TurnManager turnManager;
     CharacterRole characterRole;
     Enemy_AI enemy_AI;
+    Randomizer randomizer;
 
     public int currentDistance, baseDistance; // второй поможет с прицелом
 
@@ -27,6 +30,7 @@ public class PlayCard : MonoBehaviour
     {
         helperData = GameObject.Find("WhenGameStarts").GetComponent<HelperData>();
         turnManager = GameObject.Find("WhenGameStarts").GetComponent<TurnManager>();
+        randomizer = new Randomizer();
 
         currentDistance = helperData.baseDistance;
         baseDistance = helperData.baseDistance;
@@ -128,7 +132,12 @@ public class PlayCard : MonoBehaviour
 
     public void ForceField()
     {
-        Debug.Log("Карта разыграна");
+        if (randomizer.color() == 1)
+        {
+            Debug.Log("промашка");
+        }
+        else
+            Debug.Log("Карта разыграна");
     }
 
     public void Jackpot()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,15 +10,30 @@ public class CharacterRole : MonoBehaviour
     public Roles role;
 
     public List<Cards> hand;
+    public List<StatusEffect> statusEffects;
 
     [HideInInspector] public GetCardItem getCardItem;
     [HideInInspector] public bool frozen, // сыграли ли на персонажа Криозаряд
                                   implantSet; // надет ли на персонажа Киберимплант
 
+    public enum StatusEffect
+    {
+        Null,
+        CryoCharge,
+        CyberImplant,
+        ForceField,
+        Collapsar,
+        Glitch
+    }
+
     void Start()
     {
         frozen = false;
         implantSet = false;
+
+        // временною проверка
+        statusEffects.Add(StatusEffect.Glitch);
+        Debug.Log(statusEffects[0]);
     }
 
     public void DrawCard()
